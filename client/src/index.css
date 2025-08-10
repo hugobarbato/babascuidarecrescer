@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 18%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(0, 0%, 18%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(0, 0%, 18%);
+  --primary: hsl(28, 64%, 60%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 96%);
+  --secondary-foreground: hsl(0, 0%, 18%);
+  --muted: hsl(0, 0%, 96%);
+  --muted-foreground: hsl(0, 0%, 45%);
+  --accent: hsl(0, 0%, 96%);
+  --accent-foreground: hsl(0, 0%, 18%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(0, 0%, 89%);
+  --input: hsl(0, 0%, 89%);
+  --ring: hsl(28, 64%, 60%);
+  --radius: 0.5rem;
+
+  /* Brand Colors */
+  --coral: hsl(28, 64%, 60%);
+  --sage: hsl(120, 25%, 65%);
+  --soft-blue: hsl(218, 55%, 65%);
+  --soft-purple: hsl(300, 24%, 75%);
+  --soft-pink: hsl(0, 42%, 78%);
+  --warm-gray: hsl(0, 0%, 18%);
+  
+  /* Font Family */
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+.dark {
+  --background: hsl(0, 0%, 8%);
+  --foreground: hsl(0, 0%, 98%);
+  --card: hsl(0, 0%, 8%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --popover: hsl(0, 0%, 8%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --primary: hsl(28, 64%, 60%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 14%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --muted: hsl(0, 0%, 14%);
+  --muted-foreground: hsl(0, 0%, 63%);
+  --accent: hsl(0, 0%, 14%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62%, 50%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 14%);
+  --input: hsl(0, 0%, 14%);
+  --ring: hsl(28, 64%, 60%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+@layer utilities {
+  .text-coral {
+    color: var(--coral);
+  }
+  
+  .text-sage {
+    color: var(--sage);
+  }
+  
+  .text-soft-blue {
+    color: var(--soft-blue);
+  }
+  
+  .text-soft-purple {
+    color: var(--soft-purple);
+  }
+  
+  .text-soft-pink {
+    color: var(--soft-pink);
+  }
+  
+  .text-warm-gray {
+    color: var(--warm-gray);
+  }
+  
+  .bg-coral {
+    background-color: var(--coral);
+  }
+  
+  .bg-sage {
+    background-color: var(--sage);
+  }
+  
+  .bg-soft-blue {
+    background-color: var(--soft-blue);
+  }
+  
+  .bg-soft-purple {
+    background-color: var(--soft-purple);
+  }
+  
+  .bg-soft-pink {
+    background-color: var(--soft-pink);
+  }
+  
+  .bg-warm-gray {
+    background-color: var(--warm-gray);
+  }
+  
+  .border-coral {
+    border-color: var(--coral);
+  }
+  
+  .border-sage {
+    border-color: var(--sage);
+  }
+  
+  .border-soft-blue {
+    border-color: var(--soft-blue);
+  }
+  
+  .border-soft-purple {
+    border-color: var(--soft-purple);
+  }
+  
+  .border-soft-pink {
+    border-color: var(--soft-pink);
+  }
+  
+  .hover\:bg-coral:hover {
+    background-color: var(--coral);
+  }
+  
+  .hover\:bg-sage:hover {
+    background-color: var(--sage);
+  }
+  
+  .hover\:bg-soft-blue:hover {
+    background-color: var(--soft-blue);
+  }
+  
+  .hover\:bg-soft-purple:hover {
+    background-color: var(--soft-purple);
+  }
+  
+  .hover\:bg-soft-pink:hover {
+    background-color: var(--soft-pink);
+  }
+  
+  .hover\:text-coral:hover {
+    color: var(--coral);
+  }
+}
