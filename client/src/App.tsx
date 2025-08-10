@@ -75,7 +75,7 @@ function Router() {
       <QuoteResultModal
         isOpen={isQuoteResultOpen}
         onClose={() => setIsQuoteResultOpen(false)}
-        result={result}
+        result={result || null}
         onRecalculate={handleRecalculate}
       />
     </div>
