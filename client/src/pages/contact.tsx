@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 import { useContact } from "@/hooks/use-quote";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface ContactPageProps {
   onOpenQuoteModal: (service?: string) => void;
@@ -16,6 +18,10 @@ interface ContactPageProps {
 
 export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
   const { sendContact, isLoading } = useContact();
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState("");
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
 
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactFormSchema),
@@ -25,8 +31,15 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
   });
 
   const handleSubmit = (data: ContactForm) => {
-    sendContact(data);
+    if (siteKey && !recaptchaToken) {
+      setCaptchaError("Por favor, confirme que você não é um robô.");
+      return;
+    }
+    setCaptchaError("");
+    sendContact({ ...data, recaptchaToken: recaptchaToken ?? "" });
     form.reset();
+    setRecaptchaToken(null);
+    recaptchaRef.current?.reset();
   };
 
   return (

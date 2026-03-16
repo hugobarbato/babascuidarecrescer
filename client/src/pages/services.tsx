@@ -25,6 +25,7 @@ export default function Services({ onOpenQuoteModal }: ServicesProps) {
               <ServiceCard
                 key={service.id}
                 service={service}
+                detailHref={`/services/${service.id}`}
                 onRequestQuote={() => onOpenQuoteModal(service.name)}
               />
             ))}

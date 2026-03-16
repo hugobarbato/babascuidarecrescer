@@ -7,6 +7,7 @@ export interface Service {
   bgGradient: string;
   price: string;
   badge?: string;
+  image: string;
 }
 
 export interface PricingRow {

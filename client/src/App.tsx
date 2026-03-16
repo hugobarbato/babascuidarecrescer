@@ -10,16 +10,14 @@ import { QuoteModal } from "@/components/quote/quote-modal";
 import { QuoteResultModal } from "@/components/quote/quote-result";
 import { useQuote } from "@/hooks/use-quote";
 import Home from "@/pages/home";
-import Services from "@/pages/services";
-import Values from "@/pages/values";
-import About from "@/pages/about";
-import Contact from "@/pages/contact";
+import ServiceDetail from "@/pages/service-detail";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isQuoteResultOpen, setIsQuoteResultOpen] = useState(false);
   const [initialService, setInitialService] = useState<string>();
+  const [quoteData, setQuoteData] = useState<any>(null);
   
   const { calculateQuote, isLoading, result } = useQuote();
 
@@ -33,8 +31,9 @@ function Router() {
     setInitialService(undefined);
   };
 
-  const handleQuoteSubmit = (data: any) => {
-    calculateQuote(data, {
+  const handleQuoteSubmit = (data: any, recaptchaToken: string) => {
+    setQuoteData(data);
+    calculateQuote(data, recaptchaToken, {
       onSuccess: () => {
         setIsQuoteModalOpen(false);
         setIsQuoteResultOpen(true);
@@ -54,10 +53,7 @@ function Router() {
       <main>
         <Switch>
           <Route path="/" component={() => <Home onOpenQuoteModal={handleOpenQuoteModal} />} />
-          <Route path="/services" component={() => <Services onOpenQuoteModal={handleOpenQuoteModal} />} />
-          <Route path="/values" component={() => <Values onOpenQuoteModal={handleOpenQuoteModal} />} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={() => <Contact onOpenQuoteModal={handleOpenQuoteModal} />} />
+          <Route path="/services/:id" component={() => <ServiceDetail onOpenQuoteModal={handleOpenQuoteModal} />} />
           <Route component={NotFound} />
         </Switch>
       </main>
@@ -76,6 +72,7 @@ function Router() {
         isOpen={isQuoteResultOpen}
         onClose={() => setIsQuoteResultOpen(false)}
         result={result || null}
+        quoteData={quoteData}
         onRecalculate={handleRecalculate}
       />
     </div>

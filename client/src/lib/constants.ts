@@ -9,7 +9,8 @@ export const SERVICES: Service[] = [
     color: "coral",
     bgGradient: "from-coral/10 to-orange-100",
     price: "A partir de R$50/h",
-    badge: "+R$5 após 22h"
+    badge: "+R$5 após 22h",
+    image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300"
   },
   {
     id: "nanny-desenvolver", 
@@ -19,7 +20,8 @@ export const SERVICES: Service[] = [
     color: "sage",
     bgGradient: "from-sage/10 to-green-100",
     price: "A partir de R$70/h",
-    badge: "Profissionais especializados"
+    badge: "Profissionais especializados",
+    image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300"
   },
   {
     id: "vale-night",
@@ -29,7 +31,8 @@ export const SERVICES: Service[] = [
     color: "soft-blue",
     bgGradient: "from-soft-blue/10 to-blue-100",
     price: "R$150 - R$300",
-    badge: "Meio ou turno completo"
+    badge: "Meio ou turno completo",
+    image: "https://images.unsplash.com/photo-1566004100631-35d015d6a491?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300"
   },
   {
     id: "eventos",
@@ -39,7 +42,8 @@ export const SERVICES: Service[] = [
     color: "soft-purple", 
     bgGradient: "from-soft-purple/10 to-purple-100",
     price: "A partir de R$70/h",
-    badge: "+R$10 por criança extra"
+    badge: "+R$10 por criança extra",
+    image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300"
   },
   {
     id: "viagens",
@@ -49,17 +53,19 @@ export const SERVICES: Service[] = [
     color: "soft-pink",
     bgGradient: "from-soft-pink/10 to-pink-100", 
     price: "R$200/diária",
-    badge: "+R$50 por criança/dia"
+    badge: "+R$50 por criança/dia",
+    image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300"
   },
   {
     id: "mensalista",
-    name: "Plano Mensalista",
+    name: "Mensalista",
     description: "Orçamento personalizado baseado na quantidade de dias da semana e carga horária diária desejada. Valor fixo mensal.",
     icon: "fas fa-calendar-check",
     color: "yellow-600",
     bgGradient: "from-yellow-50 to-yellow-100",
     price: "A partir de R$2.800",
-    badge: "Orçamento personalizado"
+    badge: "Orçamento personalizado",
+    image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300"
   }
 ];
 
@@ -96,9 +102,9 @@ export const PRICING_TABLE: PricingRow[] = [
 
 export const COMPANY_INFO = {
   name: "Cuidar & Crescer",
-  phone: "(11) 99999-9999",
-  whatsapp: "5511999999999",
-  email: "contato@cuidarecrescer.com.br",
+  phone: "+55 13 99630-9340",
+  whatsapp: "5513996309340",
+  email: "espacocuidarecrescer@gmail.com",
   founded: "2022",
   mission: "Proporcionar uma rede de apoio com segurança, cuidado e desenvolvimento infantil de qualidade, conectando famílias a babás confiáveis e capacitadas.",
   vision: "Ser referência em serviços de cuidados infantis, reconhecida pela excelência e confiança no atendimento às famílias.",
