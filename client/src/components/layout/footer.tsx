@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { COMPANY_INFO, SERVICES } from "@/lib/constants";
@@ -14,7 +13,9 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <Logo className="text-2xl mb-4" />
+              <div className="mb-4">
+                <Logo className="text-2xl" />
+              </div>
               <p className="text-gray-300 leading-relaxed">
                 Cuidado e desenvolvimento infantil com acolhimento, segurança e profissionalismo desde {COMPANY_INFO.founded}.
               </p>
@@ -25,9 +26,9 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
               <ul className="space-y-2 text-gray-300">
                 {SERVICES.map((service) => (
                   <li key={service.id}>
-                    <Link href="/services" className="hover:text-coral transition-colors">
+                    <a href={`/services/${service.id}`} className="hover:text-coral transition-colors">
                       {service.name}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

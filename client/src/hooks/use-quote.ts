@@ -8,16 +8,17 @@ export function useQuote() {
   const { toast } = useToast();
   
   const mutation = useMutation({
-    mutationFn: async (data: QuoteRequest): Promise<QuoteResult> => {
+    mutationFn: async ({ quoteData, recaptchaToken }: { quoteData: QuoteRequest; recaptchaToken?: string }): Promise<QuoteResult> => {
       // Calculate quote client-side
-      const result = calculateQuote(data);
-      
+      const result = calculateQuote(quoteData);
+
       // Send email with quote details
       await apiRequest("POST", "/api/send-quote", {
-        quoteData: data,
-        quoteResult: result
+        quoteData,
+        quoteResult: result,
+        recaptchaToken,
       });
-      
+
       return result;
     },
     onSuccess: () => {
@@ -36,7 +37,11 @@ export function useQuote() {
   });
   
   return {
-    calculateQuote: mutation.mutate,
+    calculateQuote: (
+      data: QuoteRequest,
+      recaptchaToken: string,
+      options?: Parameters<typeof mutation.mutate>[1],
+    ) => mutation.mutate({ quoteData: data, recaptchaToken }, options),
     isLoading: mutation.isPending,
     result: mutation.data,
     error: mutation.error

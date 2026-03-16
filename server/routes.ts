@@ -2,33 +2,30 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { z } from "zod";
 import { quoteRequestSchema, contactFormSchema, QuoteRequest, ContactForm, QuoteResult } from "@shared/schema";
+import { sendContactEmail, sendQuoteEmail } from "./email";
+import { verifyRecaptchaToken } from "./recaptcha";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // Send quote email endpoint
   app.post("/api/send-quote", async (req, res) => {
     try {
-      const { quoteData, quoteResult } = req.body;
-      
+      const { quoteData, quoteResult, recaptchaToken } = req.body;
+
+      // Verify CAPTCHA
+      const captchaOk = await verifyRecaptchaToken(recaptchaToken);
+      if (!captchaOk) {
+        return res.status(400).json({ success: false, message: "Verificação de segurança falhou. Tente novamente." });
+      }
+
       // Validate input
       const validatedQuote = quoteRequestSchema.parse(quoteData);
       
-      // TODO: Implement actual email sending
-      // For now, we'll simulate the email sending
-      console.log("Quote email would be sent:", {
-        to: process.env.COMPANY_EMAIL || "contato@cuidarecrescer.com.br",
-        subject: `Novo orçamento - ${validatedQuote.serviceType} - ${validatedQuote.address} - ${validatedQuote.date}`,
-        quoteData: validatedQuote,
-        quoteResult
-      });
-
-      // Also send copy to client
-      console.log("Quote copy would be sent to client:", {
-        to: validatedQuote.clientEmail,
-        subject: "Resumo da sua solicitação - Cuidar & Crescer",
-        quoteData: validatedQuote,
-        quoteResult
-      });
+      try {
+        await sendQuoteEmail(validatedQuote, quoteResult);
+      } catch (emailErr) {
+        console.error("[email] Falha ao enviar e-mail de orçamento:", emailErr);
+      }
 
       res.json({ success: true, message: "Orçamento enviado com sucesso!" });
     } catch (error) {
@@ -43,14 +40,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Send contact email endpoint
   app.post("/api/send-contact", async (req, res) => {
     try {
-      const validatedContact = contactFormSchema.parse(req.body);
+      const { recaptchaToken: contactCaptchaToken, ...contactBody } = req.body;
+
+      // Verify CAPTCHA
+      const captchaOk = await verifyRecaptchaToken(contactCaptchaToken);
+      if (!captchaOk) {
+        return res.status(400).json({ success: false, message: "Verificação de segurança falhou. Tente novamente." });
+      }
+
+      const validatedContact = contactFormSchema.parse(contactBody);
       
-      // TODO: Implement actual email sending
-      console.log("Contact email would be sent:", {
-        to: process.env.COMPANY_EMAIL || "contato@cuidarecrescer.com.br",
-        subject: `Nova mensagem de contato - ${validatedContact.name}`,
-        contactData: validatedContact
-      });
+      try {
+        await sendContactEmail(validatedContact);
+      } catch (emailErr) {
+        console.error("[email] Falha ao enviar e-mail de contato:", emailErr);
+      }
 
       res.json({ success: true, message: "Mensagem enviada com sucesso!" });
     } catch (error) {
