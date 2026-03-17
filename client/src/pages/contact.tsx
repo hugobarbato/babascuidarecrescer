@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 import { useContact } from "@/hooks/use-quote";
+import { trackWhatsAppClick } from "@/lib/analytics";
 import ReCAPTCHA from "react-google-recaptcha";
 
 interface ContactPageProps {
@@ -72,6 +73,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                         href={`https://wa.me/${COMPANY_INFO.whatsapp}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
+                        onClick={() => trackWhatsAppClick("contact_info")}
                         className="text-green-500 font-medium hover:underline"
                       >
                         {COMPANY_INFO.phone}
@@ -247,6 +249,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                           href={`https://wa.me/${COMPANY_INFO.whatsapp}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
+                          onClick={() => trackWhatsAppClick("contact_form_cta")}
                           className="flex-1"
                         >
                           <Button className="w-full bg-green-500 hover:bg-green-600">

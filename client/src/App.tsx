@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { Switch, Route } from "wouter";
+import { useState, useEffect } from "react";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
+import { trackPageView, trackQuoteModalOpen } from "@/lib/analytics";
+import { useScrollDepth } from "@/hooks/use-scroll-depth";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,12 +20,21 @@ function Router() {
   const [isQuoteResultOpen, setIsQuoteResultOpen] = useState(false);
   const [initialService, setInitialService] = useState<string>();
   const [quoteData, setQuoteData] = useState<any>(null);
+  const [location] = useLocation();
   
   const { calculateQuote, isLoading, result } = useQuote();
+
+  useScrollDepth();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    trackPageView(location);
+  }, [location]);
 
   const handleOpenQuoteModal = (service?: string) => {
     setInitialService(service);
     setIsQuoteModalOpen(true);
+    trackQuoteModalOpen(service);
   };
 
   const handleCloseQuoteModal = () => {
