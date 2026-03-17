@@ -3,6 +3,7 @@ import { QuoteRequest, QuoteResult } from "@shared/schema";
 import { calculateQuote } from "@/lib/quote-calculator";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "./use-toast";
+import { trackQuoteSubmit, trackContactSubmit } from "@/lib/analytics";
 
 export function useQuote() {
   const { toast } = useToast();
@@ -22,8 +23,8 @@ export function useQuote() {
       return result;
     },
     onSuccess: () => {
+      trackQuoteSubmit();
       toast({
-        title: "Orçamento calculado!",
         description: "Enviamos os detalhes por e-mail. Nossa equipe entrará em contato em breve.",
       });
     },
@@ -56,8 +57,8 @@ export function useContact() {
       await apiRequest("POST", "/api/send-contact", data);
     },
     onSuccess: () => {
+      trackContactSubmit();
       toast({
-        title: "Mensagem enviada!",
         description: "Recebemos sua mensagem e entraremos em contato em breve.",
       });
     },

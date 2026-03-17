@@ -10,6 +10,7 @@ import { ServiceCard } from "@/components/ui/service-card";
 import { SERVICES, COMPANY_INFO, PRICING_TABLE } from "@/lib/constants";
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-quote";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 interface HomeProps {
   onOpenQuoteModal: (service?: string) => void;
@@ -60,6 +61,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("home_hero")}
               >
                 <Button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
                   <i className="fab fa-whatsapp mr-2"></i> Falar no WhatsApp
@@ -383,7 +385,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                     <div>
                       <h4 className="font-semibold text-lg">WhatsApp</h4>
                       <p className="text-gray-600">Resposta rápida e atendimento personalizado</p>
-                      <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-green-500 font-medium hover:underline">
+                      <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick("home_contact_info")} className="text-green-500 font-medium hover:underline">
                         {COMPANY_INFO.phone}
                       </a>
                     </div>
@@ -532,7 +534,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                           )}
                           Enviar Mensagem
                         </Button>
-                        <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex-1">
+                        <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick("home_form_cta")} className="flex-1">
                           <Button type="button" className="w-full bg-green-500 hover:bg-green-600">
                             <i className="fab fa-whatsapp mr-2"></i> WhatsApp
                           </Button>
@@ -567,6 +569,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick("home_bottom_cta")}
             >
               <Button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
                 <i className="fab fa-whatsapp mr-2"></i> Falar no WhatsApp

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { COMPANY_INFO, SERVICES } from "@/lib/constants";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 interface FooterProps {
   onOpenQuoteModal: () => void;
@@ -43,6 +44,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                     href={`https://wa.me/${COMPANY_INFO.whatsapp}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
+                    onClick={() => trackWhatsAppClick("footer_contact")}
                     className="hover:text-coral transition-colors"
                   >
                     {COMPANY_INFO.phone}
@@ -91,6 +93,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   href={`https://wa.me/${COMPANY_INFO.whatsapp}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick("footer_cta")}
                   className="bg-green-500 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-600 transition-colors"
                 >
                   <i className="fab fa-whatsapp mr-1"></i> WhatsApp
