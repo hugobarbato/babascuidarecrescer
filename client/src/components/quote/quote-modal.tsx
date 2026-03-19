@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -53,9 +52,6 @@ function getTomorrow(): string {
 export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialService }: QuoteModalProps) {
   const [serviceType, setServiceType] = useState<string>("");
   const [cepLoading, setCepLoading] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [captchaError, setCaptchaError] = useState("");
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
 
   const form = useForm<QuoteRequest>({
@@ -106,17 +102,15 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
     }
   };
 
-  const handleSubmit = (data: QuoteRequest) => {
-    if (siteKey && !recaptchaToken) {
-      setCaptchaError("Por favor, confirme que você não é um robô.");
-      return;
+  const handleSubmit = async (data: QuoteRequest) => {
+    let recaptchaToken = "";
+    if (siteKey) {
+      await new Promise<void>((resolve) => grecaptcha.ready(resolve));
+      recaptchaToken = await grecaptcha.execute(siteKey, { action: "quote_submit" });
     }
-    setCaptchaError("");
-    onSubmit(data, recaptchaToken ?? "");
+    onSubmit(data, recaptchaToken);
     form.reset();
     setServiceType("");
-    setRecaptchaToken(null);
-    recaptchaRef.current?.reset();
   };
 
   return (
@@ -207,7 +201,18 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
                       <span className="ml-1 text-xs font-normal text-gray-400">(opcional)</span>
                     </FormLabel>
                     <FormControl>
-                      <Input type="tel" placeholder="(13) 99999-9999" {...field} value={field.value ?? ""} />
+                      <Input
+                        placeholder="(13) 99999-9999"
+                        {...field}
+                        value={field.value ?? ""}
+                        onChange={(e) => {
+                          const d = e.target.value.replace(/\D/g, "").slice(0, 11);
+                          const masked = d.length <= 10
+                            ? d.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3")
+                            : d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+                          field.onChange(masked.replace(/-$/, ""));
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -561,25 +566,6 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
                 />
               </div>
             </div>
-
-            {/* reCAPTCHA */}
-            {siteKey && (
-              <div className="flex flex-col items-center gap-1">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={siteKey}
-                  hl="pt-BR"
-                  onChange={(token) => {
-                    setRecaptchaToken(token);
-                    if (token) setCaptchaError("");
-                  }}
-                  onExpired={() => setRecaptchaToken(null)}
-                />
-                {captchaError && (
-                  <p className="text-sm text-red-500">{captchaError}</p>
-                )}
-              </div>
-            )}
 
             <div className="flex gap-4">
               <Button

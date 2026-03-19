@@ -1,4 +1,3 @@
-import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -11,36 +10,27 @@ import { ContactForm, contactFormSchema } from "@shared/schema";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 import { useContact } from "@/hooks/use-quote";
 import { trackWhatsAppClick } from "@/lib/analytics";
-import ReCAPTCHA from "react-google-recaptcha";
-
 interface ContactPageProps {
   onOpenQuoteModal: (service?: string) => void;
 }
 
 export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
   const { sendContact, isLoading } = useContact();
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [captchaError, setCaptchaError] = useState("");
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
 
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      lgpdConsent: false,
-    },
+    defaultValues: { name: "", phone: "", email: "", serviceType: "", message: "" },
   });
 
-  const handleSubmit = (data: ContactForm) => {
-    if (siteKey && !recaptchaToken) {
-      setCaptchaError("Por favor, confirme que você não é um robô.");
-      return;
+  const handleSubmit = async (data: ContactForm) => {
+    let recaptchaToken = "";
+    if (siteKey) {
+      await new Promise<void>((resolve) => grecaptcha.ready(resolve));
+      recaptchaToken = await grecaptcha.execute(siteKey, { action: "contact_submit" });
     }
-    setCaptchaError("");
-    sendContact({ ...data, recaptchaToken: recaptchaToken ?? "" });
+    sendContact({ ...data, recaptchaToken });
     form.reset();
-    setRecaptchaToken(null);
-    recaptchaRef.current?.reset();
   };
 
   return (
@@ -145,7 +135,17 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                             <FormItem>
                               <FormLabel>Telefone/WhatsApp *</FormLabel>
                               <FormControl>
-                                <Input placeholder="(11) 99999-9999" {...field} />
+                                <Input
+                                  placeholder="(11) 99999-9999"
+                                  {...field}
+                                  onChange={(e) => {
+                                    const d = e.target.value.replace(/\D/g, "").slice(0, 11);
+                                    const masked = d.length <= 10
+                                      ? d.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3")
+                                      : d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+                                    field.onChange(masked.replace(/-$/, ""));
+                                  }}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -210,31 +210,14 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                         )}
                       />
 
-                      <FormField
-                        control={form.control}
-                        name="lgpdConsent"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox 
-                                checked={field.value} 
-                                onCheckedChange={field.onChange} 
-                              />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel className="text-xs text-gray-500">
-                                * Seus dados serão utilizados apenas para contato e orçamento. 
-                                Não armazenamos informações pessoais em nossa base de dados, conforme LGPD.
-                              </FormLabel>
-                              <FormMessage />
-                            </div>
-                          </FormItem>
-                        )}
-                      />
-                      
+                      <p className="text-xs text-gray-400">
+                        Seus dados serão utilizados apenas para contato e orçamento.
+                        Não armazenamos informações pessoais em nossa base de dados, conforme LGPD.
+                      </p>
+
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <Button 
-                          type="submit" 
+                        <Button
+                          type="submit"
                           className="flex-1 bg-coral hover:bg-orange-500"
                           disabled={isLoading}
                         >

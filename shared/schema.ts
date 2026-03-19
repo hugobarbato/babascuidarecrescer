@@ -36,21 +36,17 @@ export const quoteRequestSchema = z.object({
   // Optional notes
   observations: z.string().optional(),
 
-  // Legacy — kept as optional for backward compat
+  // Contact info
   clientPhone: z.string().optional(),
   clientEmail: z.string().optional(),
-  lgpdConsent: z.boolean().optional(),
 });
 
 export const contactFormSchema = z.object({
-  name: z.string().min(1),
-  phone: z.string().min(1),
-  email: z.string().email(),
+  name: z.string().min(2, "Informe seu nome completo"),
+  phone: z.string().min(14, "Telefone inválido"),
+  email: z.string().email("E-mail inválido"),
   serviceType: z.string().optional(),
   message: z.string().optional(),
-  lgpdConsent: z.boolean().refine(val => val === true, {
-    message: "Você deve concordar com o uso dos dados"
-  })
 });
 
 export type QuoteRequest = z.infer<typeof quoteRequestSchema>;
