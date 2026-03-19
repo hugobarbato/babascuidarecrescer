@@ -63,6 +63,17 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   <i className="fas fa-clock text-soft-blue"></i>
                   <span>Seg-Sex: 8h-18h | Sáb: 8h-14h</span>
                 </div>
+                <div className="flex items-center space-x-2">
+                  <i className="fab fa-instagram text-soft-pink"></i>
+                  <a
+                    href={COMPANY_INFO.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-coral transition-colors"
+                  >
+                    @babascuidarecrescer
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -89,14 +100,22 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                 >
                   Solicitar Orçamento
                 </Button>
-                <a 
-                  href={`https://wa.me/${COMPANY_INFO.whatsapp}`} 
-                  target="_blank" 
+                <a
+                  href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
+                  target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick("footer_cta")}
                   className="bg-green-500 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-600 transition-colors"
                 >
                   <i className="fab fa-whatsapp mr-1"></i> WhatsApp
+                </a>
+                <a
+                  href={COMPANY_INFO.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+                >
+                  <i className="fab fa-instagram mr-1"></i> Instagram
                 </a>
               </div>
             </div>

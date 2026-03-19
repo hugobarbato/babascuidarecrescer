@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SERVICES } from "@/lib/constants";
+import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 
 interface HeaderProps {
   onOpenQuoteModal: () => void;
@@ -77,6 +77,15 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
               </a>
             ))}
 
+            <a
+              href={COMPANY_INFO.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-pink-500 transition-colors"
+              aria-label="Instagram"
+            >
+              <i className="fab fa-instagram text-xl"></i>
+            </a>
             <Button
               onClick={onOpenQuoteModal}
               className="bg-coral text-white px-6 py-2 rounded-full hover:bg-orange-500 transition-colors shadow-lg font-medium"
@@ -86,7 +95,16 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
           </div>
 
           {/* Mobile Menu */}
-          <div className="lg:hidden flex items-center space-x-4">
+          <div className="lg:hidden flex items-center space-x-3">
+            <a
+              href={COMPANY_INFO.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-pink-500 transition-colors"
+              aria-label="Instagram"
+            >
+              <i className="fab fa-instagram text-xl"></i>
+            </a>
             <Button
               onClick={onOpenQuoteModal}
               className="bg-coral text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-500"
