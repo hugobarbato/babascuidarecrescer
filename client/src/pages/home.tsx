@@ -21,11 +21,18 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
   const contactForm = useForm<ContactForm>({
     resolver: zodResolver(contactFormSchema),
-    defaultValues: { lgpdConsent: false },
+    defaultValues: { name: "", phone: "", email: "", serviceType: "", message: "" },
   });
 
-  const handleContactSubmit = (data: ContactForm) => {
-    sendContact(data);
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+
+  const handleContactSubmit = async (data: ContactForm) => {
+    let recaptchaToken = "";
+    if (siteKey) {
+      await new Promise<void>((resolve) => grecaptcha.ready(resolve));
+      recaptchaToken = await grecaptcha.execute(siteKey, { action: "contact_submit" });
+    }
+    sendContact({ ...data, recaptchaToken });
     contactForm.reset();
   };
 
@@ -448,7 +455,19 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>Telefone/WhatsApp *</FormLabel>
-                              <FormControl><Input placeholder="(11) 99999-9999" {...field} /></FormControl>
+                              <FormControl>
+                                <Input
+                                  placeholder="(11) 99999-9999"
+                                  {...field}
+                                  onChange={(e) => {
+                                    const d = e.target.value.replace(/\D/g, "").slice(0, 11);
+                                    const masked = d.length <= 10
+                                      ? d.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3")
+                                      : d.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+                                    field.onChange(masked.replace(/-$/, ""));
+                                  }}
+                                />
+                              </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -502,24 +521,10 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                         )}
                       />
 
-                      <FormField
-                        control={contactForm.control}
-                        name="lgpdConsent"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel className="text-xs text-gray-500">
-                                * Seus dados serão utilizados apenas para contato e orçamento.
-                                Não armazenamos informações pessoais em nossa base de dados, conforme LGPD.
-                              </FormLabel>
-                              <FormMessage />
-                            </div>
-                          </FormItem>
-                        )}
-                      />
+                      <p className="text-xs text-gray-400">
+                        Seus dados serão utilizados apenas para contato e orçamento.
+                        Não armazenamos informações pessoais em nossa base de dados, conforme LGPD.
+                      </p>
 
                       <div className="flex flex-col sm:flex-row gap-4">
                         <Button

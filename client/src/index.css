@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,7 +34,8 @@
   --warm-gray: hsl(0, 0%, 18%);
   
   /* Font Family */
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Nunito', system-ui, sans-serif;
+  --font-body: 'Roboto', system-ui, sans-serif;
 }
 
 .dark {

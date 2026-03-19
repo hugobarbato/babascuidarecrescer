@@ -102,9 +102,10 @@ export const PRICING_TABLE: PricingRow[] = [
 
 export const COMPANY_INFO = {
   name: "Cuidar & Crescer",
-  phone: "+55 13 99630-9340",
-  whatsapp: "5513996309340",
+  phone: "+55 13 99809-0998",
+  whatsapp: "5513998090998",
   email: "espacocuidarecrescer@gmail.com",
+  instagram: "https://www.instagram.com/babascuidarecrescer/",
   founded: "2022",
   mission: "Proporcionar uma rede de apoio com segurança, cuidado e desenvolvimento infantil de qualidade, conectando famílias a babás confiáveis e capacitadas.",
   vision: "Ser referência em serviços de cuidados infantis, reconhecida pela excelência e confiança no atendimento às famílias.",
