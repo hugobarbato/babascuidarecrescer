@@ -1,21 +1,12 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { ContactForm, QuoteRequest, QuoteResult } from "@shared/schema";
 
-// ---------------------------------------------------------------------------
-// Transporter
-// ---------------------------------------------------------------------------
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
-
-const COMPANY_EMAIL = process.env.COMPANY_EMAIL || process.env.GMAIL_USER || "espacocuidarecrescer@gmail.com";
+const COMPANY_EMAIL = process.env.COMPANY_EMAIL || "espacocuidarecrescer@gmail.com";
+const RESEND_FROM = process.env.RESEND_FROM_EMAIL ?? "Cuidar & Crescer <noreply@babascuidarecrescer.com.br>";
 const COMPANY_NAME = "Cuidar & Crescer";
-const WHATSAPP_NUMBER = "5513996309340";
+const WHATSAPP_NUMBER = "5513998090998";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -39,7 +30,7 @@ function emailWrapper(title: string, body: string): string {
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f5f0;padding:32px 0;">
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
-        
+
         <!-- Header -->
         <tr>
           <td style="background:linear-gradient(135deg,#f97316 0%,#fb923c 100%);padding:32px 40px;text-align:center;">
@@ -47,7 +38,7 @@ function emailWrapper(title: string, body: string): string {
             <p style="margin:8px 0 0;color:rgba(255,255,255,0.88);font-size:14px;">Cuidado com amor e profissionalismo 💛</p>
           </td>
         </tr>
-        
+
         <!-- Body -->
         <tr>
           <td style="padding:36px 40px;">
@@ -60,7 +51,7 @@ function emailWrapper(title: string, body: string): string {
           <td style="background:#fef3e2;padding:24px 40px;text-align:center;border-top:1px solid #fed7aa;">
             <p style="margin:0;color:#9a7648;font-size:12px;line-height:1.6;">
               ${COMPANY_NAME} · <a href="https://wa.me/${WHATSAPP_NUMBER}" style="color:#f97316;text-decoration:none;">WhatsApp</a><br/>
-              Este e-mail foi gerado automaticamente — não responda diretamente.
+              Você pode responder este e-mail diretamente — nossa equipe retornará em breve.
             </p>
           </td>
         </tr>
@@ -90,15 +81,18 @@ function section(title: string, rows: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// sendContactEmail — notificação interna à empresa
+// sendContactEmail
+// TO: cliente | CC + Reply-To: empresa
 // ---------------------------------------------------------------------------
 
 export async function sendContactEmail(data: ContactForm): Promise<void> {
   const body = `
-    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Nova mensagem de contato! 📬</p>
-    <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">Recebida em ${new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}</p>
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Olá, ${data.name}! 👋</p>
+    <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">
+      Recebemos sua mensagem e em breve nossa equipe entrará em contato. Aqui está o resumo do que você enviou:
+    </p>
 
-    ${section("Dados do cliente", [
+    ${section("Sua mensagem", [
       row("Nome", data.name),
       row("Telefone / WhatsApp", data.phone),
       row("E-mail", data.email),
@@ -112,23 +106,27 @@ export async function sendContactEmail(data: ContactForm): Promise<void> {
     `) : ""}
 
     <div style="margin-top:32px;text-align:center;">
-      <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Olá+${encodeURIComponent(data.name)}!+Vi+sua+mensagem+no+site+da+${encodeURIComponent(COMPANY_NAME)}."
+      <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Olá!+Vi+minha+mensagem+no+site+da+${encodeURIComponent(COMPANY_NAME)}+e+gostaria+de+conversar."
          style="display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;">
-        💬 Responder via WhatsApp
+        💬 Falar pelo WhatsApp
       </a>
     </div>
   `;
 
-  await transporter.sendMail({
-    from: `"${COMPANY_NAME}" <${COMPANY_EMAIL}>`,
-    to: COMPANY_EMAIL,
-    subject: `📬 Novo Contato | ${data.name} — ${COMPANY_NAME}`,
-    html: emailWrapper(`Novo Contato — ${data.name}`, body),
+  await resend.emails.send({
+    from: RESEND_FROM,
+    to: data.email,
+    cc: COMPANY_EMAIL,
+    replyTo: COMPANY_EMAIL,
+    subject: `Recebemos sua mensagem — ${COMPANY_NAME}`,
+    html: emailWrapper(`Mensagem recebida — ${data.name}`, body),
   });
 }
 
 // ---------------------------------------------------------------------------
-// sendQuoteEmail — notificação interna + confirmação ao cliente
+// sendQuoteEmail
+// Se cliente tem e-mail: TO cliente | CC + Reply-To empresa
+// Se não tem e-mail: TO empresa (notificação interna)
 // ---------------------------------------------------------------------------
 
 export async function sendQuoteEmail(
@@ -152,7 +150,6 @@ export async function sendQuoteEmail(
     qui: "Quinta", sex: "Sexta", sab: "Sábado", dom: "Domingo",
   };
 
-  // --- Build service-specific details ---
   let serviceDetailsRows = "";
   if (quoteData.startHour !== undefined && quoteData.durationHours !== undefined) {
     serviceDetailsRows += row("Horário de início", `${String(quoteData.startHour).padStart(2, "0")}:00`);
@@ -168,7 +165,6 @@ export async function sendQuoteEmail(
     serviceDetailsRows += row("Horas/dia", `${quoteData.dailyHours}h`);
   }
 
-  // --- Breakdown table ---
   const breakdownRows = quoteResult.breakdown
     .map((item) => `
       <tr>
@@ -200,16 +196,74 @@ export async function sendQuoteEmail(
     </table>
   `;
 
-  // ─── Email para a empresa ─────────────────────────────────────────────────
+  // ─── Com e-mail do cliente: envia para o cliente com CC à empresa ──────────
 
-  const companyBody = `
+  if (quoteData.clientEmail) {
+    const whatsappText = encodeURIComponent(
+      `Olá! Acabei de solicitar um orçamento no site da ${COMPANY_NAME}.\n\n` +
+      `Serviço: ${quoteData.serviceType}\n` +
+      `Data: ${formatDate(quoteData.date)}\n` +
+      `Total estimado: ${totalDisplay}\n\n` +
+      `Gostaria de confirmar o agendamento!`
+    );
+
+    const clientBody = `
+      <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Olá, ${quoteData.clientName}! 👋</p>
+      <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">
+        Recebemos sua solicitação de orçamento. Nossa equipe entrará em contato em breve para confirmar os detalhes. Aqui está o resumo:
+      </p>
+
+      ${section("Detalhes do serviço", [
+        row("Serviço", quoteData.serviceType),
+        row("Data", formatDate(quoteData.date)),
+        row("Crianças", quoteData.childrenCount),
+        serviceDetailsRows,
+        row("Endereço", fullAddress),
+      ].join(""))}
+
+      ${quoteData.observations ? section("Observações", `
+        <tr><td colspan="2" style="padding:8px 0;">
+          <div style="background:#f9f5f0;border-left:4px solid #f97316;padding:16px;border-radius:0 8px 8px 0;color:#374151;font-size:14px;line-height:1.6;">${quoteData.observations.replace(/\n/g, "<br/>")}</div>
+        </td></tr>
+      `) : ""}
+
+      ${section("Valores estimados", breakdownTable)}
+
+      <div style="margin:32px 0 0;background:#fef3e2;border-radius:10px;padding:24px;text-align:center;">
+        <p style="margin:0 0 16px;color:#92400e;font-size:15px;font-weight:500;">
+          Quer confirmar o agendamento ou tirar dúvidas?
+        </p>
+        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}"
+           style="display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;">
+          💬 Falar pelo WhatsApp
+        </a>
+        <p style="margin:16px 0 0;color:#b45309;font-size:12px;">
+          Este é um orçamento estimativo. Os valores podem sofrer alterações a qualquer momento e a confirmação final é feita diretamente com nossa equipe.
+        </p>
+      </div>
+    `;
+
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: quoteData.clientEmail,
+      cc: COMPANY_EMAIL,
+      replyTo: COMPANY_EMAIL,
+      subject: `Seu orçamento — ${quoteData.serviceType} | ${COMPANY_NAME}`,
+      html: emailWrapper("Seu Orçamento", clientBody),
+    });
+
+    return;
+  }
+
+  // ─── Sem e-mail do cliente: notificação interna para a empresa ─────────────
+
+  const internalBody = `
     <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Novo orçamento solicitado! 📋</p>
-    <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">Recebido em ${new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })}</p>
+    <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">Recebido em ${new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })} — cliente não informou e-mail.</p>
 
     ${section("Dados do cliente", [
       row("Nome", quoteData.clientName),
       row("Telefone / WhatsApp", quoteData.clientPhone),
-      row("E-mail", quoteData.clientEmail),
     ].join(""))}
 
     ${section("Detalhes do serviço", [
@@ -230,7 +284,7 @@ export async function sendQuoteEmail(
 
     <div style="margin-top:32px;text-align:center;">
       ${quoteData.clientPhone
-        ? `<a href="https://wa.me/${quoteData.clientPhone.replace(/\D/g, "")}?text=Olá+${encodeURIComponent(quoteData.clientName)}!+Recebi+seu+orçamento+da+${encodeURIComponent(COMPANY_NAME)}+e+gostaria+de+confirmar."
+        ? `<a href="https://wa.me/${quoteData.clientPhone.replace(/\D/g, "")}?text=Olá+${encodeURIComponent(quoteData.clientName)}!+Recebi+seu+orçamento+e+gostaria+de+confirmar+os+detalhes."
              style="display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;">
             💬 Entrar em contato via WhatsApp
            </a>`
@@ -238,58 +292,10 @@ export async function sendQuoteEmail(
     </div>
   `;
 
-  await transporter.sendMail({
-    from: `"${COMPANY_NAME}" <${COMPANY_EMAIL}>`,
+  await resend.emails.send({
+    from: RESEND_FROM,
     to: COMPANY_EMAIL,
-    subject: `📋 Novo Orçamento | ${quoteData.clientName} — ${quoteData.serviceType}`,
-    html: emailWrapper(`Novo Orçamento — ${quoteData.clientName}`, companyBody),
+    subject: `Novo Orçamento | ${quoteData.clientName} — ${quoteData.serviceType}`,
+    html: emailWrapper(`Novo Orçamento — ${quoteData.clientName}`, internalBody),
   });
-
-  // ─── Email de confirmação ao cliente (opcional) ────────────────────────────
-
-  if (quoteData.clientEmail) {
-    const whatsappText = encodeURIComponent(
-      `Olá! Acabei de fazer um orçamento no site da ${COMPANY_NAME}.\n\n` +
-      `Serviço: ${quoteData.serviceType}\n` +
-      `Data: ${formatDate(quoteData.date)}\n` +
-      `Total estimado: ${totalDisplay}\n\n` +
-      `Gostaria de confirmar o agendamento!`
-    );
-
-    const clientBody = `
-      <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Olá, ${quoteData.clientName}! 👋</p>
-      <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">
-        Recebemos sua solicitação de orçamento. Aqui está o resumo:
-      </p>
-
-      ${section("Resumo do orçamento", [
-        row("Serviço", quoteData.serviceType),
-        row("Data", formatDate(quoteData.date)),
-        row("Crianças", quoteData.childrenCount),
-        serviceDetailsRows,
-      ].join(""))}
-
-      ${section("Valores estimados", breakdownTable)}
-
-      <div style="margin:32px 0 0;background:#fef3e2;border-radius:10px;padding:24px;text-align:center;">
-        <p style="margin:0 0 16px;color:#92400e;font-size:15px;font-weight:500;">
-          Quer confirmar o agendamento ou tirar dúvidas?
-        </p>
-        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}"
-           style="display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;">
-          💬 Falar com a ${COMPANY_NAME}
-        </a>
-        <p style="margin:16px 0 0;color:#b45309;font-size:12px;">
-          Os valores são estimativas. A confirmação final é feita via WhatsApp.
-        </p>
-      </div>
-    `;
-
-    await transporter.sendMail({
-      from: `"${COMPANY_NAME}" <${COMPANY_EMAIL}>`,
-      to: quoteData.clientEmail,
-      subject: `✅ Seu orçamento — ${quoteData.serviceType} | ${COMPANY_NAME}`,
-      html: emailWrapper("Seu Orçamento", clientBody),
-    });
-  }
 }
