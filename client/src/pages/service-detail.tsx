@@ -2,6 +2,7 @@ import { useParams, useLocation } from "wouter";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { SERVICES } from "@/lib/constants";
+import { ServiceIcon, Calculator, Check, CheckCircle2, Star, ArrowLeft, WhatsAppIcon } from "@/lib/icons";
 
 interface ServiceDetailProps {
   onOpenQuoteModal: (service?: string) => void;
@@ -467,7 +468,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
               onClick={() => onOpenQuoteModal(service.name)}
               className={`${colors.btn} text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition-all`}
             >
-              <i className="fas fa-calculator mr-2"></i> Solicitar Orçamento
+              <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
             </Button>
           </div>
         </div>
@@ -493,7 +494,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
               {content.idealFor.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className={`${colors.text} mt-1 flex-shrink-0`}>
-                    <i className="fas fa-check text-lg"></i>
+                    <Check className="w-4 h-4" />
                   </span>
                   <span className="text-gray-700">{item}</span>
                 </li>
@@ -518,7 +519,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
                 <div
                   className={`${colors.bg} text-white w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4`}
                 >
-                  <i className={`${b.icon} text-xl`}></i>
+                  <ServiceIcon name={b.icon} className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-gray-800 mb-2">{b.title}</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{b.text}</p>
@@ -540,7 +541,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
                 {content.included.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className={`${colors.text} mt-1 flex-shrink-0`}>
-                      <i className="fas fa-check-circle text-lg"></i>
+                      <CheckCircle2 className="w-4 h-4" />
                     </span>
                     <span className="text-gray-700">{item}</span>
                   </li>
@@ -680,7 +681,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
                 {content.exclusiveBenefits.map((benefit, i) => (
                   <div key={i} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
                     <span className={`${colors.text} mt-0.5 flex-shrink-0`}>
-                      <i className="fas fa-star text-sm"></i>
+                      <Star className="w-3.5 h-3.5" />
                     </span>
                     <span className="text-sm text-gray-700">{benefit}</span>
                   </div>
@@ -710,7 +711,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
               onClick={() => onOpenQuoteModal(service.name)}
               className={`${colors.btn} text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition-all`}
             >
-              <i className="fas fa-calculator mr-2"></i> Solicitar Orçamento
+              <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
             </Button>
             <Button
               variant="outline"
@@ -718,7 +719,7 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
               asChild
             >
               <a href="/#servicos">
-                <i className="fas fa-arrow-left mr-2"></i> Ver todos os serviços
+                <ArrowLeft className="w-4 h-4 mr-2 inline" /> Ver todos os serviços
               </a>
             </Button>
           </div>

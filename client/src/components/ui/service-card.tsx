@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "./button";
 import { Service } from "@/lib/types";
+import { ServiceIcon, CalendarCheck, Clock, Info } from "@/lib/icons";
 
 interface ServiceCardProps {
   service: Service;
@@ -51,10 +52,12 @@ export function ServiceCard({ service, onRequestQuote, detailHref }: ServiceCard
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         <div className={`absolute bottom-3 left-4 ${colors.text} bg-white/90 rounded-full p-2 shadow`}>
-          <i className={`${service.icon} text-xl`}></i>
+          <ServiceIcon name={service.icon} className="w-5 h-5" />
         </div>
         <div className={`absolute top-3 right-4 text-xs px-3 py-1 rounded-full font-semibold ${categoryClasses}`}>
-          <i className={`fas ${service.category === "mensalista" ? "fa-calendar-check" : "fa-clock"} mr-1`}></i>
+          {service.category === "mensalista"
+            ? <CalendarCheck className="w-3 h-3 mr-1 inline" />
+            : <Clock className="w-3 h-3 mr-1 inline" />}
           {categoryLabel}
         </div>
       </div>
@@ -80,7 +83,7 @@ export function ServiceCard({ service, onRequestQuote, detailHref }: ServiceCard
               variant="outline"
               className={`w-full py-3 px-6 rounded-full font-semibold border-2 ${colors.text} ${colors.border} hover:text-white ${colors.hover} transition-colors`}
             >
-              <i className="fas fa-info-circle mr-2"></i> Saiba mais
+              <Info className="w-4 h-4 mr-2 inline" /> Saiba mais
             </Button>
           </Link>
         )}

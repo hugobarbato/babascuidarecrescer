@@ -11,6 +11,7 @@ import { SERVICES } from "@/lib/constants";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "@/lib/icons";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -179,7 +180,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
                         }}
                       />
                       {cepLoading && (
-                        <i className="fas fa-spinner fa-spin absolute right-3 top-3 text-gray-400 text-sm" />
+                        <Loader2 className="animate-spin absolute right-3 top-3 w-4 h-4 text-gray-400" />
                       )}
                     </div>
                   </FormControl>
@@ -270,7 +271,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    <i className="fas fa-spinner fa-spin mr-2" />
+                    <Loader2 className="animate-spin w-4 h-4 mr-2" />
                   ) : "📧 "}
                   Enviar por e-mail
                 </Button>

@@ -12,6 +12,7 @@ import { SERVICES, COMPANY_INFO, PRICING_TABLE } from "@/lib/constants";
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { WhatsAppIcon, ServiceIcon, Calculator, CheckCircle2, Target, Eye, Heart, Mail, Clock, Loader2, Send } from "@/lib/icons";
 
 interface HomeProps {
   onOpenQuoteModal: (service?: string) => void;
@@ -71,7 +72,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 onClick={() => onOpenQuoteModal()}
                 className="bg-vermelho text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-vermelho/80 transition-all shadow-lg transform hover:scale-105"
               >
-                <i className="fas fa-calculator mr-2"></i> Solicitar Orçamento
+                <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
               </Button>
               <a
                 href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
@@ -80,7 +81,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 onClick={() => trackWhatsAppClick("home_hero")}
               >
                 <Button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
-                  <i className="fab fa-whatsapp mr-2"></i> Falar no WhatsApp
+                  <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
                 </Button>
               </a>
             </div>
@@ -162,7 +163,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start space-x-4">
                       <div className={`${item.bg} text-white p-3 rounded-full flex-shrink-0`}>
-                        <i className={`${item.icon} text-lg`}></i>
+                        <ServiceIcon name={item.icon} className="w-5 h-5" />
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
@@ -207,7 +208,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 ].map((topic, index) => (
                   <div key={index} className="flex items-start space-x-3">
                     <span className="text-vermelho mt-0.5 flex-shrink-0">
-                      <i className="fas fa-check-circle"></i>
+                      <CheckCircle2 className="w-4 h-4" />
                     </span>
                     <span className="text-gray-700 text-sm">{topic}</span>
                   </div>
@@ -251,7 +252,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
                 <div className="text-vermelho text-4xl mb-4">
-                  <i className="fas fa-bullseye"></i>
+                  <Target className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Missão</h3>
                 <p className="text-gray-600 leading-relaxed">{COMPANY_INFO.mission}</p>
@@ -259,7 +260,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
                 <div className="text-verde text-4xl mb-4">
-                  <i className="fas fa-eye"></i>
+                  <Eye className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Visão</h3>
                 <p className="text-gray-600 leading-relaxed">{COMPANY_INFO.vision}</p>
@@ -267,7 +268,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
                 <div className="text-azul text-4xl mb-4">
-                  <i className="fas fa-heart"></i>
+                  <Heart className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Valores</h3>
                 <p className="text-gray-600 leading-relaxed">{COMPANY_INFO.values}</p>
@@ -297,7 +298,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
                     <div className="bg-green-500 text-white p-4 rounded-full">
-                      <i className="fab fa-whatsapp text-xl"></i>
+                      <WhatsAppIcon className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-lg">WhatsApp</h4>
@@ -310,7 +311,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
                   <div className="flex items-center space-x-4">
                     <div className="bg-vermelho text-white p-4 rounded-full">
-                      <i className="fas fa-envelope text-xl"></i>
+                      <Mail className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-lg">E-mail</h4>
@@ -323,7 +324,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
                   <div className="flex items-center space-x-4">
                     <div className="bg-azul text-white p-4 rounded-full">
-                      <i className="fas fa-clock text-xl"></i>
+                      <Clock className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-lg">Horário de Atendimento</h4>
@@ -443,15 +444,15 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                           disabled={isContactLoading}
                         >
                           {isContactLoading ? (
-                            <i className="fas fa-spinner fa-spin mr-2"></i>
+                            <Loader2 className="animate-spin w-4 h-4 mr-2" />
                           ) : (
-                            <i className="fas fa-paper-plane mr-2"></i>
+                            <Send className="w-4 h-4 mr-2" />
                           )}
                           Enviar Mensagem
                         </Button>
                         <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick("home_form_cta")} className="flex-1">
                           <Button type="button" className="w-full bg-green-500 hover:bg-green-600">
-                            <i className="fab fa-whatsapp mr-2"></i> WhatsApp
+                            <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> WhatsApp
                           </Button>
                         </a>
                       </div>
@@ -478,7 +479,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               onClick={() => onOpenQuoteModal()}
               className="bg-white text-vermelho px-8 py-4 rounded-full text-lg font-semibold hover:bg-bege transition-all shadow-lg transform hover:scale-105"
             >
-              <i className="fas fa-calculator mr-2"></i> Solicitar Orçamento
+              <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
             </Button>
             <a
               href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
@@ -487,7 +488,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               onClick={() => trackWhatsAppClick("home_bottom_cta")}
             >
               <Button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
-                <i className="fab fa-whatsapp mr-2"></i> Falar no WhatsApp
+                <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
               </Button>
             </a>
           </div>

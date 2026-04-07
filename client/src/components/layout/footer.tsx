@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { COMPANY_INFO, SERVICES } from "@/lib/constants";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { WhatsAppIcon, CalendarCheck, Clock, Briefcase, Mail, Instagram } from "@/lib/icons";
 
 interface FooterProps {
   onOpenQuoteModal: () => void;
@@ -27,7 +28,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
               <div className="space-y-3 text-gray-300">
                 <div>
                   <p className="text-xs uppercase tracking-wider text-vermelho/80 font-semibold mb-2">
-                    <i className="fas fa-calendar-check mr-1.5"></i>Planos Mensais
+                    <CalendarCheck className="w-3.5 h-3.5 mr-1.5 inline" />Planos Mensais
                   </p>
                   <ul className="space-y-2 pl-0">
                     {SERVICES.filter((s) => s.category === "mensalista").map((service) => (
@@ -41,7 +42,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-azul/80 font-semibold mb-2">
-                    <i className="fas fa-clock mr-1.5"></i>Serviços Avulsos
+                    <Clock className="w-3.5 h-3.5 mr-1.5 inline" />Serviços Avulsos
                   </p>
                   <ul className="space-y-2 pl-0">
                     {SERVICES.filter((s) => s.category === "avulso").map((service) => (
@@ -56,7 +57,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
               </div>
               <div className="mt-4 pt-4 border-t border-gray-600">
                 <a href="/trabalhe-conosco" className="hover:text-verde transition-colors font-medium">
-                  <i className="fas fa-briefcase mr-2"></i>Trabalhe Conosco
+                  <Briefcase className="w-4 h-4 mr-2 inline" />Trabalhe Conosco
                 </a>
               </div>
             </div>
@@ -65,7 +66,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
               <h3 className="font-semibold text-lg mb-4">Contato</h3>
               <div className="space-y-3 text-gray-300">
                 <div className="flex items-center space-x-2">
-                  <i className="fab fa-whatsapp text-green-400"></i>
+                  <WhatsAppIcon className="w-4 h-4 text-green-400" />
                   <a 
                     href={`https://wa.me/${COMPANY_INFO.whatsapp}`} 
                     target="_blank" 
@@ -77,7 +78,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   </a>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-envelope text-vermelho"></i>
+                  <Mail className="w-4 h-4 text-vermelho" />
                   <a 
                     href={`mailto:${COMPANY_INFO.email}`} 
                     className="hover:text-vermelho transition-colors"
@@ -86,11 +87,11 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   </a>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-clock text-azul"></i>
+                  <Clock className="w-4 h-4 text-azul" />
                   <span>Seg-Sex: 8h-18h | Sáb: 8h-14h</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fab fa-instagram text-rosa"></i>
+                  <Instagram className="w-4 h-4 text-rosa" />
                   <a
                     href={COMPANY_INFO.instagram}
                     target="_blank"
@@ -125,7 +126,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   onClick={() => trackWhatsAppClick("footer_cta")}
                   className="bg-green-500 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-600 transition-colors"
                 >
-                  <i className="fab fa-whatsapp mr-1"></i> WhatsApp
+                  <WhatsAppIcon className="w-4 h-4 mr-1 inline" /> WhatsApp
                 </a>
                 <a
                   href={COMPANY_INFO.instagram}
@@ -133,7 +134,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   rel="noopener noreferrer"
                   className="bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
                 >
-                  <i className="fab fa-instagram mr-1"></i> Instagram
+                  <Instagram className="w-4 h-4 mr-1 inline" /> Instagram
                 </a>
               </div>
             </div>

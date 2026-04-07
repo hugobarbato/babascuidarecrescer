@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/constants";
+import { WhatsAppIcon, Home } from "@/lib/icons";
 
 export default function NotFound() {
   return (
@@ -23,7 +24,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/">
             <Button className="bg-vermelho text-white px-6 py-3 rounded-full font-semibold hover:bg-vermelho/80 transition-all">
-              <i className="fas fa-home mr-2"></i> Ir para o Início
+              <Home className="w-4 h-4 mr-2 inline" /> Ir para o Início
             </Button>
           </Link>
           <a
@@ -32,7 +33,7 @@ export default function NotFound() {
             rel="noopener noreferrer"
           >
             <Button className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-all">
-              <i className="fab fa-whatsapp mr-2"></i> Falar no WhatsApp
+              <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
             </Button>
           </a>
         </div>

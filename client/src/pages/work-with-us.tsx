@@ -9,6 +9,7 @@ import { JobApplication, jobApplicationSchema } from "@shared/schema";
 import { COMPANY_INFO } from "@/lib/constants";
 import { useJobApplication } from "@/hooks/use-job-application";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { WhatsAppIcon, ServiceIcon, CheckCircle2, Award, Loader2, Send, Mail } from "@/lib/icons";
 
 interface WorkWithUsProps {
   onOpenQuoteModal: (service?: string) => void;
@@ -116,7 +117,7 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                   key={index}
                   className="flex items-start gap-3 p-4 bg-white rounded-xl shadow-sm"
                 >
-                  <i className="fas fa-check-circle text-verde mt-1 flex-shrink-0"></i>
+                  <CheckCircle2 className="w-4 h-4 text-verde mt-1 flex-shrink-0" />
                   <span className="text-gray-700">{item}</span>
                 </div>
               ))}
@@ -138,7 +139,7 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                   key={index}
                   className="flex items-start gap-3 p-5 bg-white rounded-xl shadow-sm"
                 >
-                  <i className="fas fa-award text-vermelho mt-1 flex-shrink-0"></i>
+                  <Award className="w-4 h-4 text-vermelho mt-1 flex-shrink-0" />
                   <span className="text-gray-700">{item}</span>
                 </div>
               ))}
@@ -161,7 +162,7 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                   className="p-6 bg-white rounded-2xl shadow-lg text-center"
                 >
                   <div className="bg-verde/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className={`${item.icon} text-verde text-xl`}></i>
+                    <ServiceIcon name={item.icon} className="w-5 h-5 text-verde" />
                   </div>
                   <p className="text-gray-700 font-medium">{item.text}</p>
                 </div>
@@ -310,12 +311,12 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                   >
                     {isLoading ? (
                       <>
-                        <i className="fas fa-spinner fa-spin mr-2"></i>
+                        <Loader2 className="animate-spin w-4 h-4 mr-2" />
                         Enviando...
                       </>
                     ) : (
                       <>
-                        <i className="fas fa-paper-plane mr-2"></i>
+                        <Send className="w-4 h-4 mr-2" />
                         Enviar Cadastro
                       </>
                     )}
@@ -341,14 +342,14 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                   onClick={() => trackWhatsAppClick("work_with_us_cta")}
                   className="inline-flex items-center justify-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-600 transition-colors shadow-lg"
                 >
-                  <i className="fab fa-whatsapp text-xl"></i>
+                  <WhatsAppIcon className="w-5 h-5" />
                   Quero fazer parte da equipe
                 </a>
                 <a
                   href={`mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent("Trabalhe Conosco — Cadastro de Babá")}`}
                   className="inline-flex items-center justify-center gap-2 bg-vermelho text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-vermelho/80 transition-colors shadow-lg"
                 >
-                  <i className="fas fa-envelope text-xl"></i>
+                  <Mail className="w-5 h-5" />
                   Enviar por E-mail
                 </a>
               </div>

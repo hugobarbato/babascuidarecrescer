@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { trackPageView, trackQuoteModalOpen } from "@/lib/analytics";
@@ -10,9 +10,10 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ContactModal } from "@/components/quote/contact-modal";
 import Home from "@/pages/home";
-import ServiceDetail from "@/pages/service-detail";
-import WorkWithUs from "@/pages/work-with-us";
-import NotFound from "@/pages/not-found";
+
+const ServiceDetail = lazy(() => import("@/pages/service-detail"));
+const WorkWithUs = lazy(() => import("@/pages/work-with-us"));
+const NotFound = lazy(() => import("@/pages/not-found"));
 
 function Router() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -42,12 +43,14 @@ function Router() {
       <Header onOpenQuoteModal={handleOpenQuoteModal} />
 
       <main>
-        <Switch>
-          <Route path="/" component={() => <Home onOpenQuoteModal={handleOpenQuoteModal} />} />
-          <Route path="/services/:id" component={() => <ServiceDetail onOpenQuoteModal={handleOpenQuoteModal} />} />
-          <Route path="/trabalhe-conosco" component={() => <WorkWithUs onOpenQuoteModal={handleOpenQuoteModal} />} />
-          <Route component={NotFound} />
-        </Switch>
+        <Suspense fallback={null}>
+          <Switch>
+            <Route path="/" component={() => <Home onOpenQuoteModal={handleOpenQuoteModal} />} />
+            <Route path="/services/:id" component={() => <ServiceDetail onOpenQuoteModal={handleOpenQuoteModal} />} />
+            <Route path="/trabalhe-conosco" component={() => <WorkWithUs onOpenQuoteModal={handleOpenQuoteModal} />} />
+            <Route component={NotFound} />
+          </Switch>
+        </Suspense>
       </main>
 
       <Footer onOpenQuoteModal={handleOpenQuoteModal} />
