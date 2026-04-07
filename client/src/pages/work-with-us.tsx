@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { JobApplication, jobApplicationSchema } from "@shared/schema";
 import { COMPANY_INFO } from "@/lib/constants";
-import { useJobApplication } from "@/hooks/use-quote";
+import { useJobApplication } from "@/hooks/use-job-application";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
 interface WorkWithUsProps {

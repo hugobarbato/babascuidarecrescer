@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
-import { useContact } from "@/hooks/use-quote";
+import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";
 interface ContactPageProps {
   onOpenQuoteModal: (service?: string) => void;

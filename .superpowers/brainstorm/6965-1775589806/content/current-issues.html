@@ -1,0 +1,69 @@
+<h2>Problemas Identificados no Formulário Atual</h2>
+<p class="subtitle">Baseado na leitura do código — confirme ou complemente</p>
+
+<div class="section">
+  <h3>🐛 Bugs de Cálculo</h3>
+  <div style="display:flex;flex-direction:column;gap:12px;">
+
+    <div style="background:#fff3f3;border-left:4px solid #e53e3e;padding:14px 16px;border-radius:6px;">
+      <strong>Nanny Cuidar / Desenvolver — Pacote ignorado</strong>
+      <p style="margin:6px 0 0;font-size:13px;color:#555;">
+        O campo "Pacote" (Essencial, Tranquilidade, Premium) aparece no formulário, mas o cálculo <em>ignora completamente</em> o pacote escolhido
+        e sempre usa a tarifa horária (R$18/h ou R$22/h). O valor exibido está errado quando o usuário escolhe um plano mensal.
+      </p>
+    </div>
+
+    <div style="background:#fff3f3;border-left:4px solid #e53e3e;padding:14px 16px;border-radius:6px;">
+      <strong>Aulas Particulares — Sem campo de duração</strong>
+      <p style="margin:6px 0 0;font-size:13px;color:#555;">
+        O formulário esconde os campos de horário para Aulas Particulares (correto), mas também esconde a duração.
+        O cálculo usa 1 hora por padrão — o orçamento sempre sai como R$80 ou R$90 independente do que o usuário quer.
+      </p>
+    </div>
+
+    <div style="background:#fff8f0;border-left:4px solid #ed8936;padding:14px 16px;border-radius:6px;">
+      <strong>Vale Night — Duração livre em vez de pacote</strong>
+      <p style="margin:6px 0 0;font-size:13px;color:#555;">
+        O Vale Night tem 4 pacotes fixos (4h / 6h / 8h / 12h com preços definidos), mas o formulário mostra um seletor de duração
+        genérico de 1 a 12 horas + horário de início. Causa confusão e o pacote exato fica implícito.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <h3>📋 Campos Faltando ou Desnecessários</h3>
+  <div style="display:flex;flex-direction:column;gap:12px;">
+
+    <div style="background:#f0fff4;border-left:4px solid #38a169;padding:14px 16px;border-radius:6px;">
+      <strong>Nanny Mensal — Data única não faz sentido</strong>
+      <p style="margin:6px 0 0;font-size:13px;color:#555;">
+        Para serviço mensal (Nanny Cuidar/Desenvolver com pacote), pede apenas "Data do atendimento".
+        O correto seria perguntar quantos dias/semana ou dias/mês para calcular o custo mensal.
+      </p>
+    </div>
+
+    <div style="background:#f0fff4;border-left:4px solid #38a169;padding:14px 16px;border-radius:6px;">
+      <strong>Aulas Particulares — Quantidade de crianças irrelevante</strong>
+      <p style="margin:6px 0 0;font-size:13px;color:#555;">
+        O campo "Quantidade de Crianças" aparece para Aulas Particulares, mas o cálculo não usa esse valor.
+        O formulário coleta dados desnecessários que geram atrito.
+      </p>
+    </div>
+
+    <div style="background:#fffaf0;border-left:4px solid #d69e2e;padding:14px 16px;border-radius:6px;">
+      <strong>Endereço — 6 campos de uma vez</strong>
+      <p style="margin:6px 0 0;font-size:13px;color:#555;">
+        A seção de endereço expõe CEP + Rua + Número + Complemento + Bairro + Cidade + Estado ao mesmo tempo,
+        mesmo sendo todos opcionais. Isso aumenta a percepção de "formulário longo".
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <h3>Você confirma esses problemas? Tem outros que não listei?</h3>
+  <p style="color:#666;font-size:13px;">Responda no terminal — vou perguntar sobre o fluxo ideal na próxima tela.</p>
+</div>

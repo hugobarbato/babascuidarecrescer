@@ -1,0 +1,107 @@
+<h2>Estrutura do Formulário de Orçamento</h2>
+<p class="subtitle">Qual dessas estruturas faz mais sentido para o fluxo?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f9fafb;padding:16px;">
+      <div style="font-size:11px;color:#888;text-align:center;margin-bottom:8px;">PASSO 1 de 3</div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;margin-bottom:8px;font-size:12px;">
+        <div style="font-weight:600;margin-bottom:6px;">Qual serviço você precisa?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div style="background:#fef3e2;border:2px solid #f97316;border-radius:6px;padding:6px;font-size:11px;text-align:center;">🌙 Vale Night</div>
+          <div style="background:#f9fafb;border:1px solid #e2e8f0;border-radius:6px;padding:6px;font-size:11px;text-align:center;">👶 Nanny Cuidar</div>
+          <div style="background:#f9fafb;border:1px solid #e2e8f0;border-radius:6px;padding:6px;font-size:11px;text-align:center;">✈️ Viagens</div>
+          <div style="background:#f9fafb;border:1px solid #e2e8f0;border-radius:6px;padding:6px;font-size:11px;text-align:center;">🎉 Eventos</div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:12px;opacity:0.4;">
+        <div style="font-weight:600;margin-bottom:4px;">Detalhes do serviço</div>
+        <div style="height:40px;background:#f1f5f9;border-radius:4px;"></div>
+      </div>
+      <div style="text-align:center;color:#94a3b8;font-size:11px;margin-top:6px;">→ Próximo passo...</div>
+    </div>
+    <div class="card-body">
+      <h3>A — Wizard Multi-Etapas</h3>
+      <p>Passo 1: escolhe o serviço. Passo 2: detalhes específicos. Passo 3: contato + endereço. Menos campos visíveis por vez, mais guiado.</p>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Prós</h4><ul><li>Menor atrito visual</li><li>Fácil no mobile</li><li>Guia o usuário</li></ul></div>
+        <div class="cons"><h4>Contras</h4><ul><li>Mais cliques</li><li>Difícil ver tudo de uma vez</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f9fafb;padding:16px;">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:12px;">
+        <div style="font-weight:600;margin-bottom:6px;">Tipo de Serviço *</div>
+        <div style="background:#f1f5f9;border-radius:4px;padding:6px;margin-bottom:8px;font-size:11px;">👶 Nanny Cuidar ▾</div>
+
+        <div style="background:#fef3e2;border-radius:6px;padding:8px;margin-bottom:8px;font-size:11px;">
+          <strong>Modalidade:</strong>
+          <div style="display:flex;gap:6px;margin-top:4px;">
+            <div style="background:#f97316;color:#fff;border-radius:4px;padding:3px 8px;">📅 Plano Mensal</div>
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:3px 8px;">⏱ Por Hora</div>
+          </div>
+        </div>
+
+        <div style="font-weight:600;margin-bottom:4px;font-size:11px;">Pacote Mensal *</div>
+        <div style="background:#f1f5f9;border-radius:4px;padding:6px;margin-bottom:6px;font-size:11px;">Plano Essencial (5-6h/dia) ▾</div>
+
+        <div style="font-weight:600;margin-bottom:4px;font-size:11px;">Dias da Semana *</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;">
+          <span style="background:#f97316;color:#fff;border-radius:12px;padding:2px 8px;font-size:10px;">Seg</span>
+          <span style="background:#f1f5f9;border-radius:12px;padding:2px 8px;font-size:10px;">Ter</span>
+          <span style="background:#f97316;color:#fff;border-radius:12px;padding:2px 8px;font-size:10px;">Qua</span>
+          <span style="background:#f1f5f9;border-radius:12px;padding:2px 8px;font-size:10px;">Qui</span>
+          <span style="background:#f97316;color:#fff;border-radius:12px;padding:2px 8px;font-size:10px;">Sex</span>
+        </div>
+
+        <div style="color:#888;font-size:10px;border-top:1px solid #e2e8f0;padding-top:6px;">+ Nome, telefone, observações...</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Modal Único com Seções Adaptativas</h3>
+      <p>Modal como hoje, mas os campos mudam dinamicamente conforme o serviço e a modalidade. Tudo em uma tela só.</p>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Prós</h4><ul><li>Rápido de preencher</li><li>Menos cliques</li><li>Contexto sempre visível</li></ul></div>
+        <div class="cons"><h4>Contras</h4><ul><li>Pode parecer mais longo</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f9fafb;padding:16px;">
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <div style="flex:1;background:#fff;border:2px solid #f97316;border-radius:8px;padding:10px;font-size:11px;text-align:center;">
+          <div style="font-size:20px;margin-bottom:4px;">📅</div>
+          <strong>Quero um plano mensal</strong>
+          <p style="margin:4px 0 0;color:#666;font-size:10px;">Nanny fixa com pacote</p>
+        </div>
+        <div style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:11px;text-align:center;">
+          <div style="font-size:20px;margin-bottom:4px;">⚡</div>
+          <strong>Preciso agora / avulso</strong>
+          <p style="margin:4px 0 0;color:#666;font-size:10px;">Vale Night, Eventos, Viagens, Hora</p>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:11px;opacity:0.6;">
+        <div style="font-weight:600;margin-bottom:6px;">👶 Qual tipo de nanny você precisa?</div>
+        <div style="display:flex;gap:6px;">
+          <div style="background:#fef3e2;border:1px solid #fed7aa;border-radius:6px;padding:5px 8px;">Nanny Cuidar</div>
+          <div style="background:#f9fafb;border:1px solid #e2e8f0;border-radius:6px;padding:5px 8px;">Nanny Desenvolver</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Bifurcação "Mensal × Avulso" como 1ª tela</h3>
+      <p>Primeira escolha: mensal ou avulso. Mensal leva ao fluxo de planos. Avulso leva a Vale Night / Eventos / Viagens / Hora.</p>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Prós</h4><ul><li>Destaca planos mensais</li><li>Jornadas muito diferentes ficam separadas</li></ul></div>
+        <div class="cons"><h4>Contras</h4><ul><li>Mais um clique inicial</li><li>Mais complexo de implementar</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;color:#666;font-size:13px;margin-top:16px;">Clique para selecionar e responda no terminal qual faz mais sentido para o negócio.</p>

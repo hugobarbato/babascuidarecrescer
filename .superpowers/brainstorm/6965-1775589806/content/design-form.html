@@ -1,0 +1,111 @@
+<h2>Design do Novo Modal de Contato</h2>
+<p class="subtitle">Opção A — 3 campos, WhatsApp como CTA principal</p>
+
+<div class="section">
+  <h3>Estado padrão (3 campos)</h3>
+  <div class="mockup">
+    <div class="mockup-header">Modal "Solicitar Atendimento"</div>
+    <div class="mockup-body" style="max-width:420px;margin:0 auto;">
+
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:#1a202c;">
+        📋 Solicitar Atendimento
+      </div>
+
+      <!-- Serviço -->
+      <div style="margin-bottom:12px;">
+        <div style="font-size:11px;font-weight:600;margin-bottom:4px;">Serviço de interesse <span style="color:#e53e3e;">*</span></div>
+        <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;font-size:12px;color:#555;">Selecione um serviço ▾</div>
+        <div style="font-size:10px;color:#999;margin-top:3px;">Vale Night · Nanny Cuidar · Nanny Desenvolver · Eventos · Viagens · Aulas</div>
+      </div>
+
+      <!-- Nome -->
+      <div style="margin-bottom:12px;">
+        <div style="font-size:11px;font-weight:600;margin-bottom:4px;">Seu nome <span style="color:#e53e3e;">*</span></div>
+        <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;font-size:12px;color:#999;">Como prefere ser chamado(a)?</div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:600;margin-bottom:4px;">WhatsApp <span style="color:#e53e3e;">*</span></div>
+        <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;font-size:12px;color:#999;">(13) 99999-9999</div>
+      </div>
+
+      <!-- CTA Principal -->
+      <div style="background:#25d366;color:#fff;border-radius:8px;padding:11px;text-align:center;font-weight:700;font-size:13px;margin-bottom:10px;box-shadow:0 2px 8px rgba(37,211,102,0.3);">
+        💬 Falar no WhatsApp agora
+      </div>
+
+      <!-- Link e-mail -->
+      <div style="text-align:center;font-size:11px;color:#94a3b8;">
+        Prefere receber por e-mail? <span style="color:#f97316;text-decoration:underline;cursor:pointer;">Clique aqui</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Estado expandido (após clicar em "prefere e-mail")</h3>
+  <div class="mockup">
+    <div class="mockup-header">Modal — modo e-mail ativado</div>
+    <div class="mockup-body" style="max-width:420px;margin:0 auto;">
+
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;color:#1a202c;">📋 Solicitar Atendimento</div>
+
+      <!-- Serviço, Nome, WhatsApp compactos -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <div style="grid-column:1/-1;">
+          <div style="font-size:10px;font-weight:600;margin-bottom:3px;">Serviço <span style="color:#e53e3e;">*</span></div>
+          <div style="background:#f1f5f9;border-radius:5px;padding:6px 8px;font-size:11px;color:#555;">Vale Night ▾</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;margin-bottom:3px;">Nome <span style="color:#e53e3e;">*</span></div>
+          <div style="background:#f1f5f9;border-radius:5px;padding:6px 8px;font-size:11px;color:#999;">Seu nome</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;margin-bottom:3px;">WhatsApp <span style="color:#e53e3e;">*</span></div>
+          <div style="background:#f1f5f9;border-radius:5px;padding:6px 8px;font-size:11px;color:#999;">(13) 9...</div>
+        </div>
+      </div>
+
+      <!-- E-mail expandido com destaque -->
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px;margin-bottom:14px;">
+        <div style="font-size:10px;font-weight:600;margin-bottom:4px;">Seu e-mail <span style="color:#e53e3e;">*</span></div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:5px;padding:6px 8px;font-size:11px;color:#999;">seu@email.com</div>
+        <div style="font-size:10px;color:#92400e;margin-top:5px;">📨 Enviaremos um resumo do seu interesse para este e-mail.</div>
+      </div>
+
+      <!-- CTA muda para e-mail -->
+      <div style="background:#f97316;color:#fff;border-radius:8px;padding:11px;text-align:center;font-weight:700;font-size:13px;margin-bottom:8px;">
+        📧 Enviar por e-mail
+      </div>
+      <div style="text-align:center;font-size:11px;color:#94a3b8;">
+        <span style="color:#25d366;font-weight:600;cursor:pointer;">← Voltar para WhatsApp</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>O que acontece ao clicar "Falar no WhatsApp"</h3>
+  <div style="background:#f0fff4;border:1px solid #9ae6b4;border-radius:8px;padding:14px;font-size:12px;">
+    <div style="font-weight:600;margin-bottom:6px;">Mensagem pré-preenchida no WhatsApp:</div>
+    <div style="background:#dcfce7;border-radius:6px;padding:10px;font-size:12px;font-style:italic;color:#166534;">
+      "Olá! Me chamo <strong>[Nome]</strong> e tenho interesse no serviço <strong>[Serviço]</strong>. Gostaria de mais informações sobre disponibilidade e valores."
+    </div>
+    <div style="margin-top:8px;font-size:11px;color:#555;">→ Abre <code>wa.me/5513998090998?text=...</code> em nova aba. Sem salvar nada no servidor.</div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>O que é removido</h3>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="background:#fff5f5;border-radius:6px;padding:8px 12px;font-size:12px;color:#c53030;">❌ Calculadora de orçamento completa</div>
+    <div style="background:#fff5f5;border-radius:6px;padding:8px 12px;font-size:12px;color:#c53030;">❌ Campos de endereço (CEP, rua, bairro, cidade, estado)</div>
+    <div style="background:#fff5f5;border-radius:6px;padding:8px 12px;font-size:12px;color:#c53030;">❌ Data do atendimento, horário, duração, dias da semana</div>
+    <div style="background:#fff5f5;border-radius:6px;padding:8px 12px;font-size:12px;color:#c53030;">❌ Quantidade de crianças, pacote mensal no formulário</div>
+    <div style="background:#fff5f5;border-radius:6px;padding:8px 12px;font-size:12px;color:#c53030;">❌ Observações / necessidades especiais</div>
+    <div style="background:#f0fff4;border-radius:6px;padding:8px 12px;font-size:12px;color:#276749;">✅ Mantém: serviço, nome, WhatsApp, e-mail opcional</div>
+  </div>
+</div>
+
+<p style="text-align:center;color:#666;font-size:12px;margin-top:12px;">Este design está correto? Responda no terminal.</p>
