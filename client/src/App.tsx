@@ -8,22 +8,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { QuoteModal } from "@/components/quote/quote-modal";
-import { QuoteResultModal } from "@/components/quote/quote-result";
-import { useQuote } from "@/hooks/use-quote";
+import { ContactModal } from "@/components/quote/contact-modal";
 import Home from "@/pages/home";
 import ServiceDetail from "@/pages/service-detail";
 import WorkWithUs from "@/pages/work-with-us";
 import NotFound from "@/pages/not-found";
 
 function Router() {
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
-  const [isQuoteResultOpen, setIsQuoteResultOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [initialService, setInitialService] = useState<string>();
-  const [quoteData, setQuoteData] = useState<any>(null);
   const [location] = useLocation();
-  
-  const { calculateQuote, isLoading, result } = useQuote();
 
   useScrollDepth();
 
@@ -34,34 +28,19 @@ function Router() {
 
   const handleOpenQuoteModal = (service?: string) => {
     setInitialService(service);
-    setIsQuoteModalOpen(true);
+    setIsContactModalOpen(true);
     trackQuoteModalOpen(service);
   };
 
-  const handleCloseQuoteModal = () => {
-    setIsQuoteModalOpen(false);
+  const handleCloseModal = () => {
+    setIsContactModalOpen(false);
     setInitialService(undefined);
-  };
-
-  const handleQuoteSubmit = (data: any, recaptchaToken: string) => {
-    setQuoteData(data);
-    calculateQuote(data, recaptchaToken, {
-      onSuccess: () => {
-        setIsQuoteModalOpen(false);
-        setIsQuoteResultOpen(true);
-      }
-    });
-  };
-
-  const handleRecalculate = () => {
-    setIsQuoteResultOpen(false);
-    setIsQuoteModalOpen(true);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header onOpenQuoteModal={handleOpenQuoteModal} />
-      
+
       <main>
         <Switch>
           <Route path="/" component={() => <Home onOpenQuoteModal={handleOpenQuoteModal} />} />
@@ -73,20 +52,10 @@ function Router() {
 
       <Footer onOpenQuoteModal={handleOpenQuoteModal} />
 
-      <QuoteModal
-        isOpen={isQuoteModalOpen}
-        onClose={handleCloseQuoteModal}
-        onSubmit={handleQuoteSubmit}
-        isLoading={isLoading}
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={handleCloseModal}
         initialService={initialService}
-      />
-
-      <QuoteResultModal
-        isOpen={isQuoteResultOpen}
-        onClose={() => setIsQuoteResultOpen(false)}
-        result={result || null}
-        quoteData={quoteData}
-        onRecalculate={handleRecalculate}
       />
     </div>
   );
