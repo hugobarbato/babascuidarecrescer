@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { resolve, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -12,8 +12,39 @@ const { render, routes } = await import("./dist/server/entry-server.js");
 const templatePath = resolve(__dirname, "dist/public/index.html");
 const rawTemplate = readFileSync(templatePath, "utf-8");
 
+// Extrai URLs de woff2 do CSS gerado para injetar preloads de font no <head>
+// Isso quebra a cadeia HTML→CSS→Fonts, reduzindo o LCP
+function extractFontPreloads(html: string): string {
+  const cssHrefMatch = html.match(/href="(\/assets\/[^"]+\.css)"/);
+  if (!cssHrefMatch) return html;
+
+  const cssFilePath = resolve(__dirname, "dist/public", cssHrefMatch[1].replace(/^\//, ""));
+  let cssContent: string;
+  try {
+    cssContent = readFileSync(cssFilePath, "utf-8");
+  } catch {
+    return html;
+  }
+
+  // Extrai URLs woff2 do CSS — apenas subsets latin/latin-ext (site em pt-BR)
+  const allFontUrls = [...cssContent.matchAll(/url\(["']?(\/assets\/[^"')]+\.woff2)["']?\)/g)]
+    .map((m) => m[1])
+    .filter((u) => /latin/.test(u) && !/cyrillic|vietnamese|greek|devanagari/.test(u));
+  const nunitoUrls = allFontUrls.filter((u) => u.toLowerCase().includes("nunito")).slice(0, 4);
+  const otherUrls = allFontUrls.filter((u) => !u.toLowerCase().includes("nunito")).slice(0, 2);
+  const fontUrls = [...nunitoUrls, ...otherUrls];
+
+  if (fontUrls.length === 0) return html;
+
+  const preloadTags = fontUrls
+    .map((href) => `  <link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`)
+    .join("\n");
+
+  return html.replace("</head>", `${preloadTags}\n</head>`);
+}
+
 // Converte <link rel="stylesheet"> em preload não-bloqueante para eliminar render-blocking CSS
-const template = rawTemplate.replace(
+const template = extractFontPreloads(rawTemplate).replace(
   /<link rel="stylesheet"([^>]*)>/g,
   (_, attrs) => {
     const href = (attrs.match(/href="([^"]+)"/) ?? [])[1] ?? "";
