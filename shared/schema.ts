@@ -10,7 +10,17 @@ export const leadCaptureSchema = z.object({
   // E-mail path only — both required together when present
   clientPhone: z.string().min(14, "WhatsApp inválido").optional(),
   clientEmail: z.string().email("E-mail inválido").optional(),
-});
+}).refine(
+  (data) => {
+    const hasPhone = !!data.clientPhone;
+    const hasEmail = !!data.clientEmail;
+    return hasPhone === hasEmail;
+  },
+  {
+    message: "Forneça tanto telefone quanto e-mail, ou nenhum dos dois",
+    path: ["clientEmail"],
+  }
+);
 
 export const contactFormSchema = z.object({
   name: z.string().min(2, "Informe seu nome completo"),
