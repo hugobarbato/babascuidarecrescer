@@ -137,25 +137,42 @@
     <!-- reCAPTCHA v3 (non-blocking) -->
     <script async defer src="https://www.google.com/recaptcha/api.js?render=%VITE_RECAPTCHA_SITE_KEY%"></script>
 
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DV6RP2S3BZ"></script>
+    <!-- Google Analytics 4 + Hotjar: carregados após interação ou 3s para não bloquear LCP -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-DV6RP2S3BZ', { send_page_view: false });
-    </script>
 
-    <!-- Hotjar -->
-    <script>
-      (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:6670567,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      function loadAnalytics() {
+        if (window._analyticsLoaded) return;
+        window._analyticsLoaded = true;
+
+        // Google Analytics 4
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-DV6RP2S3BZ';
+        s.async = true;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-DV6RP2S3BZ', { send_page_view: false });
+
+        // Hotjar
+        (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:6670567,hjsv:6};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+      }
+
+      // Carrega na primeira interação do usuário ou após 3s (o que vier primeiro)
+      var _aTimer = setTimeout(loadAnalytics, 3000);
+      ['mousedown','keydown','touchstart','scroll'].forEach(function(e) {
+        window.addEventListener(e, function() {
+          clearTimeout(_aTimer);
+          loadAnalytics();
+        }, { once: true, passive: true });
+      });
     </script>
   </head>
   <body>
