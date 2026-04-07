@@ -3,12 +3,12 @@ import { COMPANY_INFO } from "@/lib/constants";
 export default function About() {
   return (
     <div className="pt-20 lg:pt-24">
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-sage/5 to-soft-blue/5">
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-verde/5 to-azul/5">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h1 className="text-3xl lg:text-5xl font-bold mb-6">
-                <span className="text-sage">Sobre</span> a <span className="text-coral">Cuidar & Crescer</span>
+                <span className="text-verde">Sobre</span> a <span className="text-vermelho">Cuidar & Crescer</span>
               </h1>
             </div>
 
@@ -34,7 +34,7 @@ export default function About() {
             <div className="grid md:grid-cols-3 gap-8">
               {/* Missão */}
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-coral text-4xl mb-4">
+                <div className="text-vermelho text-4xl mb-4">
                   <i className="fas fa-bullseye"></i>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Missão</h3>
@@ -45,7 +45,7 @@ export default function About() {
 
               {/* Visão */}
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-sage text-4xl mb-4">
+                <div className="text-verde text-4xl mb-4">
                   <i className="fas fa-eye"></i>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Visão</h3>
@@ -56,7 +56,7 @@ export default function About() {
 
               {/* Valores */}
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-soft-blue text-4xl mb-4">
+                <div className="text-azul text-4xl mb-4">
                   <i className="fas fa-heart"></i>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Valores</h3>

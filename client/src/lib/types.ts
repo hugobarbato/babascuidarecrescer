@@ -8,6 +8,7 @@ export interface Service {
   price: string;
   badge?: string;
   image: string;
+  category: "mensalista" | "avulso";
 }
 
 export interface PricingRow {

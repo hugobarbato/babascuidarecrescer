@@ -13,6 +13,7 @@ import { QuoteResultModal } from "@/components/quote/quote-result";
 import { useQuote } from "@/hooks/use-quote";
 import Home from "@/pages/home";
 import ServiceDetail from "@/pages/service-detail";
+import WorkWithUs from "@/pages/work-with-us";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -65,6 +66,7 @@ function Router() {
         <Switch>
           <Route path="/" component={() => <Home onOpenQuoteModal={handleOpenQuoteModal} />} />
           <Route path="/services/:id" component={() => <ServiceDetail onOpenQuoteModal={handleOpenQuoteModal} />} />
+          <Route path="/trabalhe-conosco" component={() => <WorkWithUs onOpenQuoteModal={handleOpenQuoteModal} />} />
           <Route component={NotFound} />
         </Switch>
       </main>

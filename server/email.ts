@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { ContactForm, QuoteRequest, QuoteResult } from "@shared/schema";
+import { ContactForm, JobApplication, QuoteRequest, QuoteResult } from "@shared/schema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -151,18 +151,21 @@ export async function sendQuoteEmail(
   };
 
   let serviceDetailsRows = "";
+  if (quoteData.packageType) {
+    const packageLabels: Record<string, string> = {
+      personalizado: "Personalizado",
+      essencial: "Plano Essencial",
+      tranquilidade: "Plano Tranquilidade",
+      premium: "Plano Premium",
+    };
+    serviceDetailsRows += row("Pacote", packageLabels[quoteData.packageType] ?? quoteData.packageType);
+  }
   if (quoteData.startHour !== undefined && quoteData.durationHours !== undefined) {
     serviceDetailsRows += row("Horário de início", `${String(quoteData.startHour).padStart(2, "0")}:00`);
     serviceDetailsRows += row("Duração", `${quoteData.durationHours}h`);
   }
   if (quoteData.travelDays !== undefined) {
     serviceDetailsRows += row("Diárias", `${quoteData.travelDays} dia(s)`);
-  }
-  if (quoteData.weekDays && quoteData.weekDays.length > 0) {
-    serviceDetailsRows += row("Dias da semana", quoteData.weekDays.map((d) => weekdayNames[d] || d).join(", "));
-  }
-  if (quoteData.dailyHours !== undefined) {
-    serviceDetailsRows += row("Horas/dia", `${quoteData.dailyHours}h`);
   }
 
   const breakdownRows = quoteResult.breakdown
@@ -297,5 +300,84 @@ export async function sendQuoteEmail(
     to: COMPANY_EMAIL,
     subject: `Novo Orçamento | ${quoteData.clientName} — ${quoteData.serviceType}`,
     html: emailWrapper(`Novo Orçamento — ${quoteData.clientName}`, internalBody),
+  });
+}
+
+// ---------------------------------------------------------------------------
+// sendJobApplicationEmail
+// TO: empresa | CC + Reply-To: candidata
+// ---------------------------------------------------------------------------
+
+export async function sendJobApplicationEmail(data: JobApplication): Promise<void> {
+  // Email para a empresa com os dados da candidata
+  const companyBody = `
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Nova candidata — Trabalhe Conosco 📋</p>
+    <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">
+      Recebido em ${new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })} pelo formulário "Trabalhe Conosco".
+    </p>
+
+    ${section("Dados da candidata", [
+      row("Nome", data.name),
+      row("Telefone / WhatsApp", data.phone),
+      row("E-mail", data.email),
+      row("Cidade / Região", data.city),
+    ].join(""))}
+
+    ${data.experience ? section("Experiência com crianças", `
+      <tr><td colspan="2" style="padding:8px 0;">
+        <div style="background:#f9f5f0;border-left:4px solid #f97316;padding:16px;border-radius:0 8px 8px 0;color:#374151;font-size:14px;line-height:1.6;">${data.experience.replace(/\n/g, "<br/>")}</div>
+      </td></tr>
+    `) : ""}
+
+    ${data.courses ? section("Cursos e formação", `
+      <tr><td colspan="2" style="padding:8px 0;">
+        <div style="background:#f9f5f0;border-left:4px solid #f97316;padding:16px;border-radius:0 8px 8px 0;color:#374151;font-size:14px;line-height:1.6;">${data.courses.replace(/\n/g, "<br/>")}</div>
+      </td></tr>
+    `) : ""}
+
+    <div style="margin-top:32px;text-align:center;">
+      <a href="https://wa.me/${data.phone.replace(/\D/g, "")}?text=Olá+${encodeURIComponent(data.name)}!+Recebemos+seu+cadastro+no+Trabalhe+Conosco+da+${encodeURIComponent(COMPANY_NAME)}+e+gostaríamos+de+conversar."
+         style="display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;">
+        💬 Entrar em contato via WhatsApp
+      </a>
+    </div>
+  `;
+
+  await resend.emails.send({
+    from: RESEND_FROM,
+    to: COMPANY_EMAIL,
+    replyTo: data.email,
+    subject: `Nova candidata — Trabalhe Conosco | ${data.name}`,
+    html: emailWrapper(`Nova candidata — ${data.name}`, companyBody),
+  });
+
+  // Email de confirmação para a candidata
+  const candidateBody = `
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111827;">Olá, ${data.name}! 👋</p>
+    <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">
+      Recebemos seu cadastro no "Trabalhe Conosco" da ${COMPANY_NAME}. Nossa equipe avaliará seu perfil e entrará em contato em breve.
+    </p>
+
+    ${section("Seus dados", [
+      row("Nome", data.name),
+      row("Telefone / WhatsApp", data.phone),
+      row("E-mail", data.email),
+      row("Cidade / Região", data.city),
+    ].join(""))}
+
+    <div style="margin-top:32px;text-align:center;">
+      <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Olá!+Enviei+meu+cadastro+no+Trabalhe+Conosco+da+${encodeURIComponent(COMPANY_NAME)}+e+gostaria+de+mais+informações."
+         style="display:inline-block;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;">
+        💬 Falar pelo WhatsApp
+      </a>
+    </div>
+  `;
+
+  await resend.emails.send({
+    from: RESEND_FROM,
+    to: data.email,
+    replyTo: COMPANY_EMAIL,
+    subject: `Recebemos seu cadastro — ${COMPANY_NAME}`,
+    html: emailWrapper(`Cadastro recebido — ${data.name}`, candidateBody),
   });
 }

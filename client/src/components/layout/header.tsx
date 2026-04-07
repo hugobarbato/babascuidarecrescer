@@ -8,6 +8,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 
@@ -24,9 +27,10 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
 
   const anchorLinks = [
     { name: "Serviços", href: "/#servicos" },
-    { name: "Valores", href: "/#valores" },
-    { name: "Sobre", href: "/#sobre" },
+
+    { name: "Sobre nós", href: "/#sobre" },
     { name: "Contato", href: "/#contato" },
+    { name: "Trabalhe Conosco", href: "/trabalhe-conosco" },
   ];
 
   return (
@@ -42,7 +46,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
           <div className="hidden lg:flex items-center space-x-8">
             <Link
               href="/"
-              className={`transition-colors ${isHome && !window.location.hash ? "text-coral" : "text-gray-700 hover:text-coral"}`}
+              className={`transition-colors ${isHome && !window.location.hash ? "text-vermelho" : "text-gray-700 hover:text-vermelho"}`}
             >
               Início
             </Link>
@@ -50,32 +54,61 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             {/* Serviços dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-1 text-gray-700 hover:text-coral transition-colors focus:outline-none">
+                <button className="flex items-center gap-1 text-gray-700 hover:text-vermelho transition-colors focus:outline-none">
                   Serviços
                   <i className="fas fa-chevron-down text-xs"></i>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-56">
-                {SERVICES.map((service) => (
-                  <DropdownMenuItem key={service.id} asChild>
-                    <a href={`/services/${service.id}`} className="flex items-center gap-2 cursor-pointer">
-                      <i className={`${service.icon} text-sm text-coral`}></i>
-                      {service.name}
-                    </a>
-                  </DropdownMenuItem>
-                ))}
+                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-vermelho/70 font-semibold">
+                  <i className="fas fa-calendar-check mr-1.5"></i>Planos Mensais
+                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  {SERVICES.filter((s) => s.category === "mensalista").map((service) => (
+                    <DropdownMenuItem key={service.id} asChild>
+                      <a href={`/services/${service.id}`} className="flex items-center gap-2 cursor-pointer">
+                        <i className={`${service.icon} text-sm text-vermelho`}></i>
+                        {service.name}
+                      </a>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs uppercase tracking-wider text-azul/70 font-semibold">
+                  <i className="fas fa-clock mr-1.5"></i>Serviços Avulsos
+                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                  {SERVICES.filter((s) => s.category === "avulso").map((service) => (
+                    <DropdownMenuItem key={service.id} asChild>
+                      <a href={`/services/${service.id}`} className="flex items-center gap-2 cursor-pointer">
+                        <i className={`${service.icon} text-sm text-vermelho`}></i>
+                        {service.name}
+                      </a>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {anchorLinks.slice(1).map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-gray-700 hover:text-coral transition-colors"
-              >
-                {item.name}
-              </a>
-            ))}
+            {anchorLinks.slice(1).map((item) =>
+              item.href.startsWith("/#") ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-700 hover:text-vermelho transition-colors"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-700 hover:text-vermelho transition-colors"
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
 
             <a
               href={COMPANY_INFO.instagram}
@@ -88,7 +121,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             </a>
             <Button
               onClick={onOpenQuoteModal}
-              className="bg-coral text-white px-6 py-2 rounded-full hover:bg-orange-500 transition-colors shadow-lg font-medium"
+              className="bg-vermelho text-white px-6 py-2 rounded-full hover:bg-vermelho/80 transition-colors shadow-lg font-medium"
             >
               Solicitar Orçamento
             </Button>
@@ -107,7 +140,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             </a>
             <Button
               onClick={onOpenQuoteModal}
-              className="bg-coral text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-500"
+              className="bg-vermelho text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-vermelho/80"
             >
               Orçamento
             </Button>
@@ -122,7 +155,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
                   <Link
                     href="/"
                     onClick={() => setIsOpen(false)}
-                    className={`text-lg py-3 transition-colors ${isHome ? "text-coral" : "text-gray-700 hover:text-coral"}`}
+                    className={`text-lg py-3 transition-colors ${isHome ? "text-vermelho" : "text-gray-700 hover:text-vermelho"}`}
                   >
                     Início
                   </Link>
@@ -130,37 +163,65 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
                   {/* Serviços com sub-lista */}
                   <button
                     onClick={() => setIsServicesOpen((prev) => !prev)}
-                    className="flex items-center justify-between text-lg py-3 text-gray-700 hover:text-coral transition-colors w-full text-left"
+                    className="flex items-center justify-between text-lg py-3 text-gray-700 hover:text-vermelho transition-colors w-full text-left"
                   >
                     Serviços
                     <i className={`fas fa-chevron-${isServicesOpen ? "up" : "down"} text-sm`}></i>
                   </button>
                   {isServicesOpen && (
                     <div className="pl-4 flex flex-col space-y-1 mb-2">
-                      {SERVICES.map((service) => (
+                      <span className="text-xs uppercase tracking-wider text-vermelho/70 font-semibold pt-1 pb-1">
+                        <i className="fas fa-calendar-check mr-1.5"></i>Planos Mensais
+                      </span>
+                      {SERVICES.filter((s) => s.category === "mensalista").map((service) => (
                         <a
                           key={service.id}
                           href={`/services/${service.id}`}
                           onClick={() => setIsOpen(false)}
-                          className="flex items-center gap-2 text-sm py-2 text-gray-600 hover:text-coral transition-colors"
+                          className="flex items-center gap-2 text-sm py-2 text-gray-600 hover:text-vermelho transition-colors"
                         >
-                          <i className={`${service.icon} text-coral`}></i>
+                          <i className={`${service.icon} text-vermelho`}></i>
+                          {service.name}
+                        </a>
+                      ))}
+                      <span className="text-xs uppercase tracking-wider text-azul/70 font-semibold pt-2 pb-1 border-t border-gray-100 mt-1">
+                        <i className="fas fa-clock mr-1.5"></i>Serviços Avulsos
+                      </span>
+                      {SERVICES.filter((s) => s.category === "avulso").map((service) => (
+                        <a
+                          key={service.id}
+                          href={`/services/${service.id}`}
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-2 text-sm py-2 text-gray-600 hover:text-vermelho transition-colors"
+                        >
+                          <i className={`${service.icon} text-vermelho`}></i>
                           {service.name}
                         </a>
                       ))}
                     </div>
                   )}
 
-                  {anchorLinks.slice(1).map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="text-lg py-3 text-gray-700 hover:text-coral transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+                  {anchorLinks.slice(1).map((item) =>
+                    item.href.startsWith("/#") ? (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="text-lg py-3 text-gray-700 hover:text-vermelho transition-colors"
+                      >
+                        {item.name}
+                      </a>
+                    ) : (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="text-lg py-3 text-gray-700 hover:text-vermelho transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    )
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

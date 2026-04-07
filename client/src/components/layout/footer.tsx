@@ -24,15 +24,41 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
 
             <div>
               <h3 className="font-semibold text-lg mb-4">Nossos Serviços</h3>
-              <ul className="space-y-2 text-gray-300">
-                {SERVICES.map((service) => (
-                  <li key={service.id}>
-                    <a href={`/services/${service.id}`} className="hover:text-coral transition-colors">
-                      {service.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <div className="space-y-3 text-gray-300">
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-vermelho/80 font-semibold mb-2">
+                    <i className="fas fa-calendar-check mr-1.5"></i>Planos Mensais
+                  </p>
+                  <ul className="space-y-2 pl-0">
+                    {SERVICES.filter((s) => s.category === "mensalista").map((service) => (
+                      <li key={service.id}>
+                        <a href={`/services/${service.id}`} className="hover:text-vermelho transition-colors">
+                          {service.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-azul/80 font-semibold mb-2">
+                    <i className="fas fa-clock mr-1.5"></i>Serviços Avulsos
+                  </p>
+                  <ul className="space-y-2 pl-0">
+                    {SERVICES.filter((s) => s.category === "avulso").map((service) => (
+                      <li key={service.id}>
+                        <a href={`/services/${service.id}`} className="hover:text-vermelho transition-colors">
+                          {service.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-600">
+                <a href="/trabalhe-conosco" className="hover:text-verde transition-colors font-medium">
+                  <i className="fas fa-briefcase mr-2"></i>Trabalhe Conosco
+                </a>
+              </div>
             </div>
 
             <div>
@@ -45,31 +71,31 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                     target="_blank" 
                     rel="noopener noreferrer"
                     onClick={() => trackWhatsAppClick("footer_contact")}
-                    className="hover:text-coral transition-colors"
+                    className="hover:text-vermelho transition-colors"
                   >
                     {COMPANY_INFO.phone}
                   </a>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-envelope text-coral"></i>
+                  <i className="fas fa-envelope text-vermelho"></i>
                   <a 
                     href={`mailto:${COMPANY_INFO.email}`} 
-                    className="hover:text-coral transition-colors"
+                    className="hover:text-vermelho transition-colors"
                   >
                     {COMPANY_INFO.email}
                   </a>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fas fa-clock text-soft-blue"></i>
+                  <i className="fas fa-clock text-azul"></i>
                   <span>Seg-Sex: 8h-18h | Sáb: 8h-14h</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <i className="fab fa-instagram text-soft-pink"></i>
+                  <i className="fab fa-instagram text-rosa"></i>
                   <a
                     href={COMPANY_INFO.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-coral transition-colors"
+                    className="hover:text-vermelho transition-colors"
                   >
                     @babascuidarecrescer
                   </a>
@@ -79,16 +105,8 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
           </div>
 
           <div className="border-t border-gray-600 pt-8">
-            <div className="bg-gradient-to-r from-coral/10 to-sage/10 p-6 rounded-xl mb-6">
-              <h3 className="font-semibold text-lg mb-3">
-                <i className="fas fa-info-circle mr-2 text-coral"></i>
-                Informações Importantes sobre Pagamentos:
-              </h3>
-              <div className="text-sm text-gray-300 space-y-2">
-                <p>• Os serviços são realizados mediante pagamento ou sinal de até 50% do valor acordado</p>
-                <p>• Atendimentos mensalistas possuem valor fixo, não será descontado mediante cancelamento</p>
-                <p>• Pagamentos devem ser feitos na data combinada previamente ou em até 48 horas após o atendimento</p>
-              </div>
+            <div className="bg-gradient-to-r from-vermelho/10 to-verde/10 p-6 rounded-xl mb-6">
+             
             </div>
             
             <div className="flex flex-col md:flex-row justify-between items-center">
@@ -96,7 +114,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <Button 
                   onClick={onOpenQuoteModal}
-                  className="bg-coral px-4 py-2 rounded-full text-sm font-medium hover:bg-orange-500 transition-colors"
+                  className="bg-vermelho px-4 py-2 rounded-full text-sm font-medium hover:bg-vermelho/80 transition-colors"
                 >
                   Solicitar Orçamento
                 </Button>

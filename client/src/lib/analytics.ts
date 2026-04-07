@@ -38,6 +38,12 @@ export function trackContactSubmit() {
   });
 }
 
+export function trackJobApplicationSubmit() {
+  gtag("event", "job_application_submit", {
+    event_category: "conversion",
+  });
+}
+
 export function trackWhatsAppClick(source: string) {
   gtag("event", "whatsapp_click", {
     event_category: "engagement",

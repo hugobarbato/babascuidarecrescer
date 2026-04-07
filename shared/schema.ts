@@ -5,10 +5,16 @@ export const quoteRequestSchema = z.object({
     "Nanny Cuidar",
     "Nanny Desenvolver",
     "Vale Night",
+    "Aulas Particulares",
     "Acompanhamento em Eventos",
-    "Acompanhamento em Viagens",
-    "Mensalista"
+    "Acompanhamento em Viagens"
   ]),
+  packageType: z.enum([
+    "personalizado",
+    "essencial",
+    "tranquilidade",
+    "premium"
+  ]).optional(),
   date: z.string().min(1, "Selecione uma data"),
   clientName: z.string().min(2, "Informe seu nome"),
   childrenCount: z.number().min(1),
@@ -19,10 +25,6 @@ export const quoteRequestSchema = z.object({
 
   // Travel
   travelDays: z.number().optional(),
-
-  // Monthly plan
-  weekDays: z.array(z.string()).optional(),
-  dailyHours: z.number().optional(),
 
   // Address (CEP-driven)
   cep: z.string().optional(),
@@ -49,11 +51,21 @@ export const contactFormSchema = z.object({
   message: z.string().optional(),
 });
 
+export const jobApplicationSchema = z.object({
+  name: z.string().min(2, "Informe seu nome completo"),
+  phone: z.string().min(14, "Telefone inválido"),
+  email: z.string().email("E-mail inválido"),
+  city: z.string().min(2, "Informe sua cidade/região"),
+  experience: z.string().optional(),
+  courses: z.string().optional(),
+});
+
 export type QuoteRequest = z.infer<typeof quoteRequestSchema>;
 export type ContactForm = z.infer<typeof contactFormSchema>;
+export type JobApplication = z.infer<typeof jobApplicationSchema>;
 
 export interface QuoteResult {
-  type: 'hourly' | 'travel' | 'vale_night' | 'monthly';
+  type: 'hourly' | 'travel' | 'vale_night';
   breakdown: Array<{
     item: string;
     amount: number | string;

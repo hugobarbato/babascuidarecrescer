@@ -10,22 +10,22 @@ export function Logo({ className = "text-2xl" }: { className?: string }) {
       />
       <div className={`font-sans font-bold ${className}`}>
         <div>
-          <span style={{ color: "#F0B478" }}>c</span>
-          <span style={{ color: "#96A587" }}>u</span>
-          <span style={{ color: "#B46969" }}>i</span>
-          <span style={{ color: "#5A7896" }}>d</span>
-          <span style={{ color: "#D29687" }}>a</span>
-          <span style={{ color: "#C3C3E1" }}>r</span>
-          <span style={{ color: "#96A587" }}> &</span>
+          <span style={{ color: "#F4BA7B" }}>c</span>
+          <span style={{ color: "#9FAF88" }}>u</span>
+          <span style={{ color: "#C56969" }}>i</span>
+          <span style={{ color: "#60799E" }}>d</span>
+          <span style={{ color: "#D7A392" }}>a</span>
+          <span style={{ color: "#CAB7E9" }}>r</span>
+          <span style={{ color: "#9FAF88" }}> &</span>
         </div>
         <div>
-          <span style={{ color: "#5A7896" }}>c</span>
-          <span style={{ color: "#5A7896" }}>r</span>
-          <span style={{ color: "#D29687" }}>e</span>
-          <span style={{ color: "#96A587" }}>s</span>
-          <span style={{ color: "#B46969" }}>c</span>
-          <span style={{ color: "#F0B478" }}>e</span>
-          <span style={{ color: "#5A7896" }}>r</span>
+          <span style={{ color: "#60799E" }}>c</span>
+          <span style={{ color: "#60799E" }}>r</span>
+          <span style={{ color: "#D7A392" }}>e</span>
+          <span style={{ color: "#9FAF88" }}>s</span>
+          <span style={{ color: "#C56969" }}>c</span>
+          <span style={{ color: "#F4BA7B" }}>e</span>
+          <span style={{ color: "#60799E" }}>r</span>
         </div>
       </div>
     </div>
