@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -23,8 +23,16 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [hasHash, setHasHash] = useState(false);
 
   const isHome = location === "/";
+
+  useEffect(() => {
+    setHasHash(Boolean(window.location.hash));
+    const onHashChange = () => setHasHash(Boolean(window.location.hash));
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   const anchorLinks = [
     { name: "Serviços", href: "/#servicos" },
@@ -47,7 +55,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
           <div className="hidden lg:flex items-center space-x-8">
             <Link
               href="/"
-              className={`transition-colors ${isHome && (typeof window === "undefined" || !window.location.hash) ? "text-vermelho" : "text-gray-700 hover:text-vermelho"}`}
+              className={`transition-colors ${isHome && !hasHash ? "text-vermelho" : "text-gray-700 hover:text-vermelho"}`}
             >
               Início
             </Link>

@@ -17,7 +17,7 @@ import { SERVICES } from "@/lib/constants";
 // Hook de localização estática para SSR — usa useSyncExternalStore com getServerSnapshot
 // para compatibilidade com React 18 SSR (evita "Missing getServerSnapshot" do wouter)
 function makeStaticHook(path: string) {
-  const noop = () => () => {};
+  const noop = (_listener: () => void) => () => {};
   const getSnapshot = () => path;
   return () => [useSyncExternalStore(noop, getSnapshot, getSnapshot), () => {}] as [string, (to: string) => void];
 }

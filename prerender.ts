@@ -19,8 +19,8 @@ for (const route of routes as string[]) {
   try {
     appHtml = render(route) as string;
   } catch (err) {
-    console.warn(`  Aviso: erro ao renderizar ${route}, usando HTML vazio.`, err);
-    appHtml = "";
+    console.error(`  Erro ao renderizar ${route}:`, err);
+    process.exit(1);
   }
 
   const html = template.replace("<!--app-html-->", appHtml);
