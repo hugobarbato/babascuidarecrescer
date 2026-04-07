@@ -5,6 +5,8 @@ import { fileURLToPath } from "url";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // Importa o bundle SSR gerado pelo vite build --config vite.config.ssr.ts
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — arquivo gerado em tempo de build, não existe na checagem estática
 const { render, routes } = await import("./dist/server/entry-server.js");
 
 const templatePath = resolve(__dirname, "dist/public/index.html");
