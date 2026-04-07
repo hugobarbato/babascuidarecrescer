@@ -10,7 +10,16 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const { render, routes } = await import("./dist/server/entry-server.js");
 
 const templatePath = resolve(__dirname, "dist/public/index.html");
-const template = readFileSync(templatePath, "utf-8");
+const rawTemplate = readFileSync(templatePath, "utf-8");
+
+// Converte <link rel="stylesheet"> em preload não-bloqueante para eliminar render-blocking CSS
+const template = rawTemplate.replace(
+  /<link rel="stylesheet"([^>]*)>/g,
+  (_, attrs) => {
+    const href = (attrs.match(/href="([^"]+)"/) ?? [])[1] ?? "";
+    return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`;
+  }
+);
 
 for (const route of routes as string[]) {
   console.log(`Pre-rendering: ${route}`);
