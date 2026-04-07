@@ -13,6 +13,7 @@ import {
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
+import { ServiceIcon, CalendarCheck, Clock, ChevronDown, ChevronUp, Menu, Instagram } from "@/lib/icons";
 
 interface HeaderProps {
   onOpenQuoteModal: () => void;
@@ -46,7 +47,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
           <div className="hidden lg:flex items-center space-x-8">
             <Link
               href="/"
-              className={`transition-colors ${isHome && !window.location.hash ? "text-vermelho" : "text-gray-700 hover:text-vermelho"}`}
+              className={`transition-colors ${isHome && (typeof window === "undefined" || !window.location.hash) ? "text-vermelho" : "text-gray-700 hover:text-vermelho"}`}
             >
               Início
             </Link>
@@ -56,18 +57,18 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-1 text-gray-700 hover:text-vermelho transition-colors focus:outline-none">
                   Serviços
-                  <i className="fas fa-chevron-down text-xs"></i>
+                  <ChevronDown className="w-3 h-3" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-56">
                 <DropdownMenuLabel className="text-xs uppercase tracking-wider text-vermelho/70 font-semibold">
-                  <i className="fas fa-calendar-check mr-1.5"></i>Planos Mensais
+                  <CalendarCheck className="w-3.5 h-3.5 mr-1.5 inline" />Planos Mensais
                 </DropdownMenuLabel>
                 <DropdownMenuGroup>
                   {SERVICES.filter((s) => s.category === "mensalista").map((service) => (
                     <DropdownMenuItem key={service.id} asChild>
                       <a href={`/services/${service.id}`} className="flex items-center gap-2 cursor-pointer">
-                        <i className={`${service.icon} text-sm text-vermelho`}></i>
+                        <ServiceIcon name={service.icon} className="w-3.5 h-3.5 text-vermelho" />
                         {service.name}
                       </a>
                     </DropdownMenuItem>
@@ -75,13 +76,13 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel className="text-xs uppercase tracking-wider text-azul/70 font-semibold">
-                  <i className="fas fa-clock mr-1.5"></i>Serviços Avulsos
+                  <Clock className="w-3.5 h-3.5 mr-1.5 inline" />Serviços Avulsos
                 </DropdownMenuLabel>
                 <DropdownMenuGroup>
                   {SERVICES.filter((s) => s.category === "avulso").map((service) => (
                     <DropdownMenuItem key={service.id} asChild>
                       <a href={`/services/${service.id}`} className="flex items-center gap-2 cursor-pointer">
-                        <i className={`${service.icon} text-sm text-vermelho`}></i>
+                        <ServiceIcon name={service.icon} className="w-3.5 h-3.5 text-vermelho" />
                         {service.name}
                       </a>
                     </DropdownMenuItem>
@@ -117,7 +118,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
               className="text-gray-500 hover:text-pink-500 transition-colors"
               aria-label="Instagram"
             >
-              <i className="fab fa-instagram text-xl"></i>
+              <Instagram className="w-5 h-5" />
             </a>
             <Button
               onClick={onOpenQuoteModal}
@@ -136,7 +137,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
               className="text-gray-500 hover:text-pink-500 transition-colors"
               aria-label="Instagram"
             >
-              <i className="fab fa-instagram text-xl"></i>
+              <Instagram className="w-5 h-5" />
             </a>
             <Button
               onClick={onOpenQuoteModal}
@@ -147,7 +148,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-gray-700">
-                  <i className="fas fa-bars text-xl"></i>
+                  <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
@@ -166,12 +167,12 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
                     className="flex items-center justify-between text-lg py-3 text-gray-700 hover:text-vermelho transition-colors w-full text-left"
                   >
                     Serviços
-                    <i className={`fas fa-chevron-${isServicesOpen ? "up" : "down"} text-sm`}></i>
+                    {isServicesOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
                   {isServicesOpen && (
                     <div className="pl-4 flex flex-col space-y-1 mb-2">
                       <span className="text-xs uppercase tracking-wider text-vermelho/70 font-semibold pt-1 pb-1">
-                        <i className="fas fa-calendar-check mr-1.5"></i>Planos Mensais
+                        <CalendarCheck className="w-3.5 h-3.5 mr-1.5 inline" />Planos Mensais
                       </span>
                       {SERVICES.filter((s) => s.category === "mensalista").map((service) => (
                         <a
@@ -180,12 +181,12 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
                           onClick={() => setIsOpen(false)}
                           className="flex items-center gap-2 text-sm py-2 text-gray-600 hover:text-vermelho transition-colors"
                         >
-                          <i className={`${service.icon} text-vermelho`}></i>
+                          <ServiceIcon name={service.icon} className="w-3.5 h-3.5 text-vermelho" />
                           {service.name}
                         </a>
                       ))}
                       <span className="text-xs uppercase tracking-wider text-azul/70 font-semibold pt-2 pb-1 border-t border-gray-100 mt-1">
-                        <i className="fas fa-clock mr-1.5"></i>Serviços Avulsos
+                        <Clock className="w-3.5 h-3.5 mr-1.5 inline" />Serviços Avulsos
                       </span>
                       {SERVICES.filter((s) => s.category === "avulso").map((service) => (
                         <a
@@ -194,7 +195,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
                           onClick={() => setIsOpen(false)}
                           className="flex items-center gap-2 text-sm py-2 text-gray-600 hover:text-vermelho transition-colors"
                         >
-                          <i className={`${service.icon} text-vermelho`}></i>
+                          <ServiceIcon name={service.icon} className="w-3.5 h-3.5 text-vermelho" />
                           {service.name}
                         </a>
                       ))}

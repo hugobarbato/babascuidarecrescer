@@ -12,6 +12,9 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
+  ssr: {
+    noExternal: ["react-helmet-async"],
+  },
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/server"),
     emptyOutDir: true,

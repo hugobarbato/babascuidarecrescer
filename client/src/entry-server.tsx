@@ -1,6 +1,6 @@
 import { renderToString } from "react-dom/server";
+import { useSyncExternalStore } from "react";
 import { Router as WouterRouter, Switch, Route } from "wouter";
-import { memoryLocation } from "wouter/memory-location";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,8 +14,16 @@ import WorkWithUs from "@/pages/work-with-us";
 import NotFound from "@/pages/not-found";
 import { SERVICES } from "@/lib/constants";
 
+// Hook de localização estática para SSR — usa useSyncExternalStore com getServerSnapshot
+// para compatibilidade com React 18 SSR (evita "Missing getServerSnapshot" do wouter)
+function makeStaticHook(path: string) {
+  const noop = () => () => {};
+  const getSnapshot = () => path;
+  return () => [useSyncExternalStore(noop, getSnapshot, getSnapshot), () => {}] as [string, (to: string) => void];
+}
+
 export function render(url: string): string {
-  const { hook } = memoryLocation({ path: url, static: true });
+  const hook = makeStaticHook(url);
   const queryClient = new QueryClient();
   const helmetContext = {};
 
