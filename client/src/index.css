@@ -4,13 +4,13 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
+  --background: #FFF;
   --foreground: hsl(0, 0%, 18%);
   --card: hsl(0, 0%, 100%);
   --card-foreground: hsl(0, 0%, 18%);
   --popover: hsl(0, 0%, 100%);
   --popover-foreground: hsl(0, 0%, 18%);
-  --primary: hsl(28, 64%, 60%);
+  --primary: #C56969;
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 96%);
   --secondary-foreground: hsl(0, 0%, 18%);
@@ -22,15 +22,17 @@
   --destructive-foreground: hsl(0, 0%, 100%);
   --border: hsl(0, 0%, 89%);
   --input: hsl(0, 0%, 89%);
-  --ring: hsl(28, 64%, 60%);
+  --ring: #C56969;
   --radius: 0.5rem;
 
   /* Brand Colors */
-  --coral: hsl(28, 64%, 60%);
-  --sage: hsl(120, 25%, 65%);
-  --soft-blue: hsl(218, 55%, 65%);
-  --soft-purple: hsl(300, 24%, 75%);
-  --soft-pink: hsl(0, 42%, 78%);
+  --vermelho: #C56969;
+  --verde: #9FAF88;
+  --azul: #60799E;
+  --rosa: #D7A392;
+  --amarelo: #F4BA7B;
+  --roxo: #CAB7E9;
+  --bege: #F5EBDF;
   --warm-gray: hsl(0, 0%, 18%);
   
   /* Font Family */
@@ -45,7 +47,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --popover: hsl(0, 0%, 8%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(28, 64%, 60%);
+  --primary: #C56969;
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(0, 0%, 14%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -57,7 +59,7 @@
   --destructive-foreground: hsl(0, 0%, 98%);
   --border: hsl(0, 0%, 14%);
   --input: hsl(0, 0%, 14%);
-  --ring: hsl(28, 64%, 60%);
+  --ring: #C56969;
 }
 
 @layer base {
@@ -75,95 +77,115 @@
 }
 
 @layer utilities {
-  .text-coral {
-    color: var(--coral);
+  .text-vermelho {
+    color: var(--vermelho);
   }
   
-  .text-sage {
-    color: var(--sage);
+  .text-verde {
+    color: var(--verde);
   }
   
-  .text-soft-blue {
-    color: var(--soft-blue);
+  .text-azul {
+    color: var(--azul);
   }
   
-  .text-soft-purple {
-    color: var(--soft-purple);
+  .text-roxo {
+    color: var(--roxo);
   }
   
-  .text-soft-pink {
-    color: var(--soft-pink);
+  .text-rosa {
+    color: var(--rosa);
+  }
+  
+  .text-amarelo {
+    color: var(--amarelo);
   }
   
   .text-warm-gray {
     color: var(--warm-gray);
   }
   
-  .bg-coral {
-    background-color: var(--coral);
+  .bg-vermelho {
+    background-color: var(--vermelho);
   }
   
-  .bg-sage {
-    background-color: var(--sage);
+  .bg-verde {
+    background-color: var(--verde);
   }
   
-  .bg-soft-blue {
-    background-color: var(--soft-blue);
+  .bg-azul {
+    background-color: var(--azul);
   }
   
-  .bg-soft-purple {
-    background-color: var(--soft-purple);
+  .bg-roxo {
+    background-color: var(--roxo);
   }
   
-  .bg-soft-pink {
-    background-color: var(--soft-pink);
+  .bg-rosa {
+    background-color: var(--rosa);
+  }
+  
+  .bg-amarelo {
+    background-color: var(--amarelo);
+  }
+  
+  .bg-bege {
+    background-color: var(--bege);
   }
   
   .bg-warm-gray {
     background-color: var(--warm-gray);
   }
   
-  .border-coral {
-    border-color: var(--coral);
+  .border-vermelho {
+    border-color: var(--vermelho);
   }
   
-  .border-sage {
-    border-color: var(--sage);
+  .border-verde {
+    border-color: var(--verde);
   }
   
-  .border-soft-blue {
-    border-color: var(--soft-blue);
+  .border-azul {
+    border-color: var(--azul);
   }
   
-  .border-soft-purple {
-    border-color: var(--soft-purple);
+  .border-roxo {
+    border-color: var(--roxo);
   }
   
-  .border-soft-pink {
-    border-color: var(--soft-pink);
+  .border-rosa {
+    border-color: var(--rosa);
   }
   
-  .hover\:bg-coral:hover {
-    background-color: var(--coral);
+  .border-amarelo {
+    border-color: var(--amarelo);
   }
   
-  .hover\:bg-sage:hover {
-    background-color: var(--sage);
+  .hover\:bg-vermelho:hover {
+    background-color: var(--vermelho);
   }
   
-  .hover\:bg-soft-blue:hover {
-    background-color: var(--soft-blue);
+  .hover\:bg-verde:hover {
+    background-color: var(--verde);
   }
   
-  .hover\:bg-soft-purple:hover {
-    background-color: var(--soft-purple);
+  .hover\:bg-azul:hover {
+    background-color: var(--azul);
   }
   
-  .hover\:bg-soft-pink:hover {
-    background-color: var(--soft-pink);
+  .hover\:bg-roxo:hover {
+    background-color: var(--roxo);
   }
   
-  .hover\:text-coral:hover {
-    color: var(--coral);
+  .hover\:bg-rosa:hover {
+    background-color: var(--rosa);
+  }
+  
+  .hover\:bg-amarelo:hover {
+    background-color: var(--amarelo);
+  }
+  
+  .hover\:text-vermelho:hover {
+    color: var(--vermelho);
   }
 }

@@ -43,15 +43,17 @@ function buildWhatsAppMessage(data: QuoteRequest, result: QuoteResult): string {
     lines.push(`✈️ *Diárias:* ${data.travelDays} dia(s)`);
   }
 
-  if (data.weekDays && data.weekDays.length > 0) {
-    lines.push(`📆 *Dias da semana:* ${data.weekDays.map((d) => WEEK_DAY_LABELS[d] ?? d).join(", ")}`);
-  }
-
-  if (data.dailyHours) {
-    lines.push(`⏱️ *Carga horária diária:* ${data.dailyHours}h`);
-  }
-
   lines.push(`👶 *Crianças:* ${data.childrenCount}`);
+
+  if (data.packageType) {
+    const packageLabels: Record<string, string> = {
+      personalizado: "Personalizado",
+      essencial: "Plano Essencial",
+      tranquilidade: "Plano Tranquilidade",
+      premium: "Plano Premium",
+    };
+    lines.push(`📦 *Pacote:* ${packageLabels[data.packageType] ?? data.packageType}`);
+  }
 
   const hasAddress = data.street || data.neighborhood || data.city;
   if (hasAddress) {
@@ -119,7 +121,7 @@ export function QuoteResultModal({ isOpen, onClose, result, quoteData, onRecalcu
                   </span>
                 </div>
               ))}
-              <div className="flex justify-between items-center p-4 bg-coral text-white font-bold text-lg">
+              <div className="flex justify-between items-center p-4 bg-vermelho text-white font-bold text-lg">
                 <span>TOTAL</span>
                 <span>
                   {typeof result.total === "number" ? formatCurrency(result.total) : result.total}
@@ -128,12 +130,22 @@ export function QuoteResultModal({ isOpen, onClose, result, quoteData, onRecalcu
             </div>
           </div>
 
-          {/* Custom message for monthly plans */}
-          {result.type === "monthly" && (
-            <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-              <p className="text-yellow-800 font-medium">
+          {/* Travel note */}
+          {result.details?.note && (
+            <div className="bg-amber-50 border border-amber-200 p-4 rounded-lg">
+              <p className="text-sm text-amber-800">
                 <i className="fas fa-info-circle mr-2"></i>
-                Este é um serviço personalizado. Nossa equipe entrará em contato para elaborar uma proposta específica baseada em suas necessidades.
+                {result.details.note}
+              </p>
+            </div>
+          )}
+
+          {/* Overtime info for Vale Night */}
+          {result.details?.overtimeRate && (
+            <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
+              <p className="text-sm text-blue-700">
+                <i className="fas fa-clock mr-2"></i>
+                Hora extra: R$ {result.details.overtimeRate},00
               </p>
             </div>
           )}

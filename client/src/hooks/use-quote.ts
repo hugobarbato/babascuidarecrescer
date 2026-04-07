@@ -3,7 +3,7 @@ import { QuoteRequest, QuoteResult } from "@shared/schema";
 import { calculateQuote } from "@/lib/quote-calculator";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "./use-toast";
-import { trackQuoteSubmit, trackContactSubmit } from "@/lib/analytics";
+import { trackQuoteSubmit, trackContactSubmit, trackJobApplicationSubmit } from "@/lib/analytics";
 
 export function useQuote() {
   const { toast } = useToast();
@@ -73,6 +73,34 @@ export function useContact() {
   
   return {
     sendContact: mutation.mutate,
+    isLoading: mutation.isPending
+  };
+}
+
+export function useJobApplication() {
+  const { toast } = useToast();
+  
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      await apiRequest("POST", "/api/send-job-application", data);
+    },
+    onSuccess: () => {
+      trackJobApplicationSubmit();
+      toast({
+        description: "Recebemos seu cadastro! Nossa equipe entrará em contato em breve.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erro ao enviar cadastro",
+        description: error.message || "Tente novamente ou entre em contato pelo WhatsApp.",
+        variant: "destructive",
+      });
+    }
+  });
+  
+  return {
+    sendApplication: mutation.mutate,
     isLoading: mutation.isPending
   };
 }

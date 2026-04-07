@@ -28,21 +28,6 @@ const DURATION_OPTIONS = Array.from({ length: 12 }, (_, i) => ({
   label: `${i + 1} hora${i > 0 ? "s" : ""}`,
 }));
 
-const DAILY_HOURS_OPTIONS = [2, 3, 4, 5, 6, 7, 8, 9, 10].map((h) => ({
-  value: h,
-  label: `${h} horas/dia`,
-}));
-
-const WEEK_DAYS = [
-  { id: "seg", label: "Seg" },
-  { id: "ter", label: "Ter" },
-  { id: "qua", label: "Qua" },
-  { id: "qui", label: "Qui" },
-  { id: "sex", label: "Sex" },
-  { id: "sab", label: "Sáb" },
-  { id: "dom", label: "Dom" },
-];
-
 function getTomorrow(): string {
   const d = new Date();
   d.setDate(d.getDate() + 1);
@@ -58,7 +43,6 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
     resolver: zodResolver(quoteRequestSchema),
     defaultValues: {
       childrenCount: 1,
-      weekDays: [],
     },
   });
 
@@ -72,11 +56,13 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
   const handleServiceChange = (value: string) => {
     setServiceType(value);
     form.setValue("serviceType", value as any);
+    // Reset package when service changes
+    form.setValue("packageType", undefined);
   };
 
-  const showTimeFields = !["Acompanhamento em Viagens", "Mensalista"].includes(serviceType);
+  const showTimeFields = !["Acompanhamento em Viagens", "Aulas Particulares"].includes(serviceType);
   const showTravelFields = serviceType === "Acompanhamento em Viagens";
-  const showMonthlyFields = serviceType === "Mensalista";
+  const showPackageField = ["Nanny Cuidar", "Nanny Desenvolver"].includes(serviceType);
 
   const handleCepChange = async (formatted: string) => {
     const cleaned = formatted.replace(/\D/g, "");
@@ -118,7 +104,7 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
-            <i className="fas fa-calculator mr-2 text-coral"></i>
+            <i className="fas fa-calculator mr-2 text-vermelho"></i>
             Solicitar Orçamento
           </DialogTitle>
         </DialogHeader>
@@ -154,6 +140,38 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
                   )}
                 />
               </div>
+
+              {/* Pacote — only for Nanny Cuidar / Desenvolver */}
+              {showPackageField && (
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="packageType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Pacote</FormLabel>
+                        <Select
+                          value={field.value ?? ""}
+                          onValueChange={field.onChange}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione um pacote (opcional)" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="personalizado">Personalizado</SelectItem>
+                            <SelectItem value="essencial">Plano Essencial (5-6h/dia)</SelectItem>
+                            <SelectItem value="tranquilidade">Plano Tranquilidade (7-8h/dia)</SelectItem>
+                            <SelectItem value="premium">Plano Premium (9-10h/dia)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
 
               {/* Nome */}
               <div className="md:col-span-2">
@@ -345,70 +363,7 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
                 </div>
               )}
 
-              {/* Mensalista */}
-              {showMonthlyFields && (
-                <>
-                  <div className="md:col-span-2">
-                    <FormLabel className="block mb-3 text-sm font-medium text-gray-700">
-                      Dias da semana desejados
-                    </FormLabel>
-                    <div className="flex flex-wrap gap-2">
-                      {WEEK_DAYS.map((day) => {
-                        const current = form.watch("weekDays") ?? [];
-                        const checked = current.includes(day.id);
-                        return (
-                          <button
-                            key={day.id}
-                            type="button"
-                            onClick={() => {
-                              const next = checked
-                                ? current.filter((d) => d !== day.id)
-                                : [...current, day.id];
-                              form.setValue("weekDays", next);
-                            }}
-                            className={`px-4 py-2 rounded-full text-sm font-medium border-2 transition-colors ${
-                              checked
-                                ? "bg-coral text-white border-coral"
-                                : "bg-white text-gray-600 border-gray-300 hover:border-coral"
-                            }`}
-                          >
-                            {day.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className="md:col-span-2">
-                    <FormField
-                      control={form.control}
-                      name="dailyHours"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Carga horária diária</FormLabel>
-                          <Select
-                            value={field.value ? String(field.value) : ""}
-                            onValueChange={(v) => field.onChange(parseInt(v))}
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Horas por dia" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {DAILY_HOURS_OPTIONS.map((d) => (
-                                <SelectItem key={d.value} value={String(d.value)}>
-                                  {d.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </>
-              )}
+              {/* Mensalista fields removed */}
 
               {/* Endereço — CEP primeiro */}
               <div className="md:col-span-2">
@@ -579,7 +534,7 @@ export function QuoteModal({ isOpen, onClose, onSubmit, isLoading, initialServic
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-coral hover:bg-orange-500"
+                className="flex-1 bg-vermelho hover:bg-vermelho/80"
                 disabled={isLoading}
               >
                 {isLoading ? (

@@ -1,8 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { ZodError } from "zod";
-import { quoteRequestSchema, contactFormSchema, QuoteRequest, ContactForm, QuoteResult } from "@shared/schema";
-import { sendContactEmail, sendQuoteEmail } from "./email";
+import { quoteRequestSchema, contactFormSchema, jobApplicationSchema, QuoteRequest, ContactForm, JobApplication, QuoteResult } from "@shared/schema";
+import { sendContactEmail, sendQuoteEmail, sendJobApplicationEmail } from "./email";
 import { verifyRecaptchaToken } from "./recaptcha";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -74,6 +74,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       console.error("[send-contact] Erro inesperado:", error);
       res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Erro ao enviar mensagem" });
+    }
+  });
+
+  app.post("/api/send-job-application", async (req, res) => {
+    console.log("[send-job-application] body recebido:", JSON.stringify(req.body, null, 2));
+    try {
+      const { recaptchaToken: jobCaptchaToken, ...jobBody } = req.body;
+
+      console.log("[send-job-application] recaptchaToken presente:", !!jobCaptchaToken);
+
+      const captchaOk = await verifyRecaptchaToken(jobCaptchaToken);
+      if (!captchaOk) {
+        console.warn("[send-job-application] reCAPTCHA falhou.");
+        return res.status(400).json({ success: false, message: "Verificação de segurança falhou. Tente novamente." });
+      }
+
+      console.log("[send-job-application] reCAPTCHA ok. Validando schema...");
+      const validatedApplication = jobApplicationSchema.parse(jobBody);
+      console.log("[send-job-application] Schema válido. Enviando e-mail...");
+
+      try {
+        await sendJobApplicationEmail(validatedApplication);
+        console.log("[send-job-application] E-mail enviado com sucesso.");
+      } catch (emailErr) {
+        console.error("[send-job-application] Falha ao enviar e-mail:", emailErr);
+      }
+
+      res.json({ success: true, message: "Cadastro enviado com sucesso!" });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        console.error("[send-job-application] Erro de validação Zod:", JSON.stringify(error.errors, null, 2));
+        return res.status(400).json({ success: false, message: "Dados inválidos: " + error.errors.map(e => `${e.path.join(".")}: ${e.message}`).join(", ") });
+      }
+      console.error("[send-job-application] Erro inesperado:", error);
+      res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Erro ao enviar cadastro" });
     }
   });
 

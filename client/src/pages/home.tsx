@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,29 +39,37 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
   return (
     <div className="pt-20 lg:pt-24">
+      <Helmet>
+        <title>Babás em Santos SP · Cuidar & Crescer — Babá Profissional</title>
+        <meta name="description" content="Babás profissionais em Santos e Baixada Santista. Seleção rigorosa, treinamento próprio e metodologia Montessoriana. Solicite orçamento online gratuito." />
+        <link rel="canonical" href="https://babascuidarecrescer.com.br/" />
+        <meta property="og:title" content="Babás em Santos SP · Cuidar & Crescer — Babá Profissional" />
+        <meta property="og:description" content="Babás profissionais em Santos e Baixada Santista. Seleção rigorosa, treinamento próprio e metodologia Montessoriana." />
+        <meta property="og:url" content="https://babascuidarecrescer.com.br/" />
+      </Helmet>
 
       {/* ── Hero ── */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-orange-50 via-white to-blue-50">
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-bege via-white to-azul/10">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center max-w-4xl mx-auto">
-            <p className="text-sm font-semibold text-coral uppercase tracking-widest mb-4">
+            <p className="text-sm font-semibold text-vermelho uppercase tracking-widest mb-4">
               Desde {COMPANY_INFO.founded} · Baixada Santista e região
             </p>
             <h1 className="text-4xl lg:text-6xl font-bold mb-8 leading-tight">
-              <span className="text-coral">Cuidado</span> e{" "}
-              <span className="text-soft-blue">desenvolvimento</span> com{" "}
-              <span className="text-sage">acolhimento</span>,{" "}
-              <span className="text-soft-purple">segurança</span> e{" "}
-              <span className="text-soft-pink">profissionalismo</span>
+              <span className="text-vermelho">Cuidado</span> e{" "}
+              <span className="text-azul">desenvolvimento</span> com{" "}
+              <span className="text-verde">acolhimento</span>,{" "}
+              <span className="text-roxo">segurança</span> e{" "}
+              <span className="text-rosa">profissionalismo</span>
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-12 leading-relaxed">
-              Conectamos famílias a babás treinadas e certificadas — profissionais que cuidam com técnica,
+              Conectamos famílias em Santos e Baixada Santista a babás treinadas e certificadas — profissionais que cuidam com técnica,
               carinho e olhar atento para o desenvolvimento de cada criança.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => onOpenQuoteModal()}
-                className="bg-coral text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-orange-500 transition-all shadow-lg transform hover:scale-105"
+                className="bg-vermelho text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-vermelho/80 transition-all shadow-lg transform hover:scale-105"
               >
                 <i className="fas fa-calculator mr-2"></i> Solicitar Orçamento
               </Button>
@@ -84,7 +93,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-              Conheça <span className="text-coral">Nossos Serviços</span>
+              Conheça <span className="text-vermelho">Nossos Serviços</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Modalidades pensadas para cada momento da rotina familiar — do dia a dia ao cuidado especial em eventos e viagens.
@@ -104,21 +113,22 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
       </section>
 
       {/* ── Por que escolher a Cuidar & Crescer ── */}
-      <section className="py-16 lg:py-24 bg-gradient-to-r from-coral/5 to-sage/5">
+      <section className="py-16 lg:py-24 bg-gradient-to-r from-vermelho/5 to-verde/5">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <img
                   src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-                  alt="Profissional cuidando de criança em ambiente seguro"
+                  alt="Babá profissional cuidando de criança em ambiente seguro em Santos"
+                  loading="lazy"
                   className="rounded-2xl shadow-2xl w-full h-auto"
                 />
               </div>
               <div>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4">
                   Por que escolher a{" "}
-                  <span className="text-coral">Cuidar & Crescer</span>?
+                  <span className="text-vermelho">Cuidar & Crescer</span>?
                 </h2>
                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                   Seleção criteriosa, treinamento certificado e metodologia própria — tudo para que você confie plenamente em quem cuida dos seus filhos.
@@ -126,25 +136,25 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 <div className="space-y-5">
                   {[
                     {
-                      bg: "bg-coral",
+                      bg: "bg-vermelho",
                       icon: "fas fa-user-shield",
                       title: "Seleção Rigorosa",
                       text: "Verificação de experiências, referências e histórico profissional antes de qualquer vínculo.",
                     },
                     {
-                      bg: "bg-sage",
+                      bg: "bg-verde",
                       icon: "fas fa-graduation-cap",
                       title: "Curso de Babá Profissional",
                       text: "Todas as profissionais passam por treinamento completo com primeiros socorros e desenvolvimento infantil.",
                     },
                     {
-                      bg: "bg-soft-blue",
+                      bg: "bg-azul",
                       icon: "fas fa-seedling",
                       title: "Metodologia Montessoriana",
                       text: "Educação respeitosa e afirmativa, autonomia e desenvolvimento sensorial integrados à rotina.",
                     },
                     {
-                      bg: "bg-soft-purple",
+                      bg: "bg-roxo",
                       icon: "fas fa-mobile-alt",
                       title: "Sem Uso de Telas",
                       text: "Compromisso firme: estímulo real através do brincar, da música, da leitura e da presença ativa.",
@@ -173,13 +183,13 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                <span className="text-coral">Treinamento</span> das nossas profissionais
+                <span className="text-vermelho">Treinamento</span> das nossas profissionais
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Antes de qualquer atendimento, todas as babás concluem nosso Curso de Babá Profissional — 12 módulos que garantem padrão de qualidade em cada visita.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-coral/5 to-sage/5 rounded-2xl p-8 lg:p-10">
+            <div className="bg-gradient-to-br from-vermelho/5 to-verde/5 rounded-2xl p-8 lg:p-10">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[
                   "Cuidados Pessoais padrão Cuidar e Crescer",
@@ -196,7 +206,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                   "Desenvolvimento Infantil",
                 ].map((topic, index) => (
                   <div key={index} className="flex items-start space-x-3">
-                    <span className="text-coral mt-0.5 flex-shrink-0">
+                    <span className="text-vermelho mt-0.5 flex-shrink-0">
                       <i className="fas fa-check-circle"></i>
                     </span>
                     <span className="text-gray-700 text-sm">{topic}</span>
@@ -209,12 +219,12 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
       </section>
 
       {/* ── Sobre ── */}
-      <section id="sobre" className="py-16 lg:py-24 bg-gradient-to-br from-sage/5 to-soft-blue/5">
+      <section id="sobre" className="py-16 lg:py-24 bg-gradient-to-br from-verde/5 to-azul/5">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-                <span className="text-sage">Sobre</span> a <span className="text-coral">Cuidar & Crescer</span>
+                <span className="text-verde">Sobre</span> a <span className="text-vermelho">Cuidar & Crescer</span>
               </h2>
             </div>
 
@@ -232,6 +242,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 <img
                   src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
                   alt="Família feliz com crianças brincando em ambiente seguro e colorido"
+                  loading="lazy"
                   className="rounded-2xl shadow-2xl w-full h-auto"
                 />
               </div>
@@ -239,7 +250,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-coral text-4xl mb-4">
+                <div className="text-vermelho text-4xl mb-4">
                   <i className="fas fa-bullseye"></i>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Missão</h3>
@@ -247,7 +258,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               </div>
 
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-sage text-4xl mb-4">
+                <div className="text-verde text-4xl mb-4">
                   <i className="fas fa-eye"></i>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Visão</h3>
@@ -255,7 +266,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               </div>
 
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-soft-blue text-4xl mb-4">
+                <div className="text-azul text-4xl mb-4">
                   <i className="fas fa-heart"></i>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Valores</h3>
@@ -266,115 +277,14 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
         </div>
       </section>
 
-      {/* ── Valores / Preços ── */}
-      <section id="valores" className="py-16 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 lg:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-              <span className="text-coral">Valores</span> dos Nossos Serviços
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Transparência total em nossos preços para que você possa planejar com segurança
-            </p>
-          </div>
-
-          {/* Desktop Table */}
-          <div className="hidden lg:block overflow-x-auto mb-8">
-            <table className="w-full bg-white rounded-2xl shadow-lg overflow-hidden">
-              <thead className="bg-gradient-to-r from-coral to-orange-400 text-white">
-                <tr>
-                  <th className="px-6 py-4 text-left font-semibold">Serviço</th>
-                  <th className="px-6 py-4 text-left font-semibold">Dias de Semana</th>
-                  <th className="px-6 py-4 text-left font-semibold">Finais de Semana</th>
-                  <th className="px-6 py-4 text-left font-semibold">Adicionais</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {PRICING_TABLE.map((row, index) => (
-                  <tr key={index} className={`hover:bg-gray-50 ${index === 3 ? "bg-gradient-to-r from-yellow-50 to-orange-50" : ""}`}>
-                    <td className="px-6 py-6">
-                      <div className="font-semibold text-warm-gray">{row.service}</div>
-                      <div className="text-sm text-gray-500">{row.description}</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="whitespace-pre-line text-warm-gray">{row.weekday}</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="whitespace-pre-line text-warm-gray">{row.weekend}</div>
-                    </td>
-                    <td className="px-6 py-6">
-                      <div className="whitespace-pre-line text-gray-600">{row.additional}</div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile Cards */}
-          <div className="lg:hidden space-y-6 mb-8">
-            {PRICING_TABLE.map((row, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div
-                  className={`px-6 py-4 text-white ${
-                    index === 0 ? "bg-gradient-to-r from-coral to-orange-400" :
-                    index === 1 ? "bg-gradient-to-r from-soft-blue to-blue-400" :
-                    index === 2 ? "bg-gradient-to-r from-soft-pink to-pink-400" :
-                    "bg-gradient-to-r from-yellow-500 to-orange-500"
-                  }`}
-                >
-                  <h3 className="font-semibold text-lg">{row.service}</h3>
-                  <p className="text-sm opacity-90">{row.description}</p>
-                </div>
-                <div className="p-6 space-y-4">
-                  <div>
-                    <span className="font-medium text-gray-700">Dias de semana:</span>
-                    <div className="text-gray-600 whitespace-pre-line">{row.weekday}</div>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-700">Finais de semana:</span>
-                    <div className="text-gray-600 whitespace-pre-line">{row.weekend}</div>
-                  </div>
-                  <div className="border-t pt-4">
-                    <span className="font-medium text-gray-700">Adicionais:</span>
-                    <div className="text-gray-600 whitespace-pre-line">{row.additional}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mb-16">
-            <Button
-              onClick={() => onOpenQuoteModal()}
-              className="bg-coral text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-orange-500 transition-all shadow-lg"
-            >
-              <i className="fas fa-calculator mr-2"></i>
-              Calcular Meu Orçamento
-            </Button>
-          </div>
-
-          <div className="bg-gradient-to-r from-coral/10 to-sage/10 p-6 rounded-xl">
-            <h3 className="font-semibold text-lg mb-3">
-              <i className="fas fa-info-circle mr-2 text-coral"></i>
-              Informações Importantes sobre Pagamentos:
-            </h3>
-            <div className="text-sm text-gray-700 space-y-2">
-              <p>• Os serviços são realizados mediante pagamento ou sinal de até 50% do valor acordado</p>
-              <p>• Atendimentos mensalistas possuem valor fixo, não será descontado mediante cancelamento ou diminuição de horas</p>
-              <p>• Pagamentos devem ser feitos na data combinada previamente ou em até 48 horas após o atendimento</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── Contato ── */}
-      <section id="contato" className="py-16 lg:py-24 bg-gradient-to-br from-sage/5 to-soft-blue/5">
+      <section id="contato" className="py-16 lg:py-24 bg-gradient-to-br from-verde/5 to-azul/5">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-5xl font-bold mb-6">
-                Entre em <span className="text-coral">Contato</span>
+                Entre em <span className="text-vermelho">Contato</span>
               </h2>
               <p className="text-xl text-gray-600">
                 Solicite seu orçamento ou tire suas dúvidas. Estamos aqui para ajudar!
@@ -399,20 +309,20 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <div className="bg-coral text-white p-4 rounded-full">
+                    <div className="bg-vermelho text-white p-4 rounded-full">
                       <i className="fas fa-envelope text-xl"></i>
                     </div>
                     <div>
                       <h4 className="font-semibold text-lg">E-mail</h4>
                       <p className="text-gray-600">Para dúvidas e orçamentos detalhados</p>
-                      <a href={`mailto:${COMPANY_INFO.email}`} className="text-coral font-medium hover:underline">
+                      <a href={`mailto:${COMPANY_INFO.email}`} className="text-vermelho font-medium hover:underline">
                         {COMPANY_INFO.email}
                       </a>
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <div className="bg-soft-blue text-white p-4 rounded-full">
+                    <div className="bg-azul text-white p-4 rounded-full">
                       <i className="fas fa-clock text-xl"></i>
                     </div>
                     <div>
@@ -423,7 +333,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                   </div>
                 </div>
 
-                <div className="mt-8 p-6 bg-gradient-to-r from-coral/10 to-sage/10 rounded-2xl">
+                <div className="mt-8 p-6 bg-gradient-to-r from-vermelho/10 to-verde/10 rounded-2xl">
                   <h4 className="font-semibold text-lg mb-3 text-warm-gray">Atendimento 24h para Emergências</h4>
                   <p className="text-gray-600 text-sm">
                     Para situações urgentes com nossas babás já contratadas, oferecemos suporte 24 horas por dia.
@@ -529,7 +439,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                       <div className="flex flex-col sm:flex-row gap-4">
                         <Button
                           type="submit"
-                          className="flex-1 bg-coral hover:bg-orange-500"
+                          className="flex-1 bg-vermelho hover:bg-vermelho/80"
                           disabled={isContactLoading}
                         >
                           {isContactLoading ? (
@@ -555,7 +465,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
       </section>
 
       {/* ── CTA Final ── */}
-      <section className="py-16 lg:py-20 bg-coral">
+      <section className="py-16 lg:py-20 bg-vermelho">
         <div className="container mx-auto px-4 lg:px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
             Sua família merece o melhor cuidado
@@ -566,7 +476,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               onClick={() => onOpenQuoteModal()}
-              className="bg-white text-coral px-8 py-4 rounded-full text-lg font-semibold hover:bg-orange-50 transition-all shadow-lg transform hover:scale-105"
+              className="bg-white text-vermelho px-8 py-4 rounded-full text-lg font-semibold hover:bg-bege transition-all shadow-lg transform hover:scale-105"
             >
               <i className="fas fa-calculator mr-2"></i> Solicitar Orçamento
             </Button>

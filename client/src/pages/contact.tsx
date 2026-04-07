@@ -40,7 +40,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <h1 className="text-3xl lg:text-5xl font-bold mb-6">
-                Entre em <span className="text-coral">Contato</span>
+                Entre em <span className="text-vermelho">Contato</span>
               </h1>
               <p className="text-xl text-gray-600">
                 Solicite seu orçamento ou tire suas dúvidas. Estamos aqui para ajudar!
@@ -72,7 +72,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="bg-coral text-white p-4 rounded-full">
+                    <div className="bg-vermelho text-white p-4 rounded-full">
                       <i className="fas fa-envelope text-xl"></i>
                     </div>
                     <div>
@@ -80,7 +80,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                       <p className="text-gray-600">Para dúvidas e orçamentos detalhados</p>
                       <a 
                         href={`mailto:${COMPANY_INFO.email}`} 
-                        className="text-coral font-medium hover:underline"
+                        className="text-vermelho font-medium hover:underline"
                       >
                         {COMPANY_INFO.email}
                       </a>
@@ -88,7 +88,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <div className="bg-soft-blue text-white p-4 rounded-full">
+                    <div className="bg-azul text-white p-4 rounded-full">
                       <i className="fas fa-clock text-xl"></i>
                     </div>
                     <div>
@@ -99,7 +99,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                   </div>
                 </div>
 
-                <div className="mt-8 p-6 bg-gradient-to-r from-coral/10 to-sage/10 rounded-2xl">
+                <div className="mt-8 p-6 bg-gradient-to-r from-vermelho/10 to-verde/10 rounded-2xl">
                   <h3 className="font-semibold text-lg mb-3 text-warm-gray">Atendimento 24h para Emergências</h3>
                   <p className="text-gray-600 text-sm">
                     Para situações urgentes com nossas babás já contratadas, oferecemos suporte 24 horas por dia.
@@ -218,7 +218,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                       <div className="flex flex-col sm:flex-row gap-4">
                         <Button
                           type="submit"
-                          className="flex-1 bg-coral hover:bg-orange-500"
+                          className="flex-1 bg-vermelho hover:bg-vermelho/80"
                           disabled={isLoading}
                         >
                           {isLoading ? (
