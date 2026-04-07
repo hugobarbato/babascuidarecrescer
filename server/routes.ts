@@ -1,44 +1,35 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { ZodError } from "zod";
-import { quoteRequestSchema, contactFormSchema, jobApplicationSchema, QuoteRequest, ContactForm, JobApplication, QuoteResult } from "@shared/schema";
-import { sendContactEmail, sendQuoteEmail, sendJobApplicationEmail } from "./email";
+import { leadCaptureSchema, contactFormSchema, jobApplicationSchema, LeadCapture, ContactForm, JobApplication } from "@shared/schema";
+import { sendContactEmail, sendLeadEmail, sendJobApplicationEmail } from "./email";
 import { verifyRecaptchaToken } from "./recaptcha";
 
 export async function registerRoutes(app: Express): Promise<Server> {
 
-  app.post("/api/send-quote", async (req, res) => {
-    console.log("[send-quote] body recebido:", JSON.stringify(req.body, null, 2));
+  app.post("/api/send-lead", async (req, res) => {
     try {
-      const { quoteData, quoteResult, recaptchaToken } = req.body;
-
-      console.log("[send-quote] recaptchaToken presente:", !!recaptchaToken);
+      const { recaptchaToken, ...body } = req.body;
 
       const captchaOk = await verifyRecaptchaToken(recaptchaToken);
       if (!captchaOk) {
-        console.warn("[send-quote] reCAPTCHA falhou.");
         return res.status(400).json({ success: false, message: "Verificação de segurança falhou. Tente novamente." });
       }
 
-      console.log("[send-quote] reCAPTCHA ok. Validando schema...");
-      const validatedQuote = quoteRequestSchema.parse(quoteData);
-      console.log("[send-quote] Schema válido. Enviando e-mail...");
+      const validated = leadCaptureSchema.parse(body);
 
       try {
-        await sendQuoteEmail(validatedQuote, quoteResult);
-        console.log("[send-quote] E-mail enviado com sucesso.");
+        await sendLeadEmail(validated);
       } catch (emailErr) {
-        console.error("[send-quote] Falha ao enviar e-mail:", emailErr);
+        console.error("[send-lead] Falha ao enviar e-mail:", emailErr);
       }
 
-      res.json({ success: true, message: "Orçamento enviado com sucesso!" });
+      res.json({ success: true, message: "Mensagem enviada com sucesso!" });
     } catch (error) {
       if (error instanceof ZodError) {
-        console.error("[send-quote] Erro de validação Zod:", JSON.stringify(error.errors, null, 2));
         return res.status(400).json({ success: false, message: "Dados inválidos: " + error.errors.map(e => `${e.path.join(".")}: ${e.message}`).join(", ") });
       }
-      console.error("[send-quote] Erro inesperado:", error);
-      res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Erro ao enviar orçamento" });
+      res.status(400).json({ success: false, message: error instanceof Error ? error.message : "Erro ao enviar mensagem" });
     }
   });
 
