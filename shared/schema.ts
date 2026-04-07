@@ -3,7 +3,7 @@ import { z } from "zod";
 export const leadCaptureSchema = z.object({
   serviceType: z.string().min(1, "Selecione um serviço"),
   clientName: z.string().min(2, "Informe seu nome"),
-  cep: z.string().min(8, "CEP inválido"),
+  cep: z.string().min(8, "CEP inválido").optional(),
   neighborhood: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),

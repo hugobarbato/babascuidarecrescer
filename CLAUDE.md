@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Cuidar & Crescer** — A Brazilian childcare services business website with lead generation, instant quote calculation, and email notifications. Built as a full-stack TypeScript monorepo.
+**Cuidar & Crescer** — A Brazilian childcare services business website with lead generation, contact forms, job applications, and email notifications. Built as a full-stack TypeScript monorepo.
 
 ## Commands
 
@@ -24,11 +24,11 @@ npm run db:push   # Apply Drizzle ORM migrations to PostgreSQL
 - `server/` — Express 4 REST API (serves API + static assets in production)
 - `shared/` — Zod schemas shared between client and server (`schema.ts`)
 
-**Request flow for quote/contact forms:**
-1. User fills form → client-side quote calculation via `client/src/lib/quote-calculator.ts`
-2. POST to `/api/send-quote` or `/api/send-contact` with reCAPTCHA token
-3. Server: Zod validation → reCAPTCHA v2 verification → Resend email API
-4. Emails sent to company + confirmation to client (if email provided)
+**Request flow for all forms:**
+1. User fills form → `ContactModal` or page-level form submits to an API endpoint
+2. POST includes a `recaptchaToken` field alongside the form body
+3. Server: reCAPTCHA v2 verification → Zod validation → Resend email API
+4. On error, the `recaptchaToken` is stripped before Zod parsing
 
 **Key path aliases** (configured in `tsconfig.json` and `vite.config.ts`):
 - `@/*` → `client/src/*`
@@ -39,19 +39,28 @@ npm run db:push   # Apply Drizzle ORM migrations to PostgreSQL
 
 | File | Purpose |
 |------|---------|
-| `server/routes.ts` | Two API endpoints: `POST /api/send-quote`, `POST /api/send-contact` |
-| `server/email.ts` | Resend-based email templates with company branding |
+| `server/routes.ts` | Three API endpoints: `POST /api/send-lead`, `POST /api/send-contact`, `POST /api/send-job-application` |
+| `server/email.ts` | Resend-based HTML email templates (`sendLeadEmail`, `sendContactEmail`, `sendJobApplicationEmail`) |
 | `server/recaptcha.ts` | reCAPTCHA v2 token verification (graceful fallback if key missing) |
-| `client/src/lib/quote-calculator.ts` | Pricing logic for 4 service types (hourly, travel, vale-night, monthly) |
+| `shared/schema.ts` | Zod schemas: `leadCaptureSchema`, `contactFormSchema`, `jobApplicationSchema` |
+| `client/src/App.tsx` | Root: manages `ContactModal` open/close state, passes `onOpenQuoteModal` down to all pages |
+| `client/src/components/quote/contact-modal.tsx` | Lead capture modal (WhatsApp CTA + email fallback), uses `/api/send-lead` |
+| `client/src/pages/work-with-us.tsx` | Job application page, uses `/api/send-job-application` |
+| `client/src/lib/whatsapp.ts` | WhatsApp URL builder utility |
 | `client/src/lib/analytics.ts` | Google Analytics event tracking |
-| `shared/schema.ts` | Zod schemas: `quoteRequestSchema`, `contactFormSchema`, `QuoteResult` |
+
+## Routes
+
+- `/` — Home (hero, services overview, CTAs)
+- `/services/:id` — Service detail page
+- `/trabalhe-conosco` — Job application page
 
 ## Environment Variables
 
 Required in `.env` (see `.env.example`):
 
 ```
-COMPANY_EMAIL=          # Destination for lead emails
+COMPANY_EMAIL=          # Destination for lead/contact/job emails
 RESEND_API_KEY=         # Resend API key
 RESEND_FROM_EMAIL=      # Sender address (e.g., "Company <noreply@domain.com>")
 VITE_RECAPTCHA_SITE_KEY= # Public key (exposed to frontend via Vite)
@@ -63,7 +72,7 @@ Optional (not active):
 
 ## Current State Notes
 
-- **No database in use** — quotes/contacts are emailed only; `server/storage.ts` is an in-memory placeholder
+- **No database in use** — all submissions are emailed only; `server/storage.ts` is an in-memory placeholder
 - **No authentication flows active** — Passport.js and express-session are installed but unused
-- **Email provider** — Migrated from Gmail/Nodemailer to Resend; `.env.example` still shows legacy Gmail vars
-- **Drizzle ORM** is configured pointing to `shared/schema.ts` but no DB table definitions exist yet — only Zod validation schemas
+- **Drizzle ORM** is configured but `shared/schema.ts` contains only Zod validation schemas, not Drizzle table definitions
+- **Email direction**: `sendContactEmail` → TO client, CC company; `sendLeadEmail` and `sendJobApplicationEmail` (company notification) → TO company, candidate also gets a confirmation copy for job applications

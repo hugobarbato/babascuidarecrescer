@@ -64,7 +64,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
   };
 
   const handleWhatsApp = async () => {
-    const valid = await form.trigger(["serviceType", "clientName", "cep"]);
+    const valid = await form.trigger(["serviceType", "clientName"]);
     if (!valid) return;
 
     const values = form.getValues();
@@ -164,7 +164,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
               name="cep"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>CEP *</FormLabel>
+                  <FormLabel>CEP <span className="text-gray-400 font-normal">(opcional)</span></FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -183,6 +183,9 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
                       )}
                     </div>
                   </FormControl>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Usamos o CEP apenas para identificar o bairro, cidade e estado do atendimento.
+                  </p>
                   <FormMessage />
                 </FormItem>
               )}
