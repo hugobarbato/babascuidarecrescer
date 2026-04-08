@@ -12,6 +12,7 @@ import { SERVICES, COMPANY_INFO, PRICING_TABLE } from "@/lib/constants";
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { loadRecaptcha } from "@/lib/recaptcha";
 import { WhatsAppIcon, ServiceIcon, Calculator, CheckCircle2, Target, Eye, Heart, Mail, Clock, Loader2, Send } from "@/lib/icons";
 import blocksImg from "@assets/blocks.webp";
 import nossaHistoriaImg from "@assets/nossa-historia.webp";
@@ -33,6 +34,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
   const handleContactSubmit = async (data: ContactForm) => {
     let recaptchaToken = "";
     if (siteKey) {
+      await loadRecaptcha();
       await new Promise<void>((resolve) => grecaptcha.ready(resolve));
       recaptchaToken = await grecaptcha.execute(siteKey, { action: "contact_submit" });
     }

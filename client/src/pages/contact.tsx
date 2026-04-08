@@ -10,6 +10,7 @@ import { ContactForm, contactFormSchema } from "@shared/schema";
 import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { loadRecaptcha } from "@/lib/recaptcha";
 interface ContactPageProps {
   onOpenQuoteModal: (service?: string) => void;
 }
@@ -26,6 +27,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
   const handleSubmit = async (data: ContactForm) => {
     let recaptchaToken = "";
     if (siteKey) {
+      await loadRecaptcha();
       await new Promise<void>((resolve) => grecaptcha.ready(resolve));
       recaptchaToken = await grecaptcha.execute(siteKey, { action: "contact_submit" });
     }

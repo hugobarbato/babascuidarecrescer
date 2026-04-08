@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { loadRecaptcha } from "@/lib/recaptcha";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -87,6 +88,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
     try {
       let recaptchaToken = "";
       if (siteKey) {
+        await loadRecaptcha();
         await new Promise<void>((resolve) => grecaptcha.ready(resolve));
         recaptchaToken = await grecaptcha.execute(siteKey, { action: "lead_submit" });
       }

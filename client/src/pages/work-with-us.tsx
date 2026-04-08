@@ -9,6 +9,7 @@ import { JobApplication, jobApplicationSchema } from "@shared/schema";
 import { COMPANY_INFO } from "@/lib/constants";
 import { useJobApplication } from "@/hooks/use-job-application";
 import { trackWhatsAppClick } from "@/lib/analytics";
+import { loadRecaptcha } from "@/lib/recaptcha";
 import { WhatsAppIcon, ServiceIcon, CheckCircle2, Award, Loader2, Send, Mail } from "@/lib/icons";
 
 interface WorkWithUsProps {
@@ -27,6 +28,7 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
   const handleSubmit = async (data: JobApplication) => {
     let recaptchaToken = "";
     if (siteKey) {
+      await loadRecaptcha();
       await new Promise<void>((resolve) => grecaptcha.ready(resolve));
       recaptchaToken = await grecaptcha.execute(siteKey, { action: "job_application_submit" });
     }
