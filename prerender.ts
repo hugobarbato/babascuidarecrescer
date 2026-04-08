@@ -43,14 +43,10 @@ function extractFontPreloads(html: string): string {
   return html.replace("</head>", `${preloadTags}\n</head>`);
 }
 
-// Converte <link rel="stylesheet"> em preload não-bloqueante para eliminar render-blocking CSS
-const template = extractFontPreloads(rawTemplate).replace(
-  /<link rel="stylesheet"([^>]*)>/g,
-  (_, attrs) => {
-    const href = (attrs.match(/href="([^"]+)"/) ?? [])[1] ?? "";
-    return `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${href}"></noscript>`;
-  }
-);
+// CSS mantido bloqueante: com SSG+CDN o custo é ~100-200ms mas garante que o LCP
+// (<h1> hero) seja pintado com estilos e fontes corretos no primeiro render,
+// evitando o atraso de 2.5s causado pelo font-display:swap após CSS não-bloqueante.
+const template = extractFontPreloads(rawTemplate);
 
 for (const route of routes as string[]) {
   console.log(`Pre-rendering: ${route}`);
