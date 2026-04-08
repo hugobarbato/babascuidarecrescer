@@ -74,7 +74,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => onOpenQuoteModal()}
-                className="bg-vermelho text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-vermelho/80 transition-all shadow-lg transform hover:scale-105"
+                className="w-full sm:w-auto bg-vermelho text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-vermelho/80 transition-all shadow-lg transform hover:scale-105"
               >
                 <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
               </Button>
@@ -83,8 +83,9 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick("home_hero")}
+                className="w-full sm:w-auto"
               >
-                <Button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
+                <Button className="w-full bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
                   <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
                 </Button>
               </a>
