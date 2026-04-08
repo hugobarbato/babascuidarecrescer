@@ -167,7 +167,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
               name="cep"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>CEP <span className="text-gray-400 font-normal">(opcional)</span></FormLabel>
+                  <FormLabel>CEP <span className="text-gray-500 font-normal">(opcional)</span></FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -186,7 +186,7 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
                       )}
                     </div>
                   </FormControl>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-500 mt-1">
                     Usamos o CEP apenas para identificar o bairro, cidade e estado do atendimento.
                   </p>
                   <FormMessage />
@@ -249,16 +249,16 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
               <>
                 <Button
                   type="button"
-                  className="w-full bg-[#25d366] hover:bg-[#1ebe59] text-white font-bold text-base py-6"
+                  className="w-full bg-green-700 hover:bg-green-800 text-white font-bold text-base py-6"
                   onClick={handleWhatsApp}
                 >
                   💬 Falar no WhatsApp agora
                 </Button>
-                <p className="text-center text-sm text-gray-400">
+                <p className="text-center text-sm text-gray-500">
                   Prefere receber por e-mail?{" "}
                   <button
                     type="button"
-                    className="text-orange-500 underline hover:text-orange-600"
+                    className="text-orange-700 underline hover:text-orange-800"
                     onClick={() => setEmailMode(true)}
                   >
                     Clique aqui
@@ -277,10 +277,10 @@ export function ContactModal({ isOpen, onClose, initialService }: ContactModalPr
                   ) : "📧 "}
                   Enviar por e-mail
                 </Button>
-                <p className="text-center text-sm text-gray-400">
+                <p className="text-center text-sm text-gray-500">
                   <button
                     type="button"
-                    className="text-[#25d366] font-semibold hover:underline"
+                    className="text-green-700 font-semibold hover:underline"
                     onClick={() => setEmailMode(false)}
                   >
                     ← Voltar para WhatsApp

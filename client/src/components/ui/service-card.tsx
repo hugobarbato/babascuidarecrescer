@@ -12,25 +12,25 @@ interface ServiceCardProps {
 export function ServiceCard({ service, onRequestQuote, detailHref }: ServiceCardProps) {
   const getColorClasses = () => {
     switch (service.color) {
-      case "vermelho": return { text: "text-vermelho", bg: "bg-vermelho", border: "border-vermelho", hover: "hover:bg-vermelho" };
-      case "verde":    return { text: "text-verde",    bg: "bg-verde",    border: "border-verde",    hover: "hover:bg-verde" };
-      case "azul":     return { text: "text-azul",     bg: "bg-azul",     border: "border-azul",     hover: "hover:bg-azul" };
-      case "rosa":     return { text: "text-rosa",     bg: "bg-rosa",     border: "border-rosa",     hover: "hover:bg-rosa" };
-      case "amarelo":  return { text: "text-amarelo",  bg: "bg-amarelo",  border: "border-amarelo",  hover: "hover:bg-amarelo" };
-      case "roxo":     return { text: "text-roxo",     bg: "bg-roxo",     border: "border-roxo",     hover: "hover:bg-roxo" };
-      default:         return { text: "text-vermelho", bg: "bg-vermelho", border: "border-vermelho", hover: "hover:bg-vermelho" };
+      case "vermelho": return { text: "text-vermelho-dark", bg: "bg-vermelho-dark", border: "border-vermelho", hover: "hover:bg-vermelho-dark" };
+      case "verde":    return { text: "text-verde-dark",    bg: "bg-verde-dark",    border: "border-verde",    hover: "hover:bg-verde-dark" };
+      case "azul":     return { text: "text-azul-dark",     bg: "bg-azul-dark",     border: "border-azul",     hover: "hover:bg-azul-dark" };
+      case "rosa":     return { text: "text-rosa-dark",     bg: "bg-rosa-dark",     border: "border-rosa",     hover: "hover:bg-rosa-dark" };
+      case "amarelo":  return { text: "text-amarelo-dark",  bg: "bg-amarelo-dark",  border: "border-amarelo",  hover: "hover:bg-amarelo-dark" };
+      case "roxo":     return { text: "text-roxo-dark",     bg: "bg-roxo-dark",     border: "border-roxo",     hover: "hover:bg-roxo-dark" };
+      default:         return { text: "text-vermelho-dark", bg: "bg-vermelho-dark", border: "border-vermelho", hover: "hover:bg-vermelho-dark" };
     }
   };
 
   const getBadgeClasses = () => {
     switch (service.color) {
-      case "vermelho": return "bg-vermelho/20 text-vermelho";
-      case "verde":    return "bg-verde/20 text-verde";
-      case "azul":     return "bg-azul/20 text-azul";
-      case "rosa":     return "bg-rosa/20 text-rosa";
-      case "amarelo":  return "bg-amarelo/20 text-amarelo";
-      case "roxo":     return "bg-roxo/20 text-roxo";
-      default:         return "bg-vermelho/20 text-vermelho";
+      case "vermelho": return "bg-vermelho/20 text-vermelho-dark";
+      case "verde":    return "bg-verde/20 text-verde-dark";
+      case "azul":     return "bg-azul/20 text-azul-dark";
+      case "rosa":     return "bg-rosa/20 text-rosa-dark";
+      case "amarelo":  return "bg-amarelo/20 text-amarelo-dark";
+      case "roxo":     return "bg-roxo/20 text-roxo-dark";
+      default:         return "bg-vermelho/20 text-vermelho-dark";
     }
   };
 

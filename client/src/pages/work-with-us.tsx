@@ -324,7 +324,7 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                     )}
                   </Button>
 
-                  <p className="text-xs text-gray-400 text-center">
+                  <p className="text-xs text-gray-500 text-center">
                     Seus dados serão utilizados exclusivamente para fins de recrutamento pela {COMPANY_INFO.name}.
                   </p>
                 </form>
@@ -342,7 +342,7 @@ export default function WorkWithUs({ onOpenQuoteModal }: WorkWithUsProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick("work_with_us_cta")}
-                  className="inline-flex items-center justify-center gap-2 bg-green-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-600 transition-colors shadow-lg"
+                  className="inline-flex items-center justify-center gap-2 bg-green-700 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-800 transition-colors shadow-lg"
                 >
                   <WhatsAppIcon className="w-5 h-5" />
                   Quero fazer parte da equipe

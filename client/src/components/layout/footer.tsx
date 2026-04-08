@@ -111,7 +111,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
             </div>
             
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">© 2024 Cuidar & Crescer. Todos os direitos reservados.</p>
+              <p className="text-gray-500 text-sm">© 2024 Cuidar & Crescer. Todos os direitos reservados.</p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <Button 
                   onClick={onOpenQuoteModal}
@@ -125,7 +125,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick("footer_cta")}
                   aria-label="Falar no WhatsApp"
-                  className="bg-green-500 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-600 transition-colors"
+                  className="bg-green-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-800 transition-colors"
                 >
                   <WhatsAppIcon className="w-4 h-4 sm:mr-1 inline" /><span className="hidden sm:inline"> WhatsApp</span>
                 </a>

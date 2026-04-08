@@ -130,7 +130,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             </a>
             <Button
               onClick={onOpenQuoteModal}
-              className="bg-vermelho text-white px-6 py-2 rounded-full hover:bg-vermelho/80 transition-colors shadow-lg font-medium"
+              className="bg-vermelho-dark text-white px-6 py-2 rounded-full hover:bg-vermelho-dark/80 transition-colors shadow-lg font-medium"
             >
               Solicitar Orçamento
             </Button>
@@ -149,7 +149,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             </a>
             <Button
               onClick={onOpenQuoteModal}
-              className="bg-vermelho text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-vermelho/80"
+              className="bg-vermelho-dark text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-vermelho-dark/80"
             >
               Orçamento
             </Button>

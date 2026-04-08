@@ -33,6 +33,14 @@
   --roxo: #CAB7E9;
   --bege: #F5EBDF;
   --warm-gray: hsl(0, 0%, 18%);
+
+  /* Dark variants — contraste ≥ 4.5:1 sobre branco (WCAG AA) */
+  --vermelho-dark: #8B3A3A;
+  --verde-dark: #3A5A28;
+  --azul-dark: #2B4A6E;
+  --rosa-dark: #8B4A3A;
+  --amarelo-dark: #7A5A10;
+  --roxo-dark: #4A3A6B;
   
   /* Font Family */
   --font-sans: 'Nunito', system-ui, sans-serif;
@@ -187,4 +195,25 @@
   .hover\:text-vermelho:hover {
     color: var(--vermelho);
   }
+
+  .text-vermelho-dark { color: var(--vermelho-dark); }
+  .text-verde-dark    { color: var(--verde-dark); }
+  .text-azul-dark     { color: var(--azul-dark); }
+  .text-rosa-dark     { color: var(--rosa-dark); }
+  .text-amarelo-dark  { color: var(--amarelo-dark); }
+  .text-roxo-dark     { color: var(--roxo-dark); }
+
+  .bg-vermelho-dark { background-color: var(--vermelho-dark); }
+  .bg-verde-dark    { background-color: var(--verde-dark); }
+  .bg-azul-dark     { background-color: var(--azul-dark); }
+  .bg-rosa-dark     { background-color: var(--rosa-dark); }
+  .bg-amarelo-dark  { background-color: var(--amarelo-dark); }
+  .bg-roxo-dark     { background-color: var(--roxo-dark); }
+
+  .hover\:bg-vermelho-dark:hover { background-color: var(--vermelho-dark); }
+  .hover\:bg-verde-dark:hover    { background-color: var(--verde-dark); }
+  .hover\:bg-azul-dark:hover     { background-color: var(--azul-dark); }
+  .hover\:bg-rosa-dark:hover     { background-color: var(--rosa-dark); }
+  .hover\:bg-amarelo-dark:hover  { background-color: var(--amarelo-dark); }
+  .hover\:bg-roxo-dark:hover     { background-color: var(--roxo-dark); }
 }

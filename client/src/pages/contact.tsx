@@ -55,7 +55,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                 
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-green-500 text-white p-4 rounded-full">
+                    <div className="bg-green-700 text-white p-4 rounded-full">
                       <i className="fab fa-whatsapp text-xl"></i>
                     </div>
                     <div>
@@ -66,7 +66,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                         target="_blank" 
                         rel="noopener noreferrer"
                         onClick={() => trackWhatsAppClick("contact_info")}
-                        className="text-green-500 font-medium hover:underline"
+                        className="text-green-700 font-medium hover:underline"
                       >
                         {COMPANY_INFO.phone}
                       </a>
@@ -82,7 +82,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                       <p className="text-gray-600">Para dúvidas e orçamentos detalhados</p>
                       <a 
                         href={`mailto:${COMPANY_INFO.email}`} 
-                        className="text-vermelho font-medium hover:underline"
+                        className="text-vermelho-dark font-medium hover:underline"
                       >
                         {COMPANY_INFO.email}
                       </a>
@@ -212,7 +212,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                         )}
                       />
 
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-gray-500">
                         Seus dados serão utilizados apenas para contato e orçamento.
                         Não armazenamos informações pessoais em nossa base de dados, conforme LGPD.
                       </p>
@@ -237,7 +237,7 @@ export default function Contact({ onOpenQuoteModal }: ContactPageProps) {
                           onClick={() => trackWhatsAppClick("contact_form_cta")}
                           className="flex-1"
                         >
-                          <Button className="w-full bg-green-500 hover:bg-green-600">
+                          <Button className="w-full bg-green-700 hover:bg-green-800">
                             <i className="fab fa-whatsapp mr-2"></i> WhatsApp
                           </Button>
                         </a>

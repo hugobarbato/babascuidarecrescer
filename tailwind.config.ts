@@ -69,6 +69,12 @@ export default {
         roxo: "var(--roxo)",
         bege: "var(--bege)",
         "warm-gray": "var(--warm-gray)",
+        "vermelho-dark": "var(--vermelho-dark)",
+        "verde-dark": "var(--verde-dark)",
+        "azul-dark": "var(--azul-dark)",
+        "rosa-dark": "var(--rosa-dark)",
+        "amarelo-dark": "var(--amarelo-dark)",
+        "roxo-dark": "var(--roxo-dark)",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],

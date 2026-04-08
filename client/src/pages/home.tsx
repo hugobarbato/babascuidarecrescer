@@ -79,7 +79,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 onClick={() => trackWhatsAppClick("home_hero")}
                 className="w-full sm:w-auto"
               >
-                <Button className="w-full bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
+                <Button className="w-full bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-800 transition-all shadow-lg transform hover:scale-105">
                   <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
                 </Button>
               </a>
@@ -302,13 +302,13 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                 <h3 className="text-2xl font-bold mb-8 text-warm-gray">Formas de Contato</h3>
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-green-500 text-white p-4 rounded-full">
+                    <div className="bg-green-700 text-white p-4 rounded-full">
                       <WhatsAppIcon className="w-5 h-5" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-lg">WhatsApp</h4>
                       <p className="text-gray-600">Resposta rápida e atendimento personalizado</p>
-                      <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick("home_contact_info")} className="text-green-500 font-medium hover:underline">
+                      <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick("home_contact_info")} className="text-green-700 font-medium hover:underline">
                         {COMPANY_INFO.phone}
                       </a>
                     </div>
@@ -321,7 +321,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                     <div>
                       <h4 className="font-semibold text-lg">E-mail</h4>
                       <p className="text-gray-600">Para dúvidas e orçamentos detalhados</p>
-                      <a href={`mailto:${COMPANY_INFO.email}`} className="text-vermelho font-medium hover:underline">
+                      <a href={`mailto:${COMPANY_INFO.email}`} className="text-vermelho-dark font-medium hover:underline">
                         {COMPANY_INFO.email}
                       </a>
                     </div>
@@ -437,7 +437,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                         )}
                       />
 
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-gray-500">
                         Seus dados serão utilizados apenas para contato e orçamento.
                         Não armazenamos informações pessoais em nossa base de dados, conforme LGPD.
                       </p>
@@ -456,7 +456,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                           Enviar Mensagem
                         </Button>
                         <a href={`https://wa.me/${COMPANY_INFO.whatsapp}`} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick("home_form_cta")} className="flex-1">
-                          <Button type="button" className="w-full bg-green-500 hover:bg-green-600">
+                          <Button type="button" className="w-full bg-green-700 hover:bg-green-800">
                             <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> WhatsApp
                           </Button>
                         </a>
@@ -492,7 +492,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               rel="noopener noreferrer"
               onClick={() => trackWhatsAppClick("home_bottom_cta")}
             >
-              <Button className="bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all shadow-lg transform hover:scale-105">
+              <Button className="bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-800 transition-all shadow-lg transform hover:scale-105">
                 <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
               </Button>
             </a>

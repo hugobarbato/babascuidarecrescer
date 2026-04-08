@@ -32,7 +32,7 @@ export default function NotFound() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-all">
+            <Button className="bg-green-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-800 transition-all">
               <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
             </Button>
           </a>
