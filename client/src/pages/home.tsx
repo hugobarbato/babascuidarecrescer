@@ -13,6 +13,8 @@ import { ContactForm, contactFormSchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";
 import { WhatsAppIcon, ServiceIcon, Calculator, CheckCircle2, Target, Eye, Heart, Mail, Clock, Loader2, Send } from "@/lib/icons";
+import blocksImg from "@assets/blocks.jpg";
+import nossaHistoriaImg from "@assets/nossa-historia.jpg";
 
 interface HomeProps {
   onOpenQuoteModal: (service?: string) => void;
@@ -120,7 +122,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <img
-                  src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+                  src={blocksImg}
                   alt="Babá profissional cuidando de criança em ambiente seguro em Santos"
                   loading="lazy"
                   className="rounded-2xl shadow-2xl w-full h-auto"
@@ -241,7 +243,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               </div>
               <div>
                 <img
-                  src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+                  src={nossaHistoriaImg}
                   alt="Família feliz com crianças brincando em ambiente seguro e colorido"
                   loading="lazy"
                   className="rounded-2xl shadow-2xl w-full h-auto"
