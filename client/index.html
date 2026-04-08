@@ -140,7 +140,7 @@
       function gtag(){dataLayer.push(arguments);}
 
       function loadAnalytics() {
-        if (window._analyticsLoaded) return;
+        if (window._analyticsLoaded || navigator.webdriver) return;
         window._analyticsLoaded = true;
 
         // Google Analytics 4

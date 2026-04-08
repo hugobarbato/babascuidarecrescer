@@ -4,6 +4,7 @@ import { Router as WouterRouter, Switch, Route } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -31,6 +32,7 @@ export function render(url: string): string {
     <HelmetProvider context={helmetContext}>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
+          <Toaster />
           <WouterRouter hook={hook}>
             <div className="min-h-screen bg-gray-50">
               <Header onOpenQuoteModal={() => {}} />
