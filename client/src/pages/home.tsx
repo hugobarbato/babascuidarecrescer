@@ -13,8 +13,8 @@ import { ContactForm, contactFormSchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";
 import { WhatsAppIcon, ServiceIcon, Calculator, CheckCircle2, Target, Eye, Heart, Mail, Clock, Loader2, Send } from "@/lib/icons";
-import blocksImg from "@assets/blocks.jpg";
-import nossaHistoriaImg from "@assets/nossa-historia.jpg";
+import blocksImg from "@assets/blocks.webp";
+import nossaHistoriaImg from "@assets/nossa-historia.webp";
 
 interface HomeProps {
   onOpenQuoteModal: (service?: string) => void;

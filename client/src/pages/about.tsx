@@ -1,5 +1,5 @@
 import { COMPANY_INFO } from "@/lib/constants";
-import nossaHistoriaImg from "@assets/nossa-historia.jpg";
+import nossaHistoriaImg from "@assets/nossa-historia.webp";
 
 export default function About() {
   return (

@@ -1,10 +1,10 @@
 import { Service, PricingRow } from "./types";
-import nannyCuidarImg from "@assets/nanny-cuidar.jpg";
-import nannyDesenvolverImg from "@assets/nanny-desenvolver.jpg";
-import valeNightImg from "@assets/vale-night.jpg";
-import aulaParticularImg from "@assets/aula-particular.jpg";
-import acompanhamentoViagensImg from "@assets/acompanhamento-viagens.jpg";
-import acompanhamentoEventosImg from "@assets/acompanhamento-eventos.jpg";
+import nannyCuidarImg from "@assets/nanny-cuidar.webp";
+import nannyDesenvolverImg from "@assets/nanny-desenvolver.webp";
+import valeNightImg from "@assets/vale-night.webp";
+import aulaParticularImg from "@assets/aula-particular.webp";
+import acompanhamentoViagensImg from "@assets/acompanhamento-viagens.webp";
+import acompanhamentoEventosImg from "@assets/acompanhamento-eventos.webp";
 
 export const SERVICES: Service[] = [
   {
