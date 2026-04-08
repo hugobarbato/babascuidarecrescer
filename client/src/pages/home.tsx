@@ -72,12 +72,6 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               carinho e olhar atento para o desenvolvimento de cada criança.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                onClick={() => onOpenQuoteModal()}
-                className="w-full sm:w-auto bg-vermelho text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-vermelho/80 transition-all shadow-lg transform hover:scale-105"
-              >
-                <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
-              </Button>
               <a
                 href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
                 target="_blank"
@@ -89,6 +83,12 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
                   <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Falar no WhatsApp
                 </Button>
               </a>
+              <Button
+                onClick={() => onOpenQuoteModal()}
+                className="w-full sm:w-auto bg-vermelho text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-vermelho/80 transition-all shadow-lg transform hover:scale-105"
+              >
+                <Calculator className="w-4 h-4 mr-2 inline" /> Solicitar Orçamento
+              </Button>
             </div>
           </div>
         </div>
