@@ -73,7 +73,6 @@ export function ServiceCard({ service, onRequestQuote, detailHref }: ServiceCard
         <span className={`text-sm px-3 py-1 rounded-full font-medium ${badgeClasses}`}>
           {service.badge}
         </span>
-        <span className="text-lg font-bold text-warm-gray">{service.price}</span>
       </div>
 
       <div className="flex flex-col gap-3 mt-auto">
