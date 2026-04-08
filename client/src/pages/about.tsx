@@ -1,5 +1,6 @@
 import { COMPANY_INFO } from "@/lib/constants";
 import nossaHistoriaImg from "@assets/nossa-historia.webp";
+import { Target, Eye, Heart } from "@/lib/icons";
 
 export default function About() {
   return (
@@ -35,8 +36,8 @@ export default function About() {
             <div className="grid md:grid-cols-3 gap-8">
               {/* Missão */}
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-vermelho text-4xl mb-4">
-                  <i className="fas fa-bullseye"></i>
+                <div className="flex justify-center text-vermelho mb-4">
+                  <Target className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Missão</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -46,8 +47,8 @@ export default function About() {
 
               {/* Visão */}
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-verde text-4xl mb-4">
-                  <i className="fas fa-eye"></i>
+                <div className="flex justify-center text-verde mb-4">
+                  <Eye className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Visão</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -57,8 +58,8 @@ export default function About() {
 
               {/* Valores */}
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-azul text-4xl mb-4">
-                  <i className="fas fa-heart"></i>
+                <div className="flex justify-center text-azul mb-4">
+                  <Heart className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Valores</h3>
                 <p className="text-gray-600 leading-relaxed">

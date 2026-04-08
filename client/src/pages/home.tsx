@@ -255,7 +255,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
 
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-vermelho text-4xl mb-4">
+                <div className="flex justify-center text-vermelho mb-4">
                   <Target className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Missão</h3>
@@ -263,7 +263,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               </div>
 
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-verde text-4xl mb-4">
+                <div className="flex justify-center text-verde mb-4">
                   <Eye className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Visão</h3>
@@ -271,7 +271,7 @@ export default function Home({ onOpenQuoteModal }: HomeProps) {
               </div>
 
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="text-azul text-4xl mb-4">
+                <div className="flex justify-center text-azul mb-4">
                   <Heart className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-warm-gray">Valores</h3>
