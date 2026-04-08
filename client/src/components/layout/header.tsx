@@ -155,7 +155,7 @@ export function Header({ onOpenQuoteModal }: HeaderProps) {
             </Button>
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-gray-700">
+                <Button variant="ghost" size="icon" className="text-gray-700" aria-label="Abrir menu de navegação">
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>

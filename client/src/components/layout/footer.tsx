@@ -124,6 +124,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick("footer_cta")}
+                  aria-label="Falar no WhatsApp"
                   className="bg-green-500 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-600 transition-colors"
                 >
                   <WhatsAppIcon className="w-4 h-4 sm:mr-1 inline" /><span className="hidden sm:inline"> WhatsApp</span>
@@ -132,6 +133,7 @@ export function Footer({ onOpenQuoteModal }: FooterProps) {
                   href={COMPANY_INFO.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Seguir no Instagram"
                   className="bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   <Instagram className="w-4 h-4 sm:mr-1 inline" /><span className="hidden sm:inline"> Instagram</span>
