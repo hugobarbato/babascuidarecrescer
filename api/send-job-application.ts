@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { ZodError } from "zod";
-import { jobApplicationSchema } from "../shared/schema";
-import { sendJobApplicationEmail } from "../server/email";
-import { verifyRecaptchaToken } from "../server/recaptcha";
+import { jobApplicationSchema } from "../shared/schema.js";
+import { sendJobApplicationEmail } from "../server/email.js";
+import { verifyRecaptchaToken } from "../server/recaptcha.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
