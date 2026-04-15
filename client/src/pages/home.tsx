@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { ServiceCard } from "@/components/ui/service-card";
-import { SERVICES, COMPANY_INFO, PRICING_TABLE } from "@/lib/constants";
+import { SERVICES, COMPANY_INFO } from "@/lib/constants";
 import { ContactForm, contactFormSchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-contact";
 import { trackWhatsAppClick } from "@/lib/analytics";

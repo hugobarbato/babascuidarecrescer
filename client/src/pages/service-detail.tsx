@@ -1,30 +1,12 @@
 import { useParams, useLocation } from "wouter";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { SERVICES } from "@/lib/constants";
+import { SERVICES, COMPANY_INFO } from "@/lib/constants";
+import { trackWhatsAppClick } from "@/lib/analytics";
 import { ServiceIcon, Calculator, Check, CheckCircle2, Star, ArrowLeft, WhatsAppIcon } from "@/lib/icons";
 
 interface ServiceDetailProps {
   onOpenQuoteModal: (service?: string) => void;
-}
-
-interface MonthlyPlan {
-  name: string;
-  hoursLabel: string;
-  daily: number;
-  freq5x: number;
-  freq4x: number;
-  freq3x: number;
-}
-
-interface PricingTable {
-  headers: string[];
-  rows: { label: string; values: string[] }[];
-}
-
-interface PricingCard {
-  label: string;
-  value: string;
 }
 
 const SERVICE_CONTENT: Record<string, {
@@ -33,12 +15,6 @@ const SERVICE_CONTENT: Record<string, {
   idealFor?: string[];
   benefits: { icon: string; title: string; text: string }[];
   included: string[];
-  pricing: string;
-  pricingNote?: string;
-  pricingTable?: PricingTable;
-  pricingCards?: PricingCard[];
-  monthlyPlans?: MonthlyPlan[];
-  monthlyExtras?: string[];
   exclusiveBenefits?: string[];
   ctaPhrase?: string;
   color: string;
@@ -79,16 +55,6 @@ const SERVICE_CONTENT: Record<string, {
       "Organização do espaço e pertences da criança",
       "Brincar",
     ],
-    monthlyPlans: [
-      { name: "Plano Essencial", hoursLabel: "5 a 6 horas", daily: 130, freq5x: 2600, freq4x: 2080, freq3x: 1560 },
-      { name: "Plano Tranquilidade", hoursLabel: "7 a 8 horas", daily: 180, freq5x: 3600, freq4x: 2880, freq3x: 2160 },
-      { name: "Plano Premium", hoursLabel: "9 a 10 horas", daily: 225, freq5x: 4500, freq4x: 3600, freq3x: 2700 },
-    ],
-    monthlyExtras: [
-      "Horas extras: R$ 30,00",
-      "Transporte extra: R$ 20,00",
-      "Finais de semana e feriados: cobrados como hora extra",
-    ],
     exclusiveBenefits: [
       "Substituição da babá em caso de doença",
       "Substituição durante férias da profissional",
@@ -105,8 +71,6 @@ const SERVICE_CONTENT: Record<string, {
       "Segurança e confiança",
     ],
     ctaPhrase: "Mais do que uma babá, sua família conta com o suporte de uma agência comprometida com segurança, vínculo e excelência no cuidado infantil.",
-    pricing: "Pacotes mensalistas — transporte já incluso",
-    pricingNote: "Hora extra: R$ 30 · Transporte extra: R$ 20 · FDS e feriados: hora extra",
     color: "vermelho",
     bgGradient: "from-vermelho/10 to-vermelho/5",
   },
@@ -152,16 +116,6 @@ const SERVICE_CONTENT: Record<string, {
       "Atividades do cotidiano (higiene, alimentação pré-pronta)",
       "Obrigatório o uso de uniforme completo",
     ],
-    monthlyPlans: [
-      { name: "Plano Essencial", hoursLabel: "5 a 6 horas", daily: 150, freq5x: 3000, freq4x: 2400, freq3x: 1800 },
-      { name: "Plano Tranquilidade", hoursLabel: "7 a 8 horas", daily: 180, freq5x: 3600, freq4x: 2880, freq3x: 2160 },
-      { name: "Plano Premium", hoursLabel: "9 a 10 horas", daily: 225, freq5x: 4500, freq4x: 3600, freq3x: 2700 },
-    ],
-    monthlyExtras: [
-      "Horas extras: R$ 30,00",
-      "Transporte extra: R$ 20,00",
-      "Finais de semana e feriados: cobrados como hora extra",
-    ],
     exclusiveBenefits: [
       "Substituição da babá em caso de doença",
       "Substituição durante férias da profissional",
@@ -178,8 +132,6 @@ const SERVICE_CONTENT: Record<string, {
       "Segurança e confiança",
     ],
     ctaPhrase: "Investir em um atendimento mensalista é escolher tranquilidade, segurança e um cuidado contínuo para o desenvolvimento saudável do seu bem mais precioso.",
-    pricing: "Pacotes mensalistas — transporte já incluso",
-    pricingNote: "Hora extra: R$ 30 · Transporte extra: R$ 20 · FDS e feriados: hora extra",
     color: "verde",
     bgGradient: "from-verde/10 to-verde/5",
   },
@@ -217,18 +169,6 @@ const SERVICE_CONTENT: Record<string, {
       "Monitoramento durante o sono",
       "Relato completo para os pais ao retornar",
     ],
-    pricing: "",
-    pricingTable: {
-      headers: ["Duração", "Seg–Qui", "Sex · Sáb · Dom · Feriados"],
-      rows: [
-        { label: "4 horas", values: ["R$ 160", "R$ 180"] },
-        { label: "6 horas", values: ["R$ 210", "R$ 230"] },
-        { label: "8 horas", values: ["R$ 230", "R$ 260"] },
-        { label: "Noite completa (12h)", values: ["R$ 280", "R$ 340"] },
-      ],
-    },
-    pricingNote:
-      "R$ 20 de transporte já incluso · Hora extra: R$ 40 · Criança adicional: +R$ 50 no pacote",
     color: "azul",
     bgGradient: "from-azul/10 to-azul/5",
   },
@@ -266,14 +206,6 @@ const SERVICE_CONTENT: Record<string, {
       "Estímulo à autonomia e à confiança",
       "Ambiente seguro, acolhedor e propício para o aprendizado",
     ],
-    pricing: "",
-    pricingCards: [
-      { label: "Aula avulsa · Seg–Sex", value: "R$ 80/hora-aula" },
-      { label: "Aula avulsa · Sáb, Dom e Feriados", value: "R$ 90/hora-aula" },
-      { label: "Pacote mensal · 2×/semana", value: "R$ 500/mês" },
-      { label: "Pacote mensal · 3×/semana", value: "R$ 600/mês" },
-    ],
-    pricingNote: "Transporte incluso nos pacotes mensais",
     color: "rosa",
     bgGradient: "from-rosa/10 to-rosa/5",
   },
@@ -311,12 +243,6 @@ const SERVICE_CONTENT: Record<string, {
       "Supervisão e segurança contínuas",
       "Comunicação direta com os pais durante todo o evento",
     ],
-    pricing: "",
-    pricingCards: [
-      { label: "Seg–Sex", value: "R$ 40/hora" },
-      { label: "Sáb, Dom e Feriados", value: "R$ 45/hora" },
-    ],
-    pricingNote: "Transporte: R$ 20/dia · Criança extra: +R$ 10/h (acima de 2 crianças)",
     color: "amarelo",
     bgGradient: "from-amarelo/10 to-amarelo/5",
   },
@@ -354,13 +280,6 @@ const SERVICE_CONTENT: Record<string, {
       "Supervisão contínua e atenta",
       "Adaptação à rotina e ao ambiente da viagem",
     ],
-    pricing: "",
-    pricingCards: [
-      { label: "Diária", value: "R$ 150" },
-      { label: "Criança extra", value: "+ R$ 40" },
-    ],
-    pricingNote:
-      "Todos os custos gerados durante a viagem como hospedagem, alimentação e transporte são de responsabilidade da família.",
     color: "roxo",
     bgGradient: "from-roxo/10 to-roxo/5",
   },
@@ -429,12 +348,12 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
   };
 
   const SEO_DESCRIPTIONS: Record<string, string> = {
-    "nanny-cuidar": "Babá profissional para cuidado diário em Santos SP. Refeições, escola, banho e atividades. Planos a partir de R$130/dia.",
-    "nanny-desenvolver": "Babá com foco em desfralde, seletividade alimentar e estimulação sensorial em Santos. Profissionais com formação específica.",
-    "vale-night": "Babá para cuidado noturno em Santos SP. A partir de R$160, inclui transporte. Pacotes de 4h a 12h.",
-    "aulas-particulares": "Reforço escolar e aulas particulares para crianças em Santos. Professores selecionados, R$80–90/hora.",
-    "eventos": "Babá profissional para acompanhamento em eventos, festas e reuniões em Santos. R$40–45/hora.",
-    "viagens": "Babá para acompanhar sua família em viagens. R$150/dia, tudo incluso. Santos e região.",
+    "nanny-cuidar": "Babá profissional para cuidado diário em Santos SP. Refeições, escola, banho e atividades. Fale pelo WhatsApp e receba uma proposta personalizada.",
+    "nanny-desenvolver": "Babá com foco em desfralde, seletividade alimentar e estimulação sensorial em Santos. Profissionais com formação específica. Consulte pelo WhatsApp.",
+    "vale-night": "Babá para cuidado noturno em Santos SP. Pacotes de 4h a 12h, inclui transporte. Fale pelo WhatsApp para saber os valores.",
+    "aulas-particulares": "Reforço escolar e aulas particulares para crianças em Santos. Professoras selecionadas. Consulte disponibilidade e valores pelo WhatsApp.",
+    "eventos": "Babá profissional para acompanhamento em eventos, festas e reuniões em Santos. Consulte valores e disponibilidade pelo WhatsApp.",
+    "viagens": "Babá para acompanhar sua família em viagens nacionais e internacionais. Santos e região. Consulte pelo WhatsApp.",
   };
 
   const seoTitle = SEO_TITLES[service.id] ?? `${service.name} — Cuidar & Crescer`;
@@ -552,119 +471,26 @@ export default function ServiceDetail({ onOpenQuoteModal }: ServiceDetailProps) 
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* WhatsApp CTA — Valores */}
       <section className={`py-14 bg-gradient-to-br ${content.bgGradient}`}>
         <div className="container mx-auto px-4 lg:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl lg:text-3xl font-bold mb-6">
-              Valores de Investimento
+          <div className="max-w-xl mx-auto text-center">
+            <h2 className="text-2xl lg:text-3xl font-bold mb-4">
+              Quer saber os valores?
             </h2>
-
-            {/* Monthly plans table */}
-            {content.monthlyPlans && content.monthlyPlans.length > 0 && (
-              <div className="mb-8">
-                <p className="text-sm text-gray-500 mb-4">Pacotes mensalistas — Transporte já incluso</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full bg-white rounded-2xl overflow-hidden shadow-lg text-sm">
-                    <thead>
-                      <tr className={`${colors.bg} text-white`}>
-                        <th className="py-3 px-4 text-left">Plano</th>
-                        <th className="py-3 px-4 text-center">Horas/dia</th>
-                        <th className="py-3 px-4 text-center">5x/sem</th>
-                        <th className="py-3 px-4 text-center">4x/sem</th>
-                        <th className="py-3 px-4 text-center">3x/sem</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {content.monthlyPlans.map((plan, i) => (
-                        <tr key={i} className="border-b last:border-b-0">
-                          <td className="py-3 px-4 font-semibold text-gray-800">{plan.name}</td>
-                          <td className="py-3 px-4 text-center text-gray-600">{plan.hoursLabel}</td>
-                          <td className="py-3 px-4 text-center">R$ {plan.freq5x.toLocaleString("pt-BR")}</td>
-                          <td className="py-3 px-4 text-center">R$ {plan.freq4x.toLocaleString("pt-BR")}</td>
-                          <td className="py-3 px-4 text-center">R$ {plan.freq3x.toLocaleString("pt-BR")}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                {content.monthlyExtras && (
-                  <div className="mt-4 text-sm text-gray-500 space-y-1">
-                    {content.monthlyExtras.map((extra, i) => (
-                      <p key={i}>• {extra}</p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Pricing table (e.g. vale-night com tiers de duração) */}
-            {!content.monthlyPlans && content.pricingTable && (
-              <div className="overflow-x-auto">
-                <table className="w-full bg-white rounded-2xl overflow-hidden shadow-lg text-sm">
-                  <thead>
-                    <tr className={`${colors.bg} text-white`}>
-                      {content.pricingTable.headers.map((h, i) => (
-                        <th key={i} className={`py-3 px-4 ${i === 0 ? "text-left" : "text-center"}`}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {content.pricingTable.rows.map((row, i) => (
-                      <tr key={i} className="border-b last:border-b-0">
-                        <td className="py-3 px-4 font-semibold text-gray-800">{row.label}</td>
-                        {row.values.map((v, j) => (
-                          <td key={j} className={`py-3 px-4 text-center font-medium ${colors.text}`}>{v}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {content.pricingNote && (
-                  <div className="mt-4 text-sm text-gray-500 space-y-1 text-left">
-                    {content.pricingNote.split(" · ").map((note, i) => (
-                      <p key={i}>• {note}</p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Pricing cards (serviços avulsos simples) */}
-            {!content.monthlyPlans && content.pricingCards && (
-              <div>
-                <div className={`grid gap-4 ${
-                  content.pricingCards.length <= 2
-                    ? "grid-cols-1 sm:grid-cols-2 max-w-xl mx-auto"
-                    : "grid-cols-1 sm:grid-cols-2"
-                }`}>
-                  {content.pricingCards.map((card, i) => (
-                    <div
-                      key={i}
-                      className={`bg-white rounded-2xl p-6 shadow-lg border-2 ${colors.border} flex flex-col items-center gap-1`}
-                    >
-                      <span className="text-sm text-gray-500 font-medium">{card.label}</span>
-                      <span className={`text-2xl font-bold ${colors.text}`}>{card.value}</span>
-                    </div>
-                  ))}
-                </div>
-                {content.pricingNote && (
-                  <p className="mt-4 text-sm text-gray-500">• {content.pricingNote}</p>
-                )}
-              </div>
-            )}
-
-            {/* Fallback: pricing como texto simples */}
-            {!content.monthlyPlans && !content.pricingTable && !content.pricingCards && (
-              <div className={`bg-white rounded-2xl p-8 shadow-lg border-2 ${colors.border}`}>
-                <p className={`text-xl font-bold ${colors.text} mb-3 whitespace-pre-line`}>
-                  {content.pricing}
-                </p>
-                {content.pricingNote && (
-                  <p className="text-sm text-gray-500">{content.pricingNote}</p>
-                )}
-              </div>
-            )}
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              Os valores variam conforme sua necessidade e disponibilidade. Fale com a gente pelo WhatsApp para receber uma proposta personalizada.
+            </p>
+            <a
+              href={`https://wa.me/${COMPANY_INFO.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick("service_pricing_cta")}
+            >
+              <Button className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition-all">
+                <WhatsAppIcon className="w-4 h-4 mr-2 inline" /> Consultar valores no WhatsApp
+              </Button>
+            </a>
           </div>
         </div>
       </section>

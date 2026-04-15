@@ -1,4 +1,4 @@
-import { Service, PricingRow } from "./types";
+import { Service } from "./types";
 import nannyCuidarImg from "@assets/nanny-cuidar.webp";
 import nannyDesenvolverImg from "@assets/nanny-desenvolver.webp";
 import valeNightImg from "@assets/vale-night.webp";
@@ -14,7 +14,6 @@ export const SERVICES: Service[] = [
     icon: "fas fa-heart",
     color: "vermelho",
     bgGradient: "from-vermelho/10 to-vermelho/5",
-    price: "A partir de R$130/dia",
     badge: "Pacotes mensalistas",
     image: nannyCuidarImg,
     category: "mensalista"
@@ -26,7 +25,6 @@ export const SERVICES: Service[] = [
     icon: "fas fa-seedling",
     color: "verde",
     bgGradient: "from-verde/10 to-verde/5",
-    price: "A partir de R$150/dia",
     badge: "Profissionais especializados",
     image: nannyDesenvolverImg,
     category: "mensalista"
@@ -38,7 +36,6 @@ export const SERVICES: Service[] = [
     icon: "fas fa-moon",
     color: "azul",
     bgGradient: "from-azul/10 to-azul/5",
-    price: "R$160 - R$340",
     badge: "Pacotes de 4h a 12h",
     image: valeNightImg,
     category: "avulso"
@@ -50,7 +47,6 @@ export const SERVICES: Service[] = [
     icon: "fas fa-book-open",
     color: "rosa",
     bgGradient: "from-rosa/10 to-rosa/5",
-    price: "A partir de R$80/h",
     badge: "Pacotes mensais disponíveis",
     image: aulaParticularImg,
     category: "avulso"
@@ -62,8 +58,7 @@ export const SERVICES: Service[] = [
     icon: "fas fa-calendar-alt",
     color: "amarelo", 
     bgGradient: "from-amarelo/10 to-amarelo/5",
-    price: "A partir de R$40/h",
-    badge: "+R$10/h por criança (acima de 2)",
+    badge: "Criança adicional: consulte",
     image: acompanhamentoEventosImg,
     category: "avulso"
   },
@@ -73,56 +68,10 @@ export const SERVICES: Service[] = [
     description: "Acompanhamento em viagens para que os pais aproveitem com tranquilidade. Cuidamos de higiene, brincadeiras, horários e refeições.",
     icon: "fas fa-suitcase",
     color: "roxo",
-    bgGradient: "from-roxo/10 to-roxo/5", 
-    price: "R$150/diária",
-    badge: "+R$40 por criança extra",
+    bgGradient: "from-roxo/10 to-roxo/5",
+    badge: "Criança extra: consulte",
     image: acompanhamentoViagensImg,
     category: "avulso"
-  }
-];
-
-export const PRICING_TABLE: PricingRow[] = [
-  {
-    service: "Nanny Cuidar",
-    description: "Cuidado e rotina diária — Pacotes mensalistas",
-    weekday: "Essencial (5-6h): R$ 130/dia\nTranquilidade (7-8h): R$ 180/dia\nPremium (9-10h): R$ 225/dia",
-    weekend: "Transporte já incluso",
-    additional: "Hora extra: R$ 30\nTransporte extra: R$ 20\nFDS e feriados: hora extra"
-  },
-  {
-    service: "Nanny Desenvolver",
-    description: "Desenvolvimento infantil especializado — Pacotes mensalistas",
-    weekday: "Essencial (5-6h): R$ 150/dia\nTranquilidade (7-8h): R$ 180/dia\nPremium (9-10h): R$ 225/dia",
-    weekend: "Transporte já incluso",
-    additional: "Hora extra: R$ 30\nTransporte extra: R$ 20\nFDS e feriados: hora extra"
-  },
-  {
-    service: "Vale Night",
-    description: "Cuidado noturno especializado",
-    weekday: "4h: R$ 160\n6h: R$ 210\n8h: R$ 230\n12h: R$ 280",
-    weekend: "4h: R$ 180\n6h: R$ 230\n8h: R$ 260\n12h: R$ 340",
-    additional: "R$ 20 transporte incluso\nHora extra: R$ 40\nCriança extra: +R$ 50"
-  },
-  {
-    service: "Aulas Particulares",
-    description: "Reforço escolar e aulas individuais",
-    weekday: "R$ 80/hora-aula",
-    weekend: "R$ 90/hora-aula",
-    additional: "Pacote 2x/sem: R$ 500/mês\nPacote 3x/sem: R$ 600/mês\nTransporte incluso nos pacotes"
-  },
-  {
-    service: "Acompanhamento em Eventos",
-    description: "Cuidado em festas e eventos",
-    weekday: "R$ 40/hora",
-    weekend: "R$ 45/hora",
-    additional: "Transporte: R$ 20/dia\nCriança extra: +R$ 10/h (acima de 2)"
-  },
-  {
-    service: "Acompanhamento em Viagens", 
-    description: "Hospedagem, alimentação e transporte pela família",
-    weekday: "R$ 150/diária",
-    weekend: "R$ 150/diária",
-    additional: "Criança extra: +R$ 40"
   }
 ];
 
